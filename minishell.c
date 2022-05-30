@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/05/30 14:14:47 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:30:27 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **envp)
 		if (line == "\n")
 			continue ;
 		args = ft_split(line, ' ');
-		
 	}
 	return (0);
 }
