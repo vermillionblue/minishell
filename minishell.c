@@ -6,11 +6,25 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/05/30 17:30:27 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:32:30 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+typedef struct s_cmd
+{
+	char	cmd[1];
+	char	**arg;
+	struct t_cmd *next;
+}				t_cmd;
+
+typedef struct s_i_o
+{
+	char	*input;
+	char	*output;
+}				t_i_o;
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,56 +32,41 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	char	**args;
 	t_list	lexar_list;
-	
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-      perror("getcwd() error");
+
+	while(1)
+	{
+		line = readline("minishell :D$ ");
+		args = ft_split(line, ' ');
+		if (!ft_strncmp(args[0], "cd", 2))
+		{
+			if (!args[1])
+			{
+				args[1] = "0";
+			}
+			do_cd(args[1]);
+				
+		}
+		if (!ft_strncmp(args[0], "pwd", 3))
+		{
+			getcwd(cwd, sizeof(cwd));
+			printf("%s\n", cwd);
+		}			
+	}
+
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	while (7)
-	{
-		line = readline(cwd);
-		//typing enter without args should just prompt cwd
-		//needs to be fixed: input can also contain '  \n' etc
-		if (line == "\n")
-			continue ;
-		args = ft_split(line, ' ');
-	}
+
 	return (0);
 }
 
-void	create_lexar(t_list *lexar_list, char **array)
+void	fill_linkedlst(t_cmd *cmd)
 {
-	int		i;
+	char *str;
 
-	i = 0;
-	while (i < size_of_array(array))
-	{
-		ft_lstadd_back(&lexar_list, create_stack_value(array));
-		i++;
-	}
+	str = "ls -l";
+
+	cmd->arg = ft_split(str, ' ');
+	//*cmd->cmd = "ls";
+
 }
-
-int		size_of_array(char **array)
-{
-	int		lenght;
-
-	lenght = sizeof(array) / sizeof(array);
-	return(lenght);
-}
-
-t_list	*create_stack_value(char **value)
-{
-	t_list	*element;
-
-	element = malloc(sizeof(t_list));
-	if (!element)
-		return (NULL);
-	element->line = *value;
-	element->next = NULL;
-	return (element);
-}
-
-// char x[10];
-// int elements_in_x = sizeof(x) / sizeof(x[0]);
-// char	**ft_split(char const *s, char c)

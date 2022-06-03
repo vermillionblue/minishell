@@ -6,13 +6,13 @@
 #    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/05/30 14:04:55 by danisanc         ###   ########.fr        #
+#    Updated: 2022/06/03 11:34:58 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c builtins/cmds.c 
+SRC = minishell.c builtins/cd.c
 
 OBJ = $(SRC:.c=.o)
 
