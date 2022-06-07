@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 10:54:13 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/03 11:34:39 by danisanc         ###   ########.fr       */
+/*   Created: 2022/06/05 19:59:36 by danisanc          #+#    #+#             */
+/*   Updated: 2022/06/05 23:51:18 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../minishell.h"
 
-# include "../minishell.h"
+int	do_cwd(void)
+{
+	char	cwd[PATH_MAX];
 
-void do_cd(char *path);
-
-#endif
+	if (getcwd(cwd, sizeof(cwd)))
+		printf("%s\n", cwd);
+	else
+	{
+		perror("getcwd() error");
+		return (0);
+	}
+	return (1);
+		
+}
