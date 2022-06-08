@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/06 21:02:00 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:12:02 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ int	main(int argc, char **argv, char **envp)
 			do_unset(&env_list, args[1]);		
 		if (!ft_strncmp(args[0], "exit", 4))
 			do_exit();
+		if (!ft_strncmp(args[0], "exec", 4))
+		{
+			printf("trigger\n");
+			start_exec(envp);	
+		}
+			
+		
 		
 	}
 

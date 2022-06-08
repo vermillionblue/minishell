@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/06/06 20:55:45 by danisanc         ###   ########.fr        #
+#    Updated: 2022/06/07 16:10:06 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c builtins/cd.c valentin.c builtins/export.c builtins/pwd.c builtins/exit.c builtins/unset.c builtins/env.c exec/exec.c
+SRC = minishell.c builtins/cd.c valentin.c builtins/export.c builtins/pwd.c \
+builtins/exit.c builtins/unset.c builtins/env.c exec/exec.c
 
 OBJ = $(SRC:.c=.o)
 
