@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/06 21:02:43 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:10:24 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 # include <readline/history.h>  /// For History
 # include <sys/stat.h>  /// For lstats
 // # include <sys/types.h> /// TODO V - Can't remember what I did here
-# include <linux/limits.h> //include PATH_MAX
+//# include <linux/limits.h> //include PATH_MAX
+# include <limits.h> //include PATH_MAX
 
 /* 1 Module Lexar */
 # include "lexar/lexar.h"
@@ -75,5 +76,8 @@ int		do_cwd(void);
 int		do_unset(t_env **env_list, char *name);
 void	do_exit(void);
 int		do_cd(char *path);
+
+//exec
+void    start_exec(char **env);
 
 #endif
