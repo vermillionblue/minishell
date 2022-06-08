@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/06 20:55:03 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:30:15 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int	do_export(t_env **env_list, char *args)
 
 	//check if name is already in env
 	//fix vars with double = : miau=miau=miau
+	//export with no args: miau= print double =
 	if (!ft_strncmp(args, "0", 1))
 	{
 		print_sorted_export(env_list);
