@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/08 19:41:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/22 09:51:51 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //A variable name in Bash can include letters, digits, and underscores. Its name can be started with a letter and an underscore, only. Valid variable names are size, tax5, and _tax20 but not 5rules.
-
 void	free_double(char **string)
 {
 	int	i;
@@ -74,70 +73,63 @@ unsigned int	env_list_size(t_env **env_list)
 	}
 	return (i);
 }
-t_env	*find_env_node(t_env **env_list, char *name)
+
+void	get_name_arg(t_env *new_env, char *args, t_env **env_list)
 {
-	t_env	*temp;
+	char	*name;
+	char	*value;
+	t_env	*node;
+	int		i;
+	int		len;
+	int		k;
 
-	temp = *env_list;
-	while(temp->next)
-	{
-		if (!ft_strncmp(temp->bash_variable, name, ft_strlen(temp->bash_variable) + 1))
-			return (temp);
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
-void	set_sort_var(t_env **env_list)
-{
-	t_env	*temp;
-
-	temp = *env_list;
-	while(temp->next)
-	{
-		temp->sort = 2;
-		temp = temp->next;
-	}
-	temp->sort = 2;
-}
-//find smallest first
-//sort var: 
-//sort = 2 -> unsorted
-void	print_sorted_export(t_env **env_list)
-{
-	t_env			*temp;
-	t_env			*current;
-	char			*smallest;
-	int				i;
-	unsigned int	len;
-
+	k = 0;
 	i = 0;
-	len = env_list_size(env_list);
-	current = *env_list;
-	smallest = current->bash_variable;
-	if (*env_list == NULL)
-		perror("List is Empty\n");
-	while(len > 1)
+	len = 0;
+	//len name
+	while (args[len] != '=')
+		len++;
+	name = malloc(len + 1);
+	while (i < len)
 	{
-		current = *env_list;
-		while (current->next)
-		{	
-			if ((ft_strncmp(current->bash_variable, smallest, ft_strlen(current->bash_variable)) < 0) && current->sort == 2)
-				smallest = current->bash_variable;
-			current = current->next;
-		}
-		temp = find_env_node(env_list, smallest);
-		temp->sort = 1;
-		printf("declare -x ");
-		printf("%s", temp->bash_variable);
-		printf("=");
-		printf("\"");
-		printf("%s", temp->bash_v_content);
-		printf("\"\n");
-		smallest = "{{{";
-		len--;
+		name[i] = *args;
+		i++;
+		args++;
 	}
-	set_sort_var(env_list);
+	name[i] = '\0';
+	if (!*(args + 1))
+		value = "";
+	else
+	{
+		args++;
+		len = 0;
+		while (args[len])
+			len++;
+		value = malloc(len + 1);
+		while (*args)
+		{
+			value[k] = *args;
+			k++;
+			args++;
+		}
+		value[k] = 0;
+	}
+	node = find_env_node(env_list, name);
+	if (node)
+	{
+		printf("trigger");
+		node->bash_v_content = value;
+		free(name);
+	}
+	else
+	{
+		new_env = malloc(sizeof(t_env));
+		new_env->bash_variable = name;
+		new_env->bash_v_content = value;
+		new_env->sort = 2;
+		new_env->next = NULL;
+		ft_lstadd_back_env_element(env_list, new_env);
+	}
 }
 
 int	do_export(t_env **env_list, char *args)
@@ -145,9 +137,7 @@ int	do_export(t_env **env_list, char *args)
 	t_env	*new_env;
 	char	**temp;
 
-	//check if name is already in env
-	//fix vars with double = : miau=miau=miau
-	//export with no args: miau= print double =
+	//to do:check if name is already in env
 	if (!ft_strncmp(args, "0", 1))
 	{
 		print_sorted_export(env_list);
@@ -157,33 +147,7 @@ int	do_export(t_env **env_list, char *args)
 		return (0);
 	if (check_args(args))
 	{
-		if (args[ft_strlen(args) - 1] == '=')
-		{
-			args[ft_strlen(args) - 1] = '\0';
-			temp[0] = ft_strdup(args);
-			temp[1] = "";
-		}
-		else
-			temp = ft_split(args, '=');
-		if (!find_env_node(env_list, temp[0]))
-		{
-			printf("%stemp0\n", temp[0]);
-			new_env = malloc(sizeof(t_env));
-			new_env->bash_variable = ft_strdup(temp[0]);
-			new_env->bash_v_content = ft_strdup(temp[1]);
-			// printf("%s\n", new_env->bash_variable);
-			// printf("%s\n", new_env->bash_v_content);
-			new_env->sort = 2;
-			new_env->next = NULL;
-			ft_lstadd_back_env_element(env_list, new_env);
-		}
-		else
-		{
-			//working when there are two envs with the same name 
-			new_env = find_env_node(env_list, temp[0]);
-			new_env->bash_v_content = ft_strdup(temp[1]);
-			printf("%s\n", new_env->bash_v_content);
-		}
+		get_name_arg(new_env, args, env_list);
 		return (1);
 	}
 	else

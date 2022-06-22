@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:04:58 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/06 19:07:19 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:32:52 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ void	print_env_list(t_env **env_list)
 	temp = *env_list;
 	if (*env_list == NULL)
 		perror("List is Empty\n");
-	while (temp->next)
+	while (temp)
 	{
 		printf("%s", temp->bash_variable);
 		printf("=");
 		printf("%s\n", temp->bash_v_content);
 		temp = temp->next;
 	}
-	printf("%s", temp->bash_variable);
-	printf("=");
-	printf("%s\n", temp->bash_v_content);
 }

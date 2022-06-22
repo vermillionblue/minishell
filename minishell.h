@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/07 16:10:24 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:42:30 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
 
+//# define GENERATE_STRING(STRING) #STRING,
+# define str(x) #x
+# define xstr(x) str(x)
+# define FOREACH_CMD(CMD) \
+		//CMD(cd) \
+		CMD(export) \
+		CMD(env) \
+		CMD(exit) \
+		CMD(unset) \
+		CMD(pwd) \
+		CMD(echo) \
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -36,12 +47,11 @@
 // # include <sys/types.h> /// TODO V - Can't remember what I did here
 //# include <linux/limits.h> //include PATH_MAX
 # include <limits.h> //include PATH_MAX
-
-/* 1 Module Lexar */
-# include "lexar/lexar.h"
-
 /* Libft Library */
 # include "libft/libft.h"
+
+
+
 
 typedef struct s_env
 {
@@ -71,7 +81,15 @@ void	ft_lstadd_back_env_element(t_env **lst, t_env *new);
 void	print_env_list(t_env **env_list);
 
 ///built-ins
+
+//export
 int		do_export(t_env **env_list, char *args);
+void	print_sorted_export(t_env **env_list);
+t_env	*find_env_node(t_env **env_list, char *name);
+void	set_sort_var(t_env **env_list);
+void	get_name_arg(t_env *new_env, char *args, t_env **env_list);
+unsigned int	env_list_size(t_env **env_list);
+
 int		do_cwd(void);
 int		do_unset(t_env **env_list, char *name);
 void	do_exit(void);

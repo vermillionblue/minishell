@@ -6,14 +6,14 @@
 #    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/06/07 16:10:06 by danisanc         ###   ########.fr        #
+#    Updated: 2022/06/22 09:25:27 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = minishell.c builtins/cd.c valentin.c builtins/export.c builtins/pwd.c \
-builtins/exit.c builtins/unset.c builtins/env.c exec/exec.c
+builtins/exit.c builtins/unset.c builtins/env.c exec/exec.c builtins/export_sort.c
 
 OBJ = $(SRC:.c=.o)
 
