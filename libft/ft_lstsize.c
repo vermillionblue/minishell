@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 20:17:49 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:07 by danisanc         ###   ########.fr       */
+/*   Created: 2021/12/16 21:25:45 by vangirov          #+#    #+#             */
+/*   Updated: 2021/12/20 19:17:36 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "libft.h"
 
-void do_exit(void)
+int	ft_lstsize(t_list *lst)
 {
-	printf(BLUE);
-	printf("Exiting... 🥲\n");
-	exit(EXIT_SUCCESS);
+	t_list	*next;
+	int		size;
+
+	size = 0;
+	next = lst;
+	while (next)
+	{
+		next = next->next;
+		size++;
+	}
+	return (size);
 }

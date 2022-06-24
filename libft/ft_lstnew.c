@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 20:17:49 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:07 by danisanc         ###   ########.fr       */
+/*   Created: 2021/12/15 22:00:08 by vangirov          #+#    #+#             */
+/*   Updated: 2021/12/20 19:18:04 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "libft.h"
 
-void do_exit(void)
+t_list	*ft_lstnew(void *content)
 {
-	printf(BLUE);
-	printf("Exiting... 🥲\n");
-	exit(EXIT_SUCCESS);
+	t_list	*list;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	if (!list)
+		return (NULL);
+	list->content = content;
+	list->next = NULL;
+	return (list);
 }

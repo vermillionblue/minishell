@@ -6,11 +6,11 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:21:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/22 10:32:40 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:18:45 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 //find smallest first
 //sort var: 
@@ -57,9 +57,8 @@ t_env	*find_env_node(t_env **env_list, char *name)
 	t_env	*temp;
 
 	temp = *env_list;
-	while(temp->next)
+	while(temp)
 	{
-        printf("%s| vs %s|\n", temp->bash_variable, name);
 		if (!ft_strncmp(temp->bash_variable, name, ft_strlen(temp->bash_variable) + 1))
             return (temp);
 		temp = temp->next;

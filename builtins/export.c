@@ -6,11 +6,11 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/22 09:51:51 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:26:19 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 //A variable name in Bash can include letters, digits, and underscores. Its name can be started with a letter and an underscore, only. Valid variable names are size, tax5, and _tax20 but not 5rules.
 void	free_double(char **string)
@@ -128,16 +128,16 @@ void	get_name_arg(t_env *new_env, char *args, t_env **env_list)
 		new_env->bash_v_content = value;
 		new_env->sort = 2;
 		new_env->next = NULL;
-		ft_lstadd_back_env_element(env_list, new_env);
+		append_env_element(env_list, new_env);
 	}
 }
 
 int	do_export(t_env **env_list, char *args)
 {
 	t_env	*new_env;
-	char	**temp;
 
 	//to do:check if name is already in env
+	new_env = NULL;
 	if (!ft_strncmp(args, "0", 1))
 	{
 		print_sorted_export(env_list);

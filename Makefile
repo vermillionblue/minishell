@@ -6,14 +6,15 @@
 #    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/06/22 09:25:27 by danisanc         ###   ########.fr        #
+#    Updated: 2022/06/24 14:05:08 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c builtins/cd.c valentin.c builtins/export.c builtins/pwd.c \
-builtins/exit.c builtins/unset.c builtins/env.c exec/exec.c builtins/export_sort.c
+SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
+builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
+exec/exec.c signals.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -25,7 +26,7 @@ LIB_MAC =  -I $(HOME)/goinfre/.brew/opt/readline/include/ -lreadline
 
 LIB_LINUX = -lreadline
 
-#CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -I includes/ -g
 
 RM = rm -f
 
@@ -34,19 +35,24 @@ all: $(NAME)
 $(%.o): $(%.c)
 	$(CC) -o $@ -c $^
 
-#add $(CFLAGS) later, they are just annoying now
 $(NAME): $(OBJ)
 ifeq ($(UNAME_S), Darwin)
-	$(MAKE) -C libft
-	$(CC) $(OBJ) libft/libft.a $(LIB_MAC) -o $(NAME) 
+#	$(MAKE) -C libft
+	@echo "\033[0;35mCompiling..." 
+	@make -C libft
+	$(CC) $(OBJ) libft/libft.a  -I/include/ $(LIB_MAC) -o $(NAME)
+	@echo "\033[0;37m"
 else
-	$(MAKE) -C libft
+	@echo "\033[0;35mCompiling..." 
+	@make -C libft
 	$(CC) $(OBJ) libft/libft.a $(LIB_LINUX) -o $(NAME)
+	@echo "\033[0;37m"
 endif
 
 clean:
 	$(RM) *.o
 	$(RM) builtins/*.o
+	$(RM) exec/*.o
 	$(RM) libft/*.o
 
 fclean: clean

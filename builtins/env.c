@@ -6,11 +6,11 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:04:58 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/21 15:32:52 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:44:04 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 void	print_env_list(t_env **env_list)
 {

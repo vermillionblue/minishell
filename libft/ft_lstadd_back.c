@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 20:17:49 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:07 by danisanc         ###   ########.fr       */
+/*   Created: 2021/12/16 22:14:20 by vangirov          #+#    #+#             */
+/*   Updated: 2021/12/16 22:42:41 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "libft.h"
 
-void do_exit(void)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	printf(BLUE);
-	printf("Exiting... 🥲\n");
-	exit(EXIT_SUCCESS);
+	t_list	*old_last;
+
+	old_last = *lst;
+	if (old_last)
+	{
+		old_last = ft_lstlast(*lst);
+		(old_last)->next = new;
+	}
+	else
+		*lst = new;
 }

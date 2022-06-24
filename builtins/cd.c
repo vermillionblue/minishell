@@ -6,11 +6,11 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 23:45:50 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/07 16:43:52 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:44:28 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 int	print_error(int res, char *path)
 {
@@ -20,6 +20,7 @@ int	print_error(int res, char *path)
 		perror(path);
 		return (1);
 	}
+	return (0);
 }
 
 void up_or_down(char *home, char *path, int *res)
@@ -48,7 +49,6 @@ void	expand_tilde(char *home, char *path, int *res)
 
 int	do_cd(char *path)
 {
-	int		len;
 	char	*home;
 	int		res;
 

@@ -6,13 +6,35 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:02:59 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/22 20:03:02 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:54:13 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*				ENV List			*/
+char **list_to_arr(t_env **env_list)
+{
+	char			**new_arr;
+	t_env			*temp;
+	char			*holder;
+	char			*full_path;
+	int				i;
+	
+	i = 0;
+	new_arr = malloc(env_list_size(env_list) + 1);
+	new_arr[env_list_size(env_list) + 1] = 0;
+	temp = *env_list;
+	while(temp)
+	{
+		holder = ft_strjoin(temp->bash_variable, "=");
+		full_path = ft_strjoin(holder, temp->bash_v_content);
+		free(holder);
+		new_arr[i] = ft_strdup(full_path);
+		i++;
+		temp = temp->next;
+	}
+	return (new_arr);
+}
 
 t_env	*create_env_list(char	**envp)
 {
@@ -33,12 +55,11 @@ t_env	*create_env_list(char	**envp)
 		}
 		else
 			array = ft_split(envp[i], '=');
-		ft_lstadd_back_env_element(&env_list, create_env_element(array));
+		append_env_element(&env_list, create_env_element(array));
 		i++;
 	}
 	return (env_list);
 }
-
 /* Creating One Element with Two Variables to Place in a Linked List */
 t_env	*create_env_element(char **value)
 {
@@ -53,9 +74,8 @@ t_env	*create_env_element(char **value)
 	element->next = NULL;
 	return (element);
 }
-
 /* Adding Elements to the back of the ENV List (Modified ft_lstadd_back) */
-void	ft_lstadd_back_env_element(t_env **env_list, t_env *new)
+void	append_env_element(t_env **env_list, t_env *new)
 {
 	t_env	*temp;
 
@@ -64,7 +84,6 @@ void	ft_lstadd_back_env_element(t_env **env_list, t_env *new)
 	{
 		while (temp->next)
 			temp = temp->next;
-		//printf("%s is last\n", temp->bash_variable);
 		temp->next = new;
 	}
 	else
