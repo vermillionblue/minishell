@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/06/24 14:05:08 by danisanc         ###   ########.fr        #
+#    Updated: 2022/06/24 16:08:54 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
 builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c
+exec/exec.c signals.c builtins/echo.c
 
 OBJ = $(SRC:.c=.o)
 

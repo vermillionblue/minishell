@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:34:40 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	do_unset(t_env **env_list, char *name)
 	t_env *temp;
 	
 	temp = *env_list;
+	if (!ft_strncmp(name, "0", 2))
+		return (1);
 	if (!check_unset_name(name))
 	{
 		ft_putstr_fd("export: '", 2);
@@ -48,13 +50,14 @@ int	do_unset(t_env **env_list, char *name)
 		return (0);
 	}	
 	if (*env_list == NULL)
+	{
 		perror("List is Empty\n");
+		return (0);
+	}
 	while (temp->next)
 	{
 		if (!ft_strncmp(temp->next->bash_variable, name, ft_strlen(name) + 1))
 		{
-			printf("%s temp\n", temp->bash_variable);
-			printf("%s temp\n", temp->next->bash_variable);
 			temp->next = temp->next->next;
 			return (0);
 		}

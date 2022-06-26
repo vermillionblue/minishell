@@ -6,11 +6,18 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 23:45:50 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:28 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:52:42 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
+
+char	*check_if_no_args(char **args)
+{
+	if (!args[1])
+			args[1] = "0";
+	return (args[1]);
+}
 
 int	print_error(int res, char *path)
 {

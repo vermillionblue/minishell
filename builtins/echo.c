@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/24 14:07:21 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/24 16:00:29 by danisanc         ###   ########.fr       */
+/*   Created: 2022/06/24 16:08:34 by danisanc          #+#    #+#             */
+/*   Updated: 2022/06/24 16:16:16 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/builtins.h"
 
-void    handle_sig(int sig)
+int do_echo(char **args)
 {
-    (void)sig;
-    printf("MIAU");
-}
-
-void    ft_signal(void)
-{
-    struct sigaction sa;
-    
-    
-    sa.sa_handler = &handle_sig;
-    
+    (void)args;
+    printf("echo in progress\n");
+    return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:02:59 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/24 13:54:13 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:09:43 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,21 @@ char **list_to_arr(t_env **env_list)
 	char			**new_arr;
 	t_env			*temp;
 	char			*holder;
-	char			*full_path;
 	int				i;
 	
 	i = 0;
-	new_arr = malloc(env_list_size(env_list) + 1);
-	new_arr[env_list_size(env_list) + 1] = 0;
+	new_arr = (char **)malloc(sizeof(char *) * (env_list_size(env_list) + 1));
 	temp = *env_list;
+	//printf("%s first var\n", temp->bash_variable);
 	while(temp)
 	{
 		holder = ft_strjoin(temp->bash_variable, "=");
-		full_path = ft_strjoin(holder, temp->bash_v_content);
+		new_arr[i] = ft_strjoin(holder, temp->bash_v_content);
 		free(holder);
-		new_arr[i] = ft_strdup(full_path);
 		i++;
 		temp = temp->next;
 	}
+	new_arr[i] = NULL;
 	return (new_arr);
 }
 
