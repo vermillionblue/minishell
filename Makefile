@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/06/24 16:08:54 by danisanc         ###   ########.fr        #
+#    Updated: 2022/06/27 19:13:40 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
 builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c builtins/echo.c
+exec/exec.c signals.c builtins/echo.c asterisk.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -39,12 +39,12 @@ $(NAME): $(OBJ)
 ifeq ($(UNAME_S), Darwin)
 #	$(MAKE) -C libft
 	@echo "\033[0;35mCompiling..." 
-	@make -C libft
+	@make bonus -C libft
 	$(CC) $(OBJ) libft/libft.a  -I/include/ $(LIB_MAC) -o $(NAME)
 	@echo "\033[0;37m"
 else
 	@echo "\033[0;35mCompiling..." 
-	@make -C libft
+	@make bonus -C libft
 	$(CC) $(OBJ) libft/libft.a $(LIB_LINUX) -o $(NAME)
 	@echo "\033[0;37m"
 endif

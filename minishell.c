@@ -6,11 +6,11 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/26 19:09:55 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:24:54 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -20,10 +20,12 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	env_list = create_env_list(envp);
+	//test();
+	get_filenames();
 	while(1)
 	{
 		//env_list = create_env_list(envp);
-		line = readline("\033[0;35mminishell 🦄$\033[0;37m");
+		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		envp = list_to_arr(&env_list);
 		ft_redirect(line, env_list, envp);
 	}

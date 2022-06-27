@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/26 19:07:44 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:28:13 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ t_list	*create_cmds()
 	head = malloc(sizeof(t_list));
 	tail = malloc(sizeof(t_list));
 	
-    head->content = "ls -l";
+    head->content = "ls";
     head->next = sec;
     
-    sec->content = "wc -l";
+    sec->content = "cat";
     sec->next = third;
 
-    third->content = "wc -c";
+    third->content = "cat";
     third->next = tail;
 
     tail->content = "cat -e";
@@ -176,8 +176,9 @@ int	start_exec(char **env)
     char	*files[3];
     char	*tempfile;
 	char	**paths;
+	char	*name;
 	int		res;
-	// int		fd[2];
+	int		fd[2];
 
 	tempfile = ".here_doc";
 	//files[0] = "outtrunc.txt";
@@ -190,14 +191,16 @@ int	start_exec(char **env)
     //     fd[1] = open(files[0], O_WRONLY | O_CREAT | O_TRUNC, 0777);
     //fd[1] = open(files[1], O_WRONLY | O_CREAT | O_APPEND, 0777);
 	//printf("%d\n", fd[1]);
-    // fd[0] = open(files[2], O_RDONLY);
+    fd[0] = open(files[2], O_RDONLY);
+	name = ttyname(fd[0]);
+	printf("%s tty\n", name);
     // dup2(fd[0], STDIN_FILENO);
     while (cmds->next)
     {
         exec_cmds(cmds, env, paths);
         cmds = cmds->next;
     }
-	dup2(1, STDOUT_FILENO);
+	//dup2(1, STDOUT_FILENO);
 	//printf("%s executed\n", cmds->content);
 	res = exec_last(cmds, env, paths);
 	return (res);
