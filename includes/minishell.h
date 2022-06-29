@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/27 19:23:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/28 14:55:47 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ t_list	*create_element(char **value);
 void	print_list(t_list **stack);
 void	free_list(t_list **list);
 void	delete_list(t_list **list);
-t_list	*get_filenames();
+char    *expand_wildcard(char *raw_cmd);
 #endif
