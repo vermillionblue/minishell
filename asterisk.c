@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/28 19:36:11 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:28:12 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,19 @@ int	ft_regexcomp(char *regex, char *name)
     i = 0;
     k = 0;
 	last = ft_strlen(regex) - 1;
-	// printf("%c last char for %s\n", regex[last], regex);
     while (regex[i] && name[k])
     {
-        if (regex[i] == '*')
+        if ((regex[i] == '*' && i + 1 == last &&
+        name[ft_strlen(name) - 1] == regex[last]) || (i == last && regex[i] == '*'))
+           return (1);
+        else if (regex[i] == '*')
         {
-			if ((i  ==  last && name[ft_strlen(name) - 1] == regex[i]))
-                return (1);
-
-            while ((name[k] != regex[i + 1] && name[k]) || (i + 1 ==  last && name[k] && name[k] == regex[i + 1]  && name[k + 1]))
-			{
+            while ((name[k] != regex[i + 1] && name[k]))
 				k++;
-			}
-			if (i  == last)
-                i++;
-			else
-           		i +=  2;
-
+           	i += 2;
             k++;
         }
-        else if (regex[i] != name[k] && regex[i] != '*')
+        else if (regex[i] != name[k])
             return (0);
         else
         {
@@ -50,7 +43,7 @@ int	ft_regexcomp(char *regex, char *name)
             k++;
         } 
     }
-    if (!regex[i] && !name[k] && name[ft_strlen(name) - 1] == regex[last])
+    if (!regex[i] && !name[k])
         return (1);
     return (0);
 }
