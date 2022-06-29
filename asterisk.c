@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/29 12:28:12 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/29 13:18:49 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@ int	ft_regexcomp(char *regex, char *name)
            return (1);
         else if (regex[i] == '*')
         {
+            while(regex[i + 1] == '*')
+                i++;
             while ((name[k] != regex[i + 1] && name[k]))
 				k++;
+            if (!name[k] && regex[i] == '*' && i == last)
+                return (1);    
+            else if (!name[k] && regex[i])
+                return (0);
            	i += 2;
             k++;
         }
@@ -90,6 +96,3 @@ char    *expand_wildcard(char *raw_cmd)
     }
     return (cmd);
 }
-
-
-

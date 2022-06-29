@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/29 12:24:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/06/29 13:20:46 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_list	*create_cmds()
 	head = malloc(sizeof(t_list));
 	tail = malloc(sizeof(t_list));
 	
-    head->content = expand_wildcard("ls *.o");
+    head->content = expand_wildcard("ls *sterisk*");
     head->next = sec;
     
     sec->content = "cat";
