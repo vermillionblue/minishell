@@ -3,26 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 14:07:21 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/24 16:00:29 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/03 20:59:38 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <signal.h>
 
-void    handle_sig(int sig)
+
+void    handle_sigtint(int sig)
 {
-    (void)sig;
-    printf("MIAU");
+	(void)sig;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_redisplay();
 }
 
-void    ft_signal(void)
+void    ft_signal_parent(void)
 {
-    struct sigaction sa;
-    
-    
-    sa.sa_handler = &handle_sig;
-    
+	signal(SIGINT, &handle_sigtint);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	ft_signal_child(void)
+{
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 }

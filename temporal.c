@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temporal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 20:02:59 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/27 18:28:10 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/03 13:23:14 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ t_env	*create_env_list(char	**envp)
 	t_env	*env_list;
 	char	**array;
 	int		i;
-	int		j;
-	
+
 	i = 0;
-	j = 0;
 	env_list = NULL;
 	while (envp[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asterisk.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/29 13:42:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/03 13:32:54 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 //cmd being e.g ls -l *M: will retrieve all files ending with M in the current dir
 void    for_asterisk(char *regex, char *name, int *i, int *k)
 {
-     while(regex[*i + 1] == '*')
+    while(regex[*i + 1] == '*')
         *i = *i + 1;
     while ((name[*k] != regex[*i + 1] && name[*k]))
         *k = *k + 1;
-    i += 2;
-    k++;
+    *i = *i + 2;
+	*k = *k + 1;
 }
 
 int if_return(char *name, char *regex, int k, int i)
@@ -30,22 +30,14 @@ int if_return(char *name, char *regex, int k, int i)
     last = ft_strlen(regex) - 1;
     if (!name[k] && regex[i] == '*' && i == last)
         return (1);    
-    else if (!name[k] && regex[i])
+    if (!name[k] && regex[i])
         return (0);
-    else if (regex[i] != name[k])
+    if (regex[i] != name[k])
         return (0);
-    else if (!regex[i] && !name[k])
+    if (!regex[i] && !name[k])
         return (1);
     return (2);
 }
-
-
-
-
-
-
-
-
 
 int	ft_regexcomp(char *regex, char *name)
 {
@@ -62,15 +54,15 @@ int	ft_regexcomp(char *regex, char *name)
         name[ft_strlen(name) - 1] == regex[last]) || (i == last && regex[i] == '*'))
            return (1);
         else if (regex[i] == '*')
-            for_asterisk(char *regex, char *name, int *i, int *k);
-        if_return(char *name, char *regex, int k, int i);
+			for_asterisk(regex, name, &i, &k);
+		else if(if_return(name, regex, k, i) != 2)
+			return (if_return(name, regex, k, i));
         else
         {
             i++;
             k++;
-        } 
+        }
     }
-
     return (0);
 }
 
@@ -106,10 +98,8 @@ char    *expand_wildcard(char *raw_cmd)
     char	cwd[PATH_MAX];
     char    **temp;
     char    *cmd;
-    int     i;
     DIR     *dir;
 
-    i = 1;
     temp = ft_split(raw_cmd, ' ');
     cmd = temp[0];
 	getcwd(cwd, sizeof(cwd));

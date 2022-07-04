@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/26 20:01:30 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/03 13:24:14 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,12 +124,14 @@ void	overwrite_env_or_new(t_env *new_env, t_env **env_list, char *name, char *va
 		free(name);
 	}
 	else
+	{
 		new_env = malloc(sizeof(t_env));
 		new_env->bash_variable = name;
 		new_env->bash_v_content = value;
 		new_env->sort = 2;
 		new_env->next = NULL;
 		append_env_element(env_list, new_env);
+	}
 }
 
 int	get_name_arg(t_env *new_env, char *args1, t_env **env_list)

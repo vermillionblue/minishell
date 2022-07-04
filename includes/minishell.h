@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/06/28 14:55:47 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:40:53 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
  ///colors
 # define GREEN "\033[0;32m"
 # define BLACK "\033[0;30m"
@@ -22,10 +21,7 @@
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
-
-# include "builtins.h"
-# include "exec.h"
-
+////////////////////
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -35,17 +31,61 @@
 # include <readline/readline.h>  /// For Readline
 # include <readline/history.h>  /// For History
 # include <sys/stat.h>  /// For lstats
-// # include <sys/types.h> /// TODO V - Can't remember what I did here
-//# include <linux/limits.h> //include PATH_MAX
-# include <limits.h> //include PATH_MAX
-/* Libft Library */
-# include "../libft/libft.h"
 # include <dirent.h>
 # include <errno.h>
-	/* Linked Lists Utils */
+# include <limits.h> //include PATH_MAX
+/* Our Libraries */
+# include "../libft/libft.h"
+# include "../vlad_printf/ft_printf.h"
+# include "builtins.h"
+# include "exec.h"
+
+typedef struct s_cmds
+{
+	char	**env;			// no yet, wait for Dani
+	int		cmd_num;
+	int		pipe_num;
+	char	*infile_name;	// no yet
+	char	*outfile_name;	// no yet
+	int		infile_fd;		// no yet
+	int		outfile_fd;		// no yet
+	char	**paths;		// no yet
+	int		**pipes;		// no yet, wait for Dani (depends on env)
+	char	**cmd_names;
+	t_list	***cmd_args;
+	char	***newargvs;
+	t_list	***redirs;
+}	t_cmds;
+
+typedef struct s_group
+{
+	int		index;
+	int		type;
+	t_list	**lexems;
+	t_cmds	*cmds;
+}	t_group;
+
+typedef struct s_msh
+{
+	// t_env	*env;
+	char	**builtins;
+	char	**delims;
+	t_list	**lexems;
+	int		group_num;
+	t_group	**groups;
+}	t_msh;
+
+/* Linked Lists Utils */
 t_list	*create_element(char **value);
 void	print_list(t_list **stack);
 void	free_list(t_list **list);
 void	delete_list(t_list **list);
 char    *expand_wildcard(char *raw_cmd);
+/////signals
+void	ft_signal_child(void);
+void    ft_signal_parent(void);
+
+# include "lexer.h"
+# include "parser.h"
+
 #endif

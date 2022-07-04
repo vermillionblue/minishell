@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/06/27 19:13:40 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/04 15:44:28 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
 builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c builtins/echo.c asterisk.c
+exec/exec.c signals.c builtins/echo.c asterisk.c parser/lexer.c parser/lists.c parser/parser.c parser/parser_redirs.c 
 
 OBJ = $(SRC:.c=.o)
 
@@ -37,15 +37,16 @@ $(%.o): $(%.c)
 
 $(NAME): $(OBJ)
 ifeq ($(UNAME_S), Darwin)
-#	$(MAKE) -C libft
 	@echo "\033[0;35mCompiling..." 
 	@make bonus -C libft
-	$(CC) $(OBJ) libft/libft.a  -I/include/ $(LIB_MAC) -o $(NAME)
+	@make -C vlad_printf
+	$(CC) $(OBJ) libft/libft.a vlad_printf/libftprintf.a -I/include/ $(LIB_MAC) -o $(NAME)
 	@echo "\033[0;37m"
 else
 	@echo "\033[0;35mCompiling..." 
+	@make -C vlad_printf
 	@make bonus -C libft
-	$(CC) $(OBJ) libft/libft.a $(LIB_LINUX) -o $(NAME)
+	$(CC) $(OBJ) libft/libft.a vlad_printf/libftprintf.a $(LIB_LINUX) -o $(NAME)
 	@echo "\033[0;37m"
 endif
 
