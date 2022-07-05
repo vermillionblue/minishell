@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:32 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 10:25:27 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 13:42:20 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ void	ft_print_arg_redir(t_group *group)
 	}
 }
 
-void	ft_print_newargvs(t_group *group)
+void    ft_print_newargvs(t_group *group)
 {
-	for (int j = 0; j < group->cmds->cmd_num; j++)
-	{
-		for (int k = 0; k < ft_count_args(group->cmds->cmd_args[j]); k++)
-		while (*group->cmds->newargvs[j])
-		{
-			printf(">>> argv[%d][%d][%d] = %s\n", group->index, j, k, *group->cmds->newargvs[j]++);
-		}
-	}
+    for (int j = 0; j < group->cmds->cmd_num; j++)
+    {
+        for (int k = 0; k < ft_count_args(group->cmds->cmd_args[j]); k++)
+        // while (*group->cmds->newargvs[j])
+        {
+            printf(">>> argv[%d][%d][%d] = %s\n", group->index, j, k, group->cmds->newargvs[j][k]);
+        }
+    }
 }
 
 void ft_print_groups(t_msh *msh)
