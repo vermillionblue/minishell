@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/05 10:17:42 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/05 14:23:46 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
 builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c builtins/echo.c asterisk.c parser/lexer.c parser/lists.c parser/parser.c parser/parser_redirs.c parser/printer.c
+exec/exec.c signals.c builtins/echo.c asterisk.c parser/lexer.c parser/lists.c parser/parser.c parser/parser_redirs.c parser/printer.c parser/expantion.c
 
 OBJ = $(SRC:.c=.o)
 

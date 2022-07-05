@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:14:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/26 19:53:58 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 14:22:09 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "minishell.h"
 
-typedef struct s_env
-{
-	char			*bash_variable;
-	char			*bash_v_content;
-	int				sort;
-	struct s_env	*next;
-} t_env;
+// typedef struct s_env
+// {
+// 	char			*bash_variable;
+// 	char			*bash_v_content;
+// 	int				sort;
+// 	struct s_env	*next;
+// } t_env;
 /////////export
 int		do_export(t_env **env_list, char *args);
 void	print_sorted_export(t_env **env_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:34:14 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 10:17:07 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 14:19:49 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ void	ft_printlexems(t_list **lexems);
 void	ft_print_arg_redir(t_group *group);
 void	ft_print_newargvs(t_group *group);
 void ft_print_groups(t_msh *msh);
+
+// expantion
+void	ft_expand_group_vars(t_msh *msh, int group_i);
 
 #endif

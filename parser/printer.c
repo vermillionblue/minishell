@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:32 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 10:25:27 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 15:19:10 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	ft_print_newargvs(t_group *group)
 	for (int j = 0; j < group->cmds->cmd_num; j++)
 	{
 		for (int k = 0; k < ft_count_args(group->cmds->cmd_args[j]); k++)
-		while (*group->cmds->newargvs[j])
+		// while (*group->cmds->newargvs[j])
 		{
-			printf(">>> argv[%d][%d][%d] = %s\n", group->index, j, k, *group->cmds->newargvs[j]++);
+			printf(">>> argv[%d][%d][%d] = %s\n", group->index, j, k, group->cmds->newargvs[j][k]);
 		}
 	}
 }
@@ -64,6 +64,7 @@ void ft_print_groups(t_msh *msh)
 		printf("\n\n\nNUMBER OF GROUPS: %d\n", msh->group_num);
 		while(i < msh->group_num)
 		{
+			ft_expand_group_vars(msh, i);
 			ft_make_cmd_args(msh->groups[i]);
 			msh->groups[i]->cmds->redirs = malloc(sizeof(t_list **) * msh->groups[i]->cmds->cmd_num);
 			ft_loop_cmds(msh->groups[i], ft_init_redirs);

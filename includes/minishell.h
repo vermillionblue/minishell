@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/04 15:40:53 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 14:22:47 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,14 @@
 /* Our Libraries */
 # include "../libft/libft.h"
 # include "../vlad_printf/ft_printf.h"
-# include "builtins.h"
-# include "exec.h"
+
+typedef struct s_env
+{
+	char			*bash_variable;
+	char			*bash_v_content;
+	int				sort;
+	struct s_env	*next;
+} t_env;
 
 typedef struct s_cmds
 {
@@ -67,7 +73,7 @@ typedef struct s_group
 
 typedef struct s_msh
 {
-	// t_env	*env;
+	t_env	*env_list;
 	char	**builtins;
 	char	**delims;
 	t_list	**lexems;
@@ -87,5 +93,7 @@ void    ft_signal_parent(void);
 
 # include "lexer.h"
 # include "parser.h"
+# include "builtins.h"
+# include "exec.h"
 
 #endif

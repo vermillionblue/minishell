@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redirs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:58:08 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/04 15:30:26 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 15:28:43 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_list	*ft_lst_detach_from(t_list **headfrom, t_list *target)
 {
 	t_list	*preceding;
 
+	printf("TEST >>>\n");
 	if (!headfrom)
 		exit(1);
 	if (*headfrom == target)
