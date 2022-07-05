@@ -3,86 +3,149 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/04 15:30:15 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:48:36 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_error(char *error_text, int error_num)
-{
-	ft_fdprintf(2, "minishell: %s\n (%d)\n", error_text, -error_num);
-	return (error_num);
-}
-
-/* if the first token is AND or OR print error */
 int	ft_count_cmds(t_list **lexems)
 {
 	int	counter;
 	int type;
 
 	t_list *link;
-	if (ft_lstsize(*lexems) == 1)
-		return (0);
+	// if (ft_lstsize(*lexems) == 1)
+	// 	return (0);
 	counter = 1;
 	link = *lexems;
 	type = ft_ectracttype(link);
 	if (type == LX_PIPE)
-		return(ft_error("syntax error: || or && as the first token", -401));
+		return(ft_error("syntax error: | the first token of a group", -401));
 	type = ft_ectracttype(ft_lstlast(link));
 	if (type == LX_PIPE)
-		return(ft_error("syntax error: || or && as the last token", -499));
+		return(ft_error("syntax error: | the last token of a group", -499));
 	while (link)
 	{
 		type = ft_ectracttype(link);
 		if (type == LX_PIPE)
 			counter++;
 		link = link->next;
+		
 	}
+	
 	return (counter);
 }
 
-int	ft_makegroups(t_msh *msh)
+int	ft_count_args(t_list **cmd_args)
 {
-	// int		gr_num;
+	int	counter;
+	int type;
+
+	t_list *link;
+	// if (ft_lstsize(*lexems) == 1)
+	// 	return (0);
+	counter = 0;
+	link = *cmd_args;
+	type = ft_ectracttype(link);
+	// if (type == LX_PIPE)
+	// 	return(ft_error("syntax error: | the first token of a group", -401));
+	// type = ft_ectracttype(ft_lstlast(link));
+	// if (type == LX_PIPE)
+	// 	return(ft_error("syntax error: | the last token of a group", -499));
+	while (link)
+	{
+		type = ft_ectracttype(link);
+		if (type != LX_SEP && type != LX_AND && type != LX_OR)
+			counter++;
+		link = link->next;
+		
+	}
+	
+	return (counter);
+}
+
+int	ft_make_cmd_args(t_group *group)
+{
 	int		i;
 	t_list	*link;
 	int		type;
 	char	*text;
 
-	if (msh->group_num <= 0)
-		return(ft_error("could not parse", -300));
+	group->cmds = malloc(sizeof(t_cmds));
+	group->cmds->cmd_num = ft_count_cmds(group->lexems);
+	if (group->cmds->cmd_num <= 0)
+		return(ft_error("could not parse group", -400 -(10 * group->index)));
 	
-	msh->groups = malloc(sizeof(t_group *) * msh->group_num);
+	group->cmds->cmd_args = malloc(sizeof(t_list **) * group->cmds->cmd_num);
 	i = 0;
-	link = *msh->lexems;
-	while (i < msh->group_num)
+	link = *group->lexems;
+	while (i < group->cmds->cmd_num)
 	{
-		msh->groups[i] = malloc(sizeof(t_group));
-		msh->groups[i]->lexems = malloc(sizeof(t_list *));
-		*msh->groups[i]->lexems = NULL;
-		if (i == 0)
-			msh->groups[i]->type = 0;
-		else
-			msh->groups[i]->type = ft_ectracttype(link);
+		group->cmds->cmd_args[i] = malloc(sizeof(t_list *));
+		*group->cmds->cmd_args[i] = NULL;
 		while (link)
 		{
 			type = ft_ectracttype(link);
-			if ((type == LX_AND || type == LX_OR) && *msh->groups[i]->lexems)
+			if (type == LX_PIPE && *group->cmds->cmd_args[i])
+			{
+				link = link->next;
 				break ;
-			text = ft_ectracttext(link);
-			ft_addlexem(msh->groups[i]->lexems, ft_newlexem(type, text));
+			}
+			if (!(type == LX_SEP && !*group->cmds->cmd_args[i]))
+			{
+				text = ft_ectracttext(link);
+				ft_addlexem(group->cmds->cmd_args[i], ft_newlexem(type, text));
+			}
 			link = link->next;
 		}
-		ft_dellastsep(msh->groups[i]->lexems);
+		ft_dellastsep(group->cmds->cmd_args[i]);
 		i++;
 	}
 	return (0);
 }
 
+int	ft_make_newargvs(t_group *group)
+{
+	int		cmd_i;
+	int		arg_i;
+	t_list	*link;
+	int		arg_num;
+	int		type;
+	// char	*text;
 
-void	ft_parser(t_msh *msh);
-        //   ls -la | echo gekee && make re       
+	// group->cmds = malloc(sizeof(t_cmds));
+	// group->cmds->cmd_num = ft_count_cmds(group->lexems);
+	// if (group->cmds->cmd_num <= 0)
+	// 	return(ft_error("could not parse group", -400 -(10 * group->index)));
+	
+	group->cmds->newargvs = malloc(sizeof(char **) * group->cmds->cmd_num);
+	cmd_i = 0;
+	link = *group->lexems;
+	while (cmd_i < group->cmds->cmd_num)
+	{
+		arg_i = 0;
+		arg_num = ft_count_args(group->cmds->cmd_args[cmd_i]);
+		group->cmds->newargvs[cmd_i] = malloc(sizeof(char *) * arg_num + 1);
+		// *group->cmds->cmd_args[i] = NULL;
+		link = *group->cmds->cmd_args[cmd_i];
+		while (link)
+		{
+			type = ft_ectracttype(link);
+			if (type != LX_SEP && type != LX_AND && type != LX_OR)
+			{
+				group->cmds->newargvs[cmd_i][arg_i] = ft_strdup(ft_ectracttext(link));
+				// printf("------- argv[%d][%d][%d] = %s\n", group->index, cmd_i, arg_i, group->cmds->newargvs[cmd_i][arg_i]);
+				arg_i++;
+			}
+			link = link->next;
+		}
+		group->cmds->newargvs[cmd_i][arg_i] = 0;
+		// ft_dellastsep(group->cmds->cmd_args[i]);
+		cmd_i++;
+	}
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/05 15:05:45 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:44:47 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		
 		ft_lexer(line, &msh);
 		ft_printlexems(msh.lexems);
+		ft_parser(&msh);
 		ft_print_groups(&msh);
 
 		envp = list_to_arr(&env_list);

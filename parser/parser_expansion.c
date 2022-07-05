@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 15:30:58 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:27:53 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ft_expand_group_vars(t_msh *msh, int group_i)
 	t_list	*link;
 	t_list	*next;
 	t_env	*var;
-	char	*value;
 	char	*text;
 
 	link = *msh->groups[group_i]->lexems;
@@ -42,8 +41,7 @@ void	ft_expand_group_vars(t_msh *msh, int group_i)
 			var = find_env_node(&(msh->env_list), text);
 			if (var)
 			{
-				value = var->bash_v_content;
-				(*(t_lexem *)link->content).text = value;
+				(*(t_lexem *)link->content).text = var->bash_v_content;
 				printf("TEST new text: %s\n", (*(t_lexem *)link->content).text);
 				// free(text);
 				// free(value);
