@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/04 15:44:28 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/05 10:17:42 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
 builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c builtins/echo.c asterisk.c parser/lexer.c parser/lists.c parser/parser.c parser/parser_redirs.c 
+exec/exec.c signals.c builtins/echo.c asterisk.c parser/lexer.c parser/lists.c parser/parser.c parser/parser_redirs.c parser/printer.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -54,11 +54,14 @@ clean:
 	$(RM) *.o
 	$(RM) builtins/*.o
 	$(RM) exec/*.o
+	$(RM) parser/*.o
 	$(RM) libft/*.o
+	$(RM) vlad_printf/*.o
 
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) libft/libft.a
+	$(RM) vlad_printf/libftprintf.a
 
 re: fclean all
 

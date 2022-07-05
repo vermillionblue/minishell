@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/04 15:29:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 10:27:09 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 			}
 			else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
 			{
-				printf("Test SINGLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
+				//printf("Test SINGLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
 				ft_addlexem(msh->lexems, ft_newlexem(i, ""));
 				return (ptr + 1);
 			}
@@ -170,7 +170,7 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 			}
 			else if (i >= 7 && i <= 10 && *(ptr + 1) == *ptr) // DOUBLE
 			{
-				printf("Test DOUBLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
+				//printf("Test DOUBLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
 				ft_addlexem(msh->lexems, ft_newlexem(i, ""));
 				return (ptr + 2);
 			}

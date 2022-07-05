@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:34:14 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/27 16:54:57 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/05 10:17:07 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	ft_loop_cmds(t_group *group, void (*opearation)(t_group *, int i));
 void	ft_init_redirs(t_group *group, int cmd_i);
 void	ft_extract_redirs(t_group *group, int cmd_i);
 void	ft_format_redirs(t_group *group, int cmd_i);
-
+////printing
+void	ft_printlexems(t_list **lexems);
+void	ft_print_arg_redir(t_group *group);
+void	ft_print_newargvs(t_group *group);
+void ft_print_groups(t_msh *msh);
 
 #endif
