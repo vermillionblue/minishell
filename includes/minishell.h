@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/04 15:40:53 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 14:49:52 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
+////pipes
+# define READ_END 0
+# define WRITE_END 1
 ////////////////////
 # include <unistd.h>
 # include <stdlib.h>
@@ -37,8 +40,6 @@
 /* Our Libraries */
 # include "../libft/libft.h"
 # include "../vlad_printf/ft_printf.h"
-# include "builtins.h"
-# include "exec.h"
 
 typedef struct s_cmds
 {
@@ -67,7 +68,7 @@ typedef struct s_group
 
 typedef struct s_msh
 {
-	// t_env	*env;
+	// t_env	*env;oh
 	char	**builtins;
 	char	**delims;
 	t_list	**lexems;
@@ -87,5 +88,7 @@ void    ft_signal_parent(void);
 
 # include "lexer.h"
 # include "parser.h"
+# include "builtins.h"
+# include "exec.h"
 
 #endif

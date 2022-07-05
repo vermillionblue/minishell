@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/04 10:26:39 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 16:14:18 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ int	print_arr(char **env)
 	return (1);
 }
 
-int	ft_redirect(char *line, t_env *env_list, char **env)
+int	ft_redirect(t_msh *msh, t_env *env_list, char **env)
 {
 	char	**args;
 	int		res;
 	
 	res = 0;
-    args = ft_split(line, ' ');
+	args = msh->groups[0]->cmds->newargvs[0];
+	printf("===========result=================================\n");
 	if (!ft_strncmp(args[0], "cd", 3))
 		res = do_cd(check_if_no_args(args));
 	else if (!ft_strncmp(args[0], "pwd", 4))
@@ -44,8 +45,8 @@ int	ft_redirect(char *line, t_env *env_list, char **env)
 		do_exit();
 	else if (!ft_strncmp(args[0], "echo", 5) && !ft_strncmp(args[1], "-n", 3))
 		res = do_echo(args);
-	else if (!ft_strncmp(args[0], "exec", 5))
-		start_exec(env);
+	else
+		start_exec(env, msh);
 	return (res);
 }
 
@@ -65,7 +66,7 @@ char	*get_correct_path(char **paths, char **cmd)
 		i++;
 	}
 	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd(" : command not found\n ", 2);
+	ft_putstr_fd(": command not found\n ", 2);
 	exit (EXIT_FAILURE);
 }
 
@@ -128,43 +129,63 @@ void	if_dup_fail(int n)
 	}
 }
 
-void	exec_cmds(t_list *cmds, char **env, char **paths)
+int	exec_cmds(char **cmd, char **env, char **paths, t_msh *msh, int dupin)
 {
 	int		fd[2];
     int		id;
-	char	**cmd;
 	char	*a_path;
 
     pipe(fd);
 	id = fork();
-	
 	if (id == 0)
 	{
-		cmd = ft_split(cmds->content, ' ');
+		//cmd = ft_split(cmds->content, ' ');
 		a_path = get_correct_path(paths, cmd);
-		if_dup_fail(dup2(fd[1], STDOUT_FILENO));
-		close(fd[1]);
-		close(fd[0]);
+		close(fd[READ_END]);
+		if (msh->groups[0]->cmds->cmd_num == 1)
+		{
+			
+			close(fd[WRITE_END]);
+			dup2(dupin, 1);
+			close(dupin);
+			printf("trigger with %s \n", cmd[0]);
+		}	
+		else
+		{
+			if_dup_fail(dup2(fd[WRITE_END], STDOUT_FILENO));
+			close(fd[WRITE_END]);
+		}
 		if (execve(a_path, cmd, env) == -1)
 			exit (EXIT_FAILURE);
 	}
-	if_dup_fail(dup2(fd[0], STDIN_FILENO));
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(id, NULL, 0);
+	wait(NULL);
+	if (msh->groups[0]->cmds->cmd_num == 1)
+	{
+		close(fd[READ_END]);
+		close(fd[WRITE_END]);
+		dup2(dupin, 1);
+		close(dupin);
+	}
+	else
+	{
+		close(fd[WRITE_END]);
+		if_dup_fail(dup2(fd[READ_END], STDIN_FILENO));
+		close(fd[READ_END]);
+	}
+	
+	return (1);
 }
 
-int	exec_last(t_list *cmds, char **env, char **paths)
+int	exec_last(char **cmd, char **env, char **paths)
 {
     int		id;
-	char	**cmd;
 	char	*a_path;
 	int		status;
 
 	id = fork();
 	if (id == 0)
 	{
-		cmd = ft_split(cmds->content, ' ');
+		//cmd = ft_split(cmds->content, ' ');
 		a_path = get_correct_path(paths, cmd);
 		//rl_replace_line("", 0);
 		if (execve(a_path, cmd, env) == -1)
@@ -173,43 +194,34 @@ int	exec_last(t_list *cmds, char **env, char **paths)
 			exit (EXIT_FAILURE);
 		}
 	}
-	waitpid(-1, &status, 0);
+	waitpid(id, &status, 0);
 	return (status);
 }
 
-int	start_exec(char **env)
+int	start_exec(char **env, t_msh *msh)
 {
-    t_list  *cmds;
-    // char	*files[3];
-    // char	*tempfile;
+    char  **cmds;
 	char	**paths;
 	int		res;
-	// int		fd[2];
+	int		j;
+	int temp = dup(1);
 
-	// tempfile = ".here_doc";
-	// //files[0] = "outtrunc.txt";
-	// //files[1] = "outapp.txt";
-	// files[2] = "infile.txt";
-    //files = ["outtrunc.txt", "outapp.txt", "infile.txt"];
 	paths = get_paths(env);
-    cmds = create_cmds();
-    // if (files[1] != "0")
-    //     fd[1] = open(files[0], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-    //fd[1] = open(files[1], O_WRONLY | O_CREAT | O_APPEND, 0777);
-	//printf("%d\n", fd[1]);
-    // fd[0] = open(files[2], O_RDONLY);
-   // dup2(0, STDIN_FILENO);
-    while (cmds->next)
+    //cmds = create_cmds();
+	j = 0;
+
+	
+    while (msh->groups[0]->cmds->cmd_num > 0)
     {
-        exec_cmds(cmds, env, paths);
-        cmds = cmds->next;
+		cmds = msh->groups[0]->cmds->newargvs[j];
+        res = exec_cmds(cmds, env, paths, msh, temp);
+       // cmds = cmds->next;
+		msh->groups[0]->cmds->cmd_num -= 1;
     }
-
-
-
-	dup2(1, STDOUT_FILENO);
-		//printf("%s executed\n", cmds->content);
-	res = exec_last(cmds, env, paths);
+	//dup2(1, STDOUT_FILENO);
+	//printf("%s executed\n", cmds->content);
+	//cmds = msh->groups[0]->cmds->newargvs[j];
+	//res = exec_last(cmds, env, paths);
 	return (res);
 	//exit(EXIT_SUCCESS);
 }
