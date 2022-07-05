@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 16:14:18 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/05 20:22:13 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	if_dup_fail(int n)
 	}
 }
 
-int	exec_cmds(char **cmd, char **env, char **paths, t_msh *msh, int dupin)
+int	exec_cmds(char **cmd, char **env, char **paths, t_msh *msh)
 {
 	int		fd[2];
     int		id;
@@ -142,38 +142,16 @@ int	exec_cmds(char **cmd, char **env, char **paths, t_msh *msh, int dupin)
 		//cmd = ft_split(cmds->content, ' ');
 		a_path = get_correct_path(paths, cmd);
 		close(fd[READ_END]);
-		if (msh->groups[0]->cmds->cmd_num == 1)
-		{
-			
-			close(fd[WRITE_END]);
-			dup2(dupin, 1);
-			close(dupin);
-			printf("trigger with %s \n", cmd[0]);
-		}	
-		else
-		{
-			if_dup_fail(dup2(fd[WRITE_END], STDOUT_FILENO));
-			close(fd[WRITE_END]);
-		}
+		if_dup_fail(dup2(fd[WRITE_END], STDOUT_FILENO));
+		close(fd[WRITE_END]);
 		if (execve(a_path, cmd, env) == -1)
 			exit (EXIT_FAILURE);
 	}
-	wait(NULL);
-	if (msh->groups[0]->cmds->cmd_num == 1)
-	{
-		close(fd[READ_END]);
-		close(fd[WRITE_END]);
-		dup2(dupin, 1);
-		close(dupin);
-	}
-	else
-	{
-		close(fd[WRITE_END]);
-		if_dup_fail(dup2(fd[READ_END], STDIN_FILENO));
-		close(fd[READ_END]);
-	}
+	waitpid(-1, NULL, 0);
+	close(fd[WRITE_END]);
+	if_dup_fail(dup2(fd[READ_END], STDIN_FILENO));
+	close(fd[READ_END]);
 	
-	return (1);
 }
 
 int	exec_last(char **cmd, char **env, char **paths)
@@ -204,24 +182,28 @@ int	start_exec(char **env, t_msh *msh)
 	char	**paths;
 	int		res;
 	int		j;
-	int temp = dup(1);
+	int		temp;
+	int		temp2;
 
 	paths = get_paths(env);
     //cmds = create_cmds();
 	j = 0;
-
-	
-    while (msh->groups[0]->cmds->cmd_num > 0)
+	temp2 = dup(STDIN_FILENO);
+	temp = dup(STDOUT_FILENO);
+    while (j < msh->groups[0]->cmds->cmd_num - 1)
     {
 		cmds = msh->groups[0]->cmds->newargvs[j];
-        res = exec_cmds(cmds, env, paths, msh, temp);
+        res = exec_cmds(cmds, env, paths, msh);
        // cmds = cmds->next;
-		msh->groups[0]->cmds->cmd_num -= 1;
+		j++;
     }
-	//dup2(1, STDOUT_FILENO);
+	dup2(temp, STDOUT_FILENO);
+	close(temp);
 	//printf("%s executed\n", cmds->content);
-	//cmds = msh->groups[0]->cmds->newargvs[j];
-	//res = exec_last(cmds, env, paths);
+	cmds = msh->groups[0]->cmds->newargvs[j];
+	res = exec_last(cmds, env, paths);
+	dup2(temp2, STDIN_FILENO);
+	close(temp2);
 	return (res);
 	//exit(EXIT_SUCCESS);
 }
