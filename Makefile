@@ -6,7 +6,7 @@
 #    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/06 21:25:04 by vangirov         ###   ########.fr        #
+#    Updated: 2022/07/06 21:36:30 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = minishell
 
 SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
 builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c builtins/echo.c asterisk.c \
+exec/exec.c signals.c builtins/echo.c \
+		wildcard/asterisk.c \
+		wildcard/asterisk_utils.c \
 		parser/lexer.c \
 		parser/lists.c \
 		parser/parser_main.c \

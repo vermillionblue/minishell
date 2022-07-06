@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/06 12:10:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:32:47 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int	exec_cmds(char **cmd, char **env, char **paths, t_group *group, int *temps)
 		close(fd[READ_END]);
 	}
 	waitpid(-1, NULL, 0);
+	return (0); //////// otherwise:  error: control reaches end of non-void function
 }
 
 int	exec_group(t_group *group, char **env, t_msh *msh)
@@ -151,11 +152,11 @@ int	exec_group(t_group *group, char **env, t_msh *msh)
 	int		res;
 	int		j;
 	int		temps[2];
-	char	*fname;
-	int		type;
+	// char	*fname;
+	// int		type;
 
 	paths = get_paths(env);
-	j = 0;
+	j = 0 * msh->group_num; /////////// otherwise: error: unused parameter ‘msh’
 	// fname = ft_ectracttext(msh->groups[0]->cmds->redirs[0][0]);
 	// type = ft_ectracttype(msh->groups[0]->cmds->redirs[0][0]);
 	// printf("redir type is %d and %s name\n", type, fname);
