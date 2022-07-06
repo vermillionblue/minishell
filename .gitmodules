@@ -1,0 +1,6 @@
+[submodule "vlad_printf"]
+	path = vlad_printf
+	url = git@github.com:angirov/42ft_printf.git
+[submodule "libft"]
+	path = libft
+	url = git@github.com:angirov/42Libft.git
