@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:32 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 17:43:20 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:16:49 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_print_arg_redir(t_group *group)
 	}
 }
 
-void	ft_print_newargvs(t_group *group)
+void    ft_print_newargvs(t_group *group)
 {
 	for (int j = 0; j < group->cmds->cmd_num; j++)
 	{

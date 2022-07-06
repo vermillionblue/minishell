@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/06 20:17:40 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:20:59 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	
 	env_list = create_env_list(envp);
 	msh.env_list = env_list; // printf("TEST PATH: %s\n", find_env_node(&msh.env_list, "PATH")->bash_v_content);
 	//test();

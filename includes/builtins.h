@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:14:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 14:22:09 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:18:17 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ void	append_env_element(t_env **lst, t_env *new);
 int		print_env_list(t_env **env_list);
 char    **list_to_arr(t_env **env_list);
 //exec
-int		ft_redirect(char *line, t_env *env_list, char **env);
+int		ft_redirect(t_msh *msh, t_env *env_list, char **env);
 #endif
