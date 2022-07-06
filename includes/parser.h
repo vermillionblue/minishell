@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:34:14 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 18:53:48 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 14:42:33 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_print_newargvs(t_group *group);
 void	ft_print_groups(t_msh *msh);
 
 // expantion
-void	ft_expand_group_vars(t_msh *msh, int group_i);
+void	ft_expand_gr_vars(t_msh *msh, int group_i);
+void	ft_expand_gr_fields(t_msh *msh, int group_i);
 
 #endif

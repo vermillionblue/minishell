@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-/*   Updated: 2022/06/24 17:21:28 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 14:11:40 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ft_findsym(char *ptr, t_msh *msh);
 char	*ft_getfield(int lx_type, char *ptr, t_msh *msh);
 char	*ft_gettext(char *ptr, int len);
 int		ft_have_inters(char *s1, char *s2);
+char	*ft_chr2str(char c);
 
 // lists.c
 t_list	*ft_lst_penult(t_list *lst);
