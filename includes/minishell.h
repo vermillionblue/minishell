@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/05 14:49:52 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:18:01 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ typedef struct s_msh
 	t_list	**lexems;
 	int		group_num;
 	t_group	**groups;
+	char	**paths;
+	int		last_exit_stat;
+	char	**env;
+	int		*temp_i_o;
 }	t_msh;
 
 /* Linked Lists Utils */
