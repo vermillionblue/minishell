@@ -6,7 +6,7 @@
 #    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/05 18:54:58 by vangirov         ###   ########.fr        #
+#    Updated: 2022/07/06 11:55:39 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
 exec/exec.c signals.c builtins/echo.c asterisk.c \
 		parser/lexer.c \
 		parser/lists.c \
-		parser/parser.c \
 		parser/parser_main.c \
 		parser/parser_groups.c \
 		parser/parser_expansion.c \
