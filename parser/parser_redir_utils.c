@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:39:08 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 18:44:31 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:15:03 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ t_list	*ft_lst_detach_from(t_list **headfrom, t_list *target)
 
 void	ft_free_lexem(t_list *link)
 {
-	if (ft_ectracttype(link) <= LX_VAR)
-		free(ft_ectracttext(link));
+	// if (ft_ectracttype(link) <= LX_VAR)
+	free(ft_ectracttext(link));
 	free(link->content);
 	free(link);
 }

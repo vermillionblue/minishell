@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 10:27:09 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:07:13 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_skip_spaces(char *ptr, t_msh *msh)
 		sep++;
 	}
 	if (sep && ft_lstsize(*msh->lexems))
-		ft_addlexem(msh->lexems, ft_newlexem(LX_SEP, ""));
+		ft_addlexem(msh->lexems, ft_newlexem(LX_SEP, ft_strdup("")));
 	return (ptr);
 }
 
@@ -160,7 +160,7 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 			else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
 			{
 				//printf("Test SINGLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
-				ft_addlexem(msh->lexems, ft_newlexem(i, ""));
+				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 1);
 			}
 			else if (i == 7 && ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
@@ -171,7 +171,7 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 			else if (i >= 7 && i <= 10 && *(ptr + 1) == *ptr) // DOUBLE
 			{
 				//printf("Test DOUBLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
-				ft_addlexem(msh->lexems, ft_newlexem(i, ""));
+				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 2);
 			}
 			// else

@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/05 14:22:47 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:27:09 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_env
 
 typedef struct s_cmds
 {
-	char	**env;			// no yet, wait for Dani
+	// char	**env;			// no yet, wait for Dani
 	int		cmd_num;
 	int		pipe_num;
 	char	*infile_name;	// no yet

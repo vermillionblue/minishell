@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 18:48:36 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:17:28 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_make_cmd_args(t_group *group)
 			}
 			if (!(type == LX_SEP && !*group->cmds->cmd_args[i]))
 			{
-				text = ft_ectracttext(link);
+				text = ft_strdup(ft_ectracttext(link));
 				ft_addlexem(group->cmds->cmd_args[i], ft_newlexem(type, text));
 			}
 			link = link->next;

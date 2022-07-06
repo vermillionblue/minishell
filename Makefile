@@ -6,7 +6,7 @@
 #    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/06 11:55:39 by vangirov         ###   ########.fr        #
+#    Updated: 2022/07/06 15:21:07 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ exec/exec.c signals.c builtins/echo.c asterisk.c \
 		parser/parser_redir_utils.c \
 		parser/parser_cmds.c \
 		parser/printer.c \
+		parser/freeings.c
 
 OBJ = $(SRC:.c=.o)
 

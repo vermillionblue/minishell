@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:50:19 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/04 15:29:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:15:27 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	ft_dellastsep(t_list **lexems)
 	if (last && (*(t_lexem *)last->content).type == LX_SEP)
 	{
 		ft_lst_penult(*lexems)->next = NULL;
-		free(last);
+		// free((*(t_lexem *)last->content).text);
+		// free(last);
+		ft_free_lexem(last);
 	}
 }
 

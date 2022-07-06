@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:34:14 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 14:42:33 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:13:34 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,10 @@ void	ft_print_groups(t_msh *msh);
 // expantion
 void	ft_expand_gr_vars(t_msh *msh, int group_i);
 void	ft_expand_gr_fields(t_msh *msh, int group_i);
+
+// freeings.c
+void	ft_free_lexems(t_list **head);
+void	ft_free_groups(t_msh *msh);
+void	ft_free_msh(t_msh *msh);
 
 #endif
