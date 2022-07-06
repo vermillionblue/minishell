@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/06 12:10:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 13:36:10 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	if_dup_fail(int n)
 {
 	if (n < 0)
 	{
-		perror("dup");
+		perror("dup2 error\n");
 		exit(EXIT_FAILURE);
 	}
 }
