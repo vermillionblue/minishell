@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 14:07:17 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 00:28:52 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 
 //exec
-int    start_exec(char **env, t_msh *msh);
-
+int	exec_group(t_group *group, char **env, t_msh *msh);
+void	prep_groups(char **env, t_msh *msh);
 void	ft_exec();
 
 #endif
