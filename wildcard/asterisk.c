@@ -6,11 +6,11 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/03 13:32:54 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:20:53 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/asterisk.h"
 
 //cmd being e.g ls -l *M: will retrieve all files ending with M in the current dir
 void    for_asterisk(char *regex, char *name, int *i, int *k)
@@ -64,14 +64,6 @@ int	ft_regexcomp(char *regex, char *name)
         }
     }
     return (0);
-}
-
-void    print_regex_error(char *cmd, char *regex)
-{
-    ft_putstr_fd(cmd, 2);
-    ft_putstr_fd(": ", 2);
-    ft_putstr_fd(regex, 2);
-    ft_putstr_fd(": No such file or directory\n", 2);
 }
 
 char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)

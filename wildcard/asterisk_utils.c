@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   asterisk_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/06 00:28:52 by danisanc         ###   ########.fr       */
+/*   Created: 2022/07/06 12:19:07 by danisanc          #+#    #+#             */
+/*   Updated: 2022/07/06 12:20:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#include "../includes/asterisk.h"
 
-# include "minishell.h"
-# include "builtins.h"
-
-
-//exec
-int	exec_group(t_group *group, char **env, t_msh *msh);
-void	prep_groups(char **env, t_msh *msh);
-void	ft_exec();
-
-#endif
+void    print_regex_error(char *cmd, char *regex)
+{
+    ft_putstr_fd(cmd, 2);
+    ft_putstr_fd(": ", 2);
+    ft_putstr_fd(regex, 2);
+    ft_putstr_fd(": No such file or directory\n", 2);
+}
