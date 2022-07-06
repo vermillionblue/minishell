@@ -6,17 +6,16 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 15:07:13 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:25:46 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
 void	ft_init_delims(t_msh *msh)
 {
 	char	**delims;
-	// int		i;
+	msh->lexems = NULL;
 
 	delims = malloc(sizeof(char *) * (LX_NUM + 1));
 	// i = 0;
