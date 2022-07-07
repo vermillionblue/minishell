@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/07 11:51:02 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:33:22 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,12 @@ void	set_std_i_o(t_cmds *cmd, t_msh *msh)
 		}
 			
 	}
-	////for truncate redir >
 	if (cmd->outfile_name) 
 	{
-		cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		if (cmd->append_outfile)
+			cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_APPEND, 0664);
+		else
+			cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	}
 }
 
@@ -219,14 +221,23 @@ void	exec_group(t_group *group, t_msh *msh)
 		{
 			while (group->cmds->redirs[j][0])
 			{
-				if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN)
+				if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN ||
+				ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
 				{
 					group->cmds->infile_name = ft_ectracttext(group->cmds->redirs[j][0]);
+					if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
+						group->cmds->here_doc = 1;
+					else
+						group->cmds->here_doc = 0;
 					printf("%s :in name for cmd %d\n",group->cmds->infile_name, j );
 				}
-				else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_OUT)
+				else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_OUT || ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_APPEND)
 				{
 					group->cmds->outfile_name = ft_ectracttext(group->cmds->redirs[j][0]);
+					if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_APPEND)
+						group->cmds->append_outfile = 1;
+					else
+						group->cmds->append_outfile = 0;
 					printf("%s :out name for cmd %d\n",group->cmds->outfile_name, j );
 				}	
 				group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;

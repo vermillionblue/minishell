@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/06 16:18:01 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:01:38 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ typedef struct s_cmds
 	char	*infile_name;	// no yet
 	char	*outfile_name;	// no yet
 	int		infile_fd;		// no yet
-	int		outfile_fd;		// no yet
+	int		outfile_fd;	
+	int		append_outfile; //boolean
+	int		here_doc;	// boolean
 	char	**paths;		// no yet
 	int		**pipes;		// no yet, wait for Dani (depends on env)
 	char	**cmd_names;
