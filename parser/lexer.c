@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 20:25:46 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:43:35 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_init_delims(t_msh *msh)
 	// {
 	delims[LX_FIELD] = "''";
 	delims[LX_EXT_FIELD] = "\"\"";
-	delims[LX_VAR] = "$$ *"; //should also finish with <>&&
-	delims[LX_WC] = "*";
+	delims[LX_VAR] = "$$ "; //should also finish with <>&&
+	// delims[LX_WC] = "*";
 	
 	delims[LX_PIPE] = "|";
 	delims[LX_REDIR_OUT] = ">";
@@ -35,7 +35,7 @@ void	ft_init_delims(t_msh *msh)
 	delims[LX_REDIR_APPEND] = ">>";
 	delims[LX_REDIR_INSRC] = "<<";
 
-	delims[LX_NUM] = "  $*|'\"><&";
+	delims[LX_NUM] = "  $|'\"><&";
 	// }
 	msh->delims = delims;
 }
@@ -151,23 +151,24 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 		if (*ptr == msh->delims[i][0])
 		{
 			// closings = msh->delims[i] + 1;
-			if (i <= 2) // && ft_have_inters(ptr + 1, closings)) // FIELD
+			if (i <= LX_VAR) // && ft_have_inters(ptr + 1, closings)) // FIELD
 			{
 				// printf("closings: %s\n", closings);
 				return (ft_getfield(i, ++ptr, msh));
 			}
-			else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
+			// else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
+			else if (i >= LX_PIPE && i <= LX_REDIR_IN && *(ptr + 1) && *(ptr + 1) != *ptr) // SINGLE
 			{
 				//printf("Test SINGLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
 				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 1);
 			}
-			else if (i == 7 && ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
+			else if (i == LX_AND && ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
 			{
 				ft_addlexem(msh->lexems, ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
 				return (ptr + 1);
 			}
-			else if (i >= 7 && i <= 10 && *(ptr + 1) == *ptr) // DOUBLE
+			else if (i >= LX_AND && i <= LX_REDIR_INSRC && *(ptr + 1) == *ptr) // DOUBLE
 			{
 				//printf("Test DOUBLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
 				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
