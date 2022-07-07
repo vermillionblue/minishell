@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/06 17:23:51 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:51:02 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,32 @@ void	check_pipe(int n)
 	}
 }
 
+
+void	set_std_i_o(t_cmds *cmd, t_msh *msh)
+{
+	if (cmd->infile_name)
+	{
+		printf("trigger\n");
+		cmd->infile_fd = open(cmd->infile_name, O_RDONLY);
+		if (cmd->infile_fd == -1)
+		{
+			perror(cmd->infile_name);
+			msh->last_exit_stat = 127;
+		}
+		else
+		{
+			
+			dup2(cmd->infile_fd, STDIN_FILENO);
+		}
+			
+	}
+	////for truncate redir >
+	if (cmd->outfile_name) 
+	{
+		cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	}
+}
+
 int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 {
 	int		fd[2];
@@ -116,6 +142,7 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
     int		id;
 	char	*a_path;
 
+	set_std_i_o(group->cmds, msh);
     check_pipe(pipe(fd));
 	id = fork();
 	if (id == 0)
@@ -124,10 +151,20 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 		a_path = get_correct_path(cmd, msh);
 		if (group->cmds->cmd_num == 1)
 		{
+			//close(group->cmds->infile_fd);
 			close(fd[READ_END]);
 			close(fd[WRITE_END]);
-			if_dup_fail(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
-			close(msh->temp_i_o[WRITE_END]);
+			if (group->cmds->outfile_name)
+			{
+				printf("trigger2 out fd %d\n", group->cmds->outfile_fd);
+				if_dup_fail(dup2(group->cmds->outfile_fd, STDOUT_FILENO));
+				close(group->cmds->outfile_fd);
+			}
+			else
+			{
+				if_dup_fail(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
+				close(msh->temp_i_o[WRITE_END]);
+			}
 		}
 		else
 		{
@@ -146,6 +183,7 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	{
 		close(fd[WRITE_END]);
 		close(fd[READ_END]);
+		close(group->cmds->infile_fd);
 		if_dup_fail(dup2(msh->temp_i_o[READ_END], STDIN_FILENO));
 		close(msh->temp_i_o[READ_END]);
 	}
@@ -159,28 +197,49 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	return (res);
 }
 
+
 void	exec_group(t_group *group, t_msh *msh)
 {
 	int		res;
 	int		j;
+	int		k;
+	int		index;
 	char	*fname;
 	int		type;
 	
 	j = 0;
+	k = 0;
+	index = group->index;
 	//fname = ft_ectracttext(msh->groups[0]->cmds->redirs[0][0]);
-	// type = ft_ectracttype(msh->groups[0]->cmds->redirs[0][0]);
-	// printf("redir type is %d and %s name\n", type, fname);
 	if_dup_fail(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
 	if_dup_fail(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
     while (group->cmds->cmd_num > 0)
     {
+		if (group->cmds->redirs[j][0])
+		{
+			while (group->cmds->redirs[j][0])
+			{
+				if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN)
+				{
+					group->cmds->infile_name = ft_ectracttext(group->cmds->redirs[j][0]);
+					printf("%s :in name for cmd %d\n",group->cmds->infile_name, j );
+				}
+				else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_OUT)
+				{
+					group->cmds->outfile_name = ft_ectracttext(group->cmds->redirs[j][0]);
+					printf("%s :out name for cmd %d\n",group->cmds->outfile_name, j );
+				}	
+				group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;
+			}
+		}
         msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j], group, msh);
 		group->cmds->cmd_num  -= 1; 
 		j++;
     }
 }
 //try
-//ls |cat -e && ls -l | cat | cat
+//<in <innn ls | <i <ll ls && <k <kjn ls // test in out files
+//ls |cat -e && ls -l | cat | cat // tes logical ops
 void	ft_prep_exec(t_msh *msh, char **env)
 {
 	int	i;
@@ -188,7 +247,8 @@ void	ft_prep_exec(t_msh *msh, char **env)
 	i = 0;
 	msh->env = env;
 	msh->paths = get_paths(env);;
-	msh->last_exit_stat = -1;
+	msh->last_exit_stat = 0;
+
 	printf("===========result=================================\n");
 	while(msh->group_num > i)
 	{
@@ -197,6 +257,7 @@ void	ft_prep_exec(t_msh *msh, char **env)
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)
 			break ;
 		exec_group(msh->groups[i], msh);
+		//msh->groups[i]->cmds->redirs[0][k]
 		i++;
 	}
 }
