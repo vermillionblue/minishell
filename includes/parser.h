@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:34:14 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 16:13:34 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:26:51 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 // parser_main.c
 void	ft_parser(t_msh *msh);
 int		ft_error(char *error_text, int error_num);
+
+// parser_wc.c
+int		ft_expand_wcs(t_group *group);
 
 // parser_groups.c
 int		ft_makegroups(t_msh *msh);

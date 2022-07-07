@@ -6,7 +6,7 @@
 #    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/06 21:36:30 by vangirov         ###   ########.fr        #
+#    Updated: 2022/07/07 11:52:09 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ exec/exec.c signals.c builtins/echo.c \
 		parser/parser_main.c \
 		parser/parser_groups.c \
 		parser/parser_expansion.c \
+		parser/parser_wc.c \
 		parser/parser_redirs.c \
 		parser/parser_redir_utils.c \
 		parser/parser_cmds.c \
