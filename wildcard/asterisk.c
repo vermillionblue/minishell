@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/06 12:20:53 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/08 11:21:21 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,17 @@ char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)
     return (cmd);
 }
 
-char    *expand_wildcard(char *raw_cmd)
+char    *expand_wildcard(char *arg)
 {
     char	cwd[PATH_MAX];
-    char    **temp;
     char    *cmd;
     DIR     *dir;
 
-    temp = ft_split(raw_cmd, ' ');
-    cmd = temp[0];
+    cmd = arg;
 	getcwd(cwd, sizeof(cwd));
 	dir = opendir(cwd);
-    cmd = ft_read_dir(cmd, temp[1], dir);
+    cmd = ft_read_dir(cmd, arg, dir);
 	if (closedir(dir) == -1)
-        perror("closedir");
-    if (!ft_strncmp(cmd, temp[0], ft_strlen(cmd + 1)))
-    {
-        print_regex_error(temp[0], temp[1]);
-        exit(EXIT_FAILURE);
-    }
+        perror("closedir() error\n");
     return (cmd);
 }
