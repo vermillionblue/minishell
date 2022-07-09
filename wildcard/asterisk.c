@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 12:12:11 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:12:08 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,22 @@ char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)
 {
     struct	dirent *dir_struct;
     char    *tmp2;
+	char	*start;
 
+	start = "";
     dir_struct = readdir(dir);
 	while (dir_struct != NULL)
     {
         if (ft_regexcomp(regex_arg, dir_struct->d_name))
         {
-            tmp2 = ft_strjoin(cmd, " ");
-            cmd = ft_strjoin(tmp2, dir_struct->d_name);
+            tmp2 = ft_strjoin(start, " ");
+            start = ft_strjoin(tmp2, dir_struct->d_name);
             free(tmp2);
         }
         dir_struct = readdir(dir);
     }
+	if (ft_strncmp(start, "", 2))
+		return (start);
     return (cmd);
 }
 
