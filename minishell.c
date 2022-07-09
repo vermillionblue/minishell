@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/09 17:09:15 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:25:14 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		env_list = create_env_list(envp);
+		msh.env_list = &env_list; // printf("TEST PATH: %s\n", find_env_node(&msh.env_list, "PATH")->bash_v_content);
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{

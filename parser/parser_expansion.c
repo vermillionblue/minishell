@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 14:50:29 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:51:19 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 		{
 			text = (*(t_lexem *)link->content).text;
 			printf("TEST text: %s\n", text);
-			var = find_env_node(&(msh->env_list), text);
+			print_env_list(msh->env_list);
+			printf(">>>>>>>>>>>>>>> Finish printing env\n");
+			var = find_env_node(msh->env_list, text);
 			if (var)
 			{
 				(*(t_lexem *)link->content).text = var->bash_v_content;
@@ -117,7 +119,7 @@ char	*ft_expand_text(t_msh *msh, char *text)
 			len = ft_get_var_len(++ptr, msh);
 			name = ft_gettext(ptr, len);
 			printf("LEN: %d\n", len);
-			var = find_env_node(&(msh->env_list), name);
+			var = find_env_node(msh->env_list, name);
 			free(name);
 			if (var)
 			{

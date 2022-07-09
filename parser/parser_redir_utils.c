@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:39:08 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 15:15:03 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:40:56 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_list	*ft_lst_detach_from(t_list **headfrom, t_list *target)
 {
 	t_list	*preceding;
 
-	printf("TEST >>>\n");
 	if (!headfrom)
 		exit(1);
 	if (*headfrom == target)
