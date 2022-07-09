@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 13:04:19 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:36:48 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int if_return(char *name, char *regex, int k, int i)
 
 int	ft_regexcomp(char *regex, char *name)
 {
-    int	i;
-    int	last;
-    int	k;
+	int	i;
+	int	last;
+	int	k;
 
-    i = 0;
-    k = 0;
+	i = 0;
+	k = 0;
 	last = ft_strlen(regex) - 1;
     while (regex[i] && name[k])
     {
@@ -84,9 +84,9 @@ char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)
         }
         dir_struct = readdir(dir);
     }
-	if (ft_strncmp(start, "", 2))
-		return (start);
-    return (cmd);
+	if (!ft_strncmp(start, "", 2))
+		return (NULL);
+    return (start);
 }
 
 char    *expand_wildcard(char *arg)

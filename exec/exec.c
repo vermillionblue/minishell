@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 12:57:40 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:34:56 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ void	exec_group(t_group *group, t_msh *msh)
 	int		index;
 	char	*fname;
 	int		type;
-	
+
 	j = 0;
 	k = 0;
 	index = group->index;
@@ -303,10 +303,10 @@ void	ft_prep_exec(t_msh *msh, char **env, t_env **env_list)
 
 	i = 0;
 	msh->env = env;
-	msh->paths = get_paths(env);;
-	msh->last_exit_stat = 0;
-	msh->env_list = env_list;
-	printf("===========result=================================\n");
+	msh->paths = get_paths(env);
+	// msh->last_exit_stat = 0;
+	// msh->env_list = env_list;
+	printf("===========result===========\n");
 	while(msh->group_num > i)
 	{
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat == 127)
