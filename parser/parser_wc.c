@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 11:48:18 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/07 12:37:27 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:31:35 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ void	ft_exchange_link_for_list(t_list **head, t_list *target, t_list *newfirst)
 	ft_free_lexem(target);
 }
 
+void	ft_print_split(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		printf("[%2d] %s\n", i, arr[i]);
+		i++;
+	}
+}
+
 t_list	*ft_expanded2list(char *expanded)
 {
 	char	**arr;
@@ -49,11 +61,12 @@ t_list	*ft_expanded2list(char *expanded)
 		}
 		else
 		{
+			ft_addlexem(&newfirst, ft_newlexem(LX_SEP, ft_strdup("")));
 			ft_addlexem(&newfirst, ft_newlexem(LX_WORD, arr[i]));
 		}
 		i++;
 	}
-	ft_free_split(arr);
+	free(arr);
 	return (newfirst);
 }
 
@@ -77,10 +90,12 @@ int	ft_expand_wcs(t_group *group)
 			{
 				printf("To extend: \"%s\"\n", ft_ectracttext(link));
 				expanded = expand_wildcard(ft_ectracttext(link));
+				printf("Expanded: %s\n", expanded);
 				newfirst = ft_expanded2list(expanded);
-				free(expanded);
+				ft_printlexems(&newfirst);
 				ft_exchange_link_for_list(group->cmds->cmd_args[cmd_i], \
 					link, newfirst);
+				ft_printlexems(group->cmds->cmd_args[cmd_i]);
 			}
 			link = next;
 		}

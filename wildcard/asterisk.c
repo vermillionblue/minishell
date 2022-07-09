@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 12:06:21 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:12:11 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	ft_regexcomp(char *regex, char *name)
 
     i = 0;
     k = 0;
-    printf("WC TEST 3\n");
 	last = ft_strlen(regex) - 1;
-    printf("WC TEST 4\n");
     while (regex[i] && name[k])
     {
         if ((regex[i] == '*' && i + 1 == last &&
@@ -76,10 +74,8 @@ char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)
     dir_struct = readdir(dir);
 	while (dir_struct != NULL)
     {
-        printf("WC TEST 1\n");
         if (ft_regexcomp(regex_arg, dir_struct->d_name))
         {
-            printf("WC TEST 2\n");
             tmp2 = ft_strjoin(cmd, " ");
             cmd = ft_strjoin(tmp2, dir_struct->d_name);
             free(tmp2);
