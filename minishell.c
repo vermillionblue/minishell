@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/09 15:17:12 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:09:15 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
+		
 		ft_printlexems(msh.lexems);
+		ft_parser(&msh);
+		
 		ft_print_groups(&msh);
 		envp = list_to_arr(&env_list);
 		ft_prep_exec(&msh, envp, &env_list);
