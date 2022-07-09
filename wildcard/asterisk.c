@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 12:53:53 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:10:42 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)
         }
         dir_struct = readdir(dir);
     }
-	if (!ft_strncmp(start, "", 2));
+	if (!ft_strncmp(start, "", 2))
 		return (start);
     return (cmd);
 }
