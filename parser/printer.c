@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:32 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 13:42:20 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:16:49 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,39 +45,29 @@ void	ft_print_arg_redir(t_group *group)
 
 void    ft_print_newargvs(t_group *group)
 {
-    for (int j = 0; j < group->cmds->cmd_num; j++)
-    {
-        for (int k = 0; k < ft_count_args(group->cmds->cmd_args[j]); k++)
-        // while (*group->cmds->newargvs[j])
-        {
-            printf(">>> argv[%d][%d][%d] = %s\n", group->index, j, k, group->cmds->newargvs[j][k]);
-        }
-    }
+	for (int j = 0; j < group->cmds->cmd_num; j++)
+	{
+		for (int k = 0; k < ft_count_args(group->cmds->cmd_args[j]); k++)
+		// while (*group->cmds->newargvs[j])
+		{
+			printf(">>> argv[%d][%d][%d] = %s\n", group->index, j, k, group->cmds->newargvs[j][k]);
+		}
+	}
 }
 
 void ft_print_groups(t_msh *msh)
 {
-	if (ft_makegroups(msh) == 0)
-	{
-		int i = 0;
+	int i;
 
-		printf("\n\n\nNUMBER OF GROUPS: %d\n", msh->group_num);
-		while(i < msh->group_num)
-		{
-			ft_make_cmd_args(msh->groups[i]);
-			msh->groups[i]->cmds->redirs = malloc(sizeof(t_list **) * msh->groups[i]->cmds->cmd_num);
-			ft_loop_cmds(msh->groups[i], ft_init_redirs);
-			// ft_print_arg_redir(msh->groups[i]);
-			printf("============================================\n");
-			ft_loop_cmds(msh->groups[i], ft_format_redirs);
-			ft_unite_texts(msh->groups[i]);
-			ft_loop_cmds(msh->groups[i], ft_extract_redirs);
-			ft_make_newargvs(msh->groups[i]);
-			printf("Group #%d (type %d, cmd_num %d):\n", i, msh->groups[i]->type, msh->groups[i]->cmds->cmd_num);
-			ft_print_arg_redir(msh->groups[i]);
-			ft_print_newargvs(msh->groups[i]);
-			printf("============================================\n");
-			i++;
-		}
+	i = 0;
+	printf("\n\n\nNUMBER OF GROUPS: %d\n", msh->group_num);
+	while(i < msh->group_num)
+	{
+		printf("============================================\n");
+		printf("Group #%d (type %d, cmd_num %d):\n", i, msh->groups[i]->type, msh->groups[i]->cmds->cmd_num);
+		ft_print_arg_redir(msh->groups[i]);
+		ft_print_newargvs(msh->groups[i]);
+		printf("============================================\n");
+		i++;
 	}
 }

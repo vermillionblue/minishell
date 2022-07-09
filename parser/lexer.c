@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/05 10:27:09 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:43:35 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
 void	ft_init_delims(t_msh *msh)
 {
 	char	**delims;
-	// int		i;
+	msh->lexems = NULL;
 
 	delims = malloc(sizeof(char *) * (LX_NUM + 1));
 	// i = 0;
@@ -24,8 +23,8 @@ void	ft_init_delims(t_msh *msh)
 	// {
 	delims[LX_FIELD] = "''";
 	delims[LX_EXT_FIELD] = "\"\"";
-	delims[LX_VAR] = "$$ *"; //should also finish with <>&&
-	delims[LX_WC] = "*";
+	delims[LX_VAR] = "$$ "; //should also finish with <>&&
+	// delims[LX_WC] = "*";
 	
 	delims[LX_PIPE] = "|";
 	delims[LX_REDIR_OUT] = ">";
@@ -36,7 +35,7 @@ void	ft_init_delims(t_msh *msh)
 	delims[LX_REDIR_APPEND] = ">>";
 	delims[LX_REDIR_INSRC] = "<<";
 
-	delims[LX_NUM] = "  $*|'\"><&";
+	delims[LX_NUM] = "  $|'\"><&";
 	// }
 	msh->delims = delims;
 }
@@ -68,7 +67,7 @@ char	*ft_skip_spaces(char *ptr, t_msh *msh)
 		sep++;
 	}
 	if (sep && ft_lstsize(*msh->lexems))
-		ft_addlexem(msh->lexems, ft_newlexem(LX_SEP, ""));
+		ft_addlexem(msh->lexems, ft_newlexem(LX_SEP, ft_strdup("")));
 	return (ptr);
 }
 
@@ -152,26 +151,27 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 		if (*ptr == msh->delims[i][0])
 		{
 			// closings = msh->delims[i] + 1;
-			if (i <= 2) // && ft_have_inters(ptr + 1, closings)) // FIELD
+			if (i <= LX_VAR) // && ft_have_inters(ptr + 1, closings)) // FIELD
 			{
 				// printf("closings: %s\n", closings);
 				return (ft_getfield(i, ++ptr, msh));
 			}
-			else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
+			// else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
+			else if (i >= LX_PIPE && i <= LX_REDIR_IN && *(ptr + 1) && *(ptr + 1) != *ptr) // SINGLE
 			{
 				//printf("Test SINGLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
-				ft_addlexem(msh->lexems, ft_newlexem(i, ""));
+				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 1);
 			}
-			else if (i == 7 && ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
+			else if (i == LX_AND && ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
 			{
 				ft_addlexem(msh->lexems, ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
 				return (ptr + 1);
 			}
-			else if (i >= 7 && i <= 10 && *(ptr + 1) == *ptr) // DOUBLE
+			else if (i >= LX_AND && i <= LX_REDIR_INSRC && *(ptr + 1) == *ptr) // DOUBLE
 			{
 				//printf("Test DOUBLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
-				ft_addlexem(msh->lexems, ft_newlexem(i, ""));
+				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 2);
 			}
 			// else
