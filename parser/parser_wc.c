@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 11:48:18 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/09 13:38:01 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:41:10 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,15 @@ int	ft_expand_wcs(t_group *group)
 			{
 				printf("To extend: \"%s\"\n", ft_ectracttext(link));
 				expanded = expand_wildcard(ft_ectracttext(link));
-				printf("Expanded: \"%s\"\n", expanded);
-				newfirst = ft_expanded2list(expanded);
-				ft_printlexems(&newfirst);
-				ft_exchange_link_for_list(group->cmds->cmd_args[cmd_i], \
-					link, newfirst);
-				ft_printlexems(group->cmds->cmd_args[cmd_i]);
+				if (expanded)
+				{
+					printf("Expanded: \"%s\"\n", expanded);
+					newfirst = ft_expanded2list(expanded);
+					ft_printlexems(&newfirst);
+					ft_exchange_link_for_list(group->cmds->cmd_args[cmd_i], \
+						link, newfirst);
+					ft_printlexems(group->cmds->cmd_args[cmd_i]);
+				}
 			}
 			link = next;
 		}
