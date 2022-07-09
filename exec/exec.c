@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/07 13:33:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:29:32 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,75 @@ int	print_arr(char **env)
 	return (1);
 }
 
-// int	ft_redirect(t_msh *msh, t_env *env_list, char **env)
+char	*read_stdin(char *limiter, char *file)
+{
+	char	*line;
+	int		fd;
+	int		id;
+
+	id = fork();
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (id == 0)
+	{
+		ft_signal_child();
+		while (1)
+		{
+			line = readline("> ");
+			if (!ft_strncmp(limiter, line, ft_strlen(limiter) + 1) || !line)
+			{
+				free (limiter);
+				break ;
+			}
+			write(fd, line, ft_strlen(line));
+			write(fd, "\n", 1);
+			free(line);
+		}
+	}
+	wait(NULL);
+	return (file);
+}
+
+
+// int	redirect_child(char *a_path, char **cmd, t_msh *msh)
 // {
-// 	char	**args;
 // 	int		res;
-	
+
 // 	res = 0;
+// 	if (!ft_strncmp(cmd[0], "pwd", 4))
+// 		res = do_cwd();
+// 	else if (!ft_strncmp(cmd[0], "env", 4))
+// 		print_env_list(msh->env_list);
+// 	// else if (!ft_strncmp(args[0], "echo", 5) && !ft_strncmp(args[1], "-n", 3))
+// 	// 	res = do_echo(args);
+// 	else
+// 	{
+// 		if (execve(a_path, cmd, msh->env) == -1)
+// 		{
+// 			perror("execve error\n");
+// 			msh->last_exit_stat = 1;
+// 			exit (EXIT_FAILURE);
+// 		}
+// 	}
+// 	return (res);
+// }
+
+///built ins run in parent: unset export cd exit
+//exit needs to work differently
+// int	redirect_parent(t_msh *msh, t_env *env_list)
+// {
+// 	int		res;
+// 	char	*args;
+
+// 	res = -2;
 // 	args = msh->groups[0]->cmds->newargvs[0];
-// 	printf("===========result=================================\n");
 // 	if (!ft_strncmp(args[0], "cd", 3))
 // 		res = do_cd(check_if_no_args(args));
-// 	else if (!ft_strncmp(args[0], "pwd", 4))
-// 		res = do_cwd();
-// 	else if (!ft_strncmp(args[0], "env", 4))
-// 		print_env_list(&env_list);
 // 	else if (!ft_strncmp(args[0], "export", 7))
 // 		res = do_export(&env_list, check_if_no_args(args));
 // 	else if (!ft_strncmp(args[0], "unset", 6))
 // 		res = do_unset(&env_list, check_if_no_args(args));
 // 	else if (!ft_strncmp(args[0], "exit", 5))
 // 		do_exit();
-// 	else if (!ft_strncmp(args[0], "echo", 5) && !ft_strncmp(args[1], "-n", 3))
-// 		res = do_echo(args);
-// 	else
-// 		prep_groups(env, msh);
 // 	return (res);
 // }
 
@@ -109,24 +154,20 @@ void	check_pipe(int n)
 	}
 }
 
-
 void	set_std_i_o(t_cmds *cmd, t_msh *msh)
 {
 	if (cmd->infile_name)
 	{
-		printf("trigger\n");
 		cmd->infile_fd = open(cmd->infile_name, O_RDONLY);
 		if (cmd->infile_fd == -1)
 		{
 			perror(cmd->infile_name);
-			msh->last_exit_stat = 127;
+			msh->last_exit_stat = 1;
 		}
 		else
 		{
-			
 			dup2(cmd->infile_fd, STDIN_FILENO);
-		}
-			
+		}	
 	}
 	if (cmd->outfile_name) 
 	{
@@ -158,7 +199,6 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 			close(fd[WRITE_END]);
 			if (group->cmds->outfile_name)
 			{
-				printf("trigger2 out fd %d\n", group->cmds->outfile_fd);
 				if_dup_fail(dup2(group->cmds->outfile_fd, STDOUT_FILENO));
 				close(group->cmds->outfile_fd);
 			}
@@ -174,10 +214,11 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 			if_dup_fail(dup2(fd[WRITE_END], STDOUT_FILENO));
 			close(fd[WRITE_END]);
 		}
+		//redirect_child(a_path, cmd, msh);
 		if (execve(a_path, cmd, msh->env) == -1)
 		{
-			perror("execve\n");
-			msh->last_exit_stat = 127;
+			perror("execve error\n");
+			msh->last_exit_stat = 1;
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -199,7 +240,6 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	return (res);
 }
 
-
 void	exec_group(t_group *group, t_msh *msh)
 {
 	int		res;
@@ -212,7 +252,6 @@ void	exec_group(t_group *group, t_msh *msh)
 	j = 0;
 	k = 0;
 	index = group->index;
-	//fname = ft_ectracttext(msh->groups[0]->cmds->redirs[0][0]);
 	if_dup_fail(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
 	if_dup_fail(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
     while (group->cmds->cmd_num > 0)
@@ -224,12 +263,18 @@ void	exec_group(t_group *group, t_msh *msh)
 				if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN ||
 				ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
 				{
-					group->cmds->infile_name = ft_ectracttext(group->cmds->redirs[j][0]);
+					
 					if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
+					{
 						group->cmds->here_doc = 1;
+						read_stdin(ft_ectracttext(group->cmds->redirs[j][0]), ".here_doc");
+						group->cmds->infile_name = ".here_doc";
+					}	
 					else
+					{
 						group->cmds->here_doc = 0;
-					printf("%s :in name for cmd %d\n",group->cmds->infile_name, j );
+						group->cmds->infile_name = ft_ectracttext(group->cmds->redirs[j][0]);
+					}
 				}
 				else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_OUT || ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_APPEND)
 				{
@@ -238,11 +283,12 @@ void	exec_group(t_group *group, t_msh *msh)
 						group->cmds->append_outfile = 1;
 					else
 						group->cmds->append_outfile = 0;
-					printf("%s :out name for cmd %d\n",group->cmds->outfile_name, j );
 				}	
 				group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;
 			}
 		}
+		// res = redirect_parent(msh)
+		// if ()
         msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j], group, msh);
 		group->cmds->cmd_num  -= 1; 
 		j++;
@@ -250,8 +296,8 @@ void	exec_group(t_group *group, t_msh *msh)
 }
 //try
 //<in <innn ls | <i <ll ls && <k <kjn ls // test in out files
-//ls |cat -e && ls -l | cat | cat // tes logical ops
-void	ft_prep_exec(t_msh *msh, char **env)
+//ls |cat -e & ls -l | cat | cat // tes logical ops
+void	ft_prep_exec(t_msh *msh, char **env, t_env **env_list)
 {
 	int	i;
 
@@ -259,7 +305,7 @@ void	ft_prep_exec(t_msh *msh, char **env)
 	msh->env = env;
 	msh->paths = get_paths(env);;
 	msh->last_exit_stat = 0;
-
+	msh->env_list = env_list;
 	printf("===========result=================================\n");
 	while(msh->group_num > i)
 	{

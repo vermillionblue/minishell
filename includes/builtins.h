@@ -6,22 +6,13 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:14:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/05 12:53:35 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:12:45 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
 # include "minishell.h"
-
-typedef struct s_env
-{
-	char			*bash_variable;
-	char			*bash_v_content;
-	int				sort;
-	struct s_env	*next;
-} t_env;
 /////////export
 int		do_export(t_env **env_list, char *args);
 void	print_sorted_export(t_env **env_list);
@@ -43,4 +34,5 @@ int		print_env_list(t_env **env_list);
 char    **list_to_arr(t_env **env_list);
 //exec
 int		ft_redirect(t_msh *msh, t_env *env_list, char **env);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/08 11:08:55 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:51:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	
 	env_list = create_env_list(envp);
-	//test();
 	ft_signal_parent();
 	ft_init_delims(&msh);
 	while(1)
@@ -59,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_printlexems(msh.lexems);
 		ft_print_groups(&msh);
 		envp = list_to_arr(&env_list);
-		ft_prep_exec(&msh, envp);
+		ft_prep_exec(&msh, envp, &env_list);
 		free(line);
 	}
 	return (0);

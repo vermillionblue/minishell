@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/07 12:01:38 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 12:14:22 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@
 /* Our Libraries */
 # include "../libft/libft.h"
 # include "../vlad_printf/ft_printf.h"
+
+typedef struct s_env
+{
+	char			*bash_variable;
+	char			*bash_v_content;
+	int				sort;
+	struct s_env	*next;
+} t_env;
 
 typedef struct s_cmds
 {
@@ -79,6 +87,7 @@ typedef struct s_msh
 	char	**paths;
 	int		last_exit_stat;
 	char	**env;
+	t_env	**env_list;
 	int		*temp_i_o;
 }	t_msh;
 
@@ -94,7 +103,6 @@ void    ft_signal_parent(void);
 
 # include "lexer.h"
 # include "parser.h"
-# include "builtins.h"
 # include "exec.h"
 
 #endif
