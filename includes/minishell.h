@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/05 14:49:52 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:27:43 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@
 # include "../libft/libft.h"
 # include "../vlad_printf/ft_printf.h"
 
+typedef struct s_env
+{
+	char			*bash_variable;
+	char			*bash_v_content;
+	int				sort;
+	struct s_env	*next;
+} t_env;
+
 typedef struct s_cmds
 {
 	char	**env;			// no yet, wait for Dani
@@ -49,9 +57,11 @@ typedef struct s_cmds
 	char	*infile_name;	// no yet
 	char	*outfile_name;	// no yet
 	int		infile_fd;		// no yet
-	int		outfile_fd;		// no yet
+	int		outfile_fd;	
+	int		append_outfile; //boolean
+	int		here_doc;	// boolean
 	char	**paths;		// no yet
-	int		**pipes;		// no yet, wait for Dani (depends on env)
+	int		**pipes;	
 	char	**cmd_names;
 	t_list	***cmd_args;
 	char	***newargvs;
@@ -74,6 +84,11 @@ typedef struct s_msh
 	t_list	**lexems;
 	int		group_num;
 	t_group	**groups;
+	char	**paths;
+	int		last_exit_stat;
+	char	**env;
+	t_env	**env_list;
+	int		*temp_i_o;
 }	t_msh;
 
 /* Linked Lists Utils */
@@ -88,7 +103,6 @@ void    ft_signal_parent(void);
 
 # include "lexer.h"
 # include "parser.h"
-# include "builtins.h"
 # include "exec.h"
 
 #endif

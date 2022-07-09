@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 14:07:21 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/03 20:59:38 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:06:21 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
-
 
 void    handle_sigtint(int sig)
 {
