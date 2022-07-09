@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/06 13:57:22 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/09 13:40:33 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIB_MAC =  -I $(HOME)/goinfre/.brew/opt/readline/include/ -lreadline
 
 LIB_LINUX = -lreadline
 
-CFLAGS = -I includes/ -g
+CFLAGS = -Wall -Wextra -Werror -I includes/ -g
 
 RM = rm -f
 

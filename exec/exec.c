@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 13:34:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:41:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,16 +242,9 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 
 void	exec_group(t_group *group, t_msh *msh)
 {
-	int		res;
 	int		j;
-	int		k;
-	int		index;
-	char	*fname;
-	int		type;
 
 	j = 0;
-	k = 0;
-	index = group->index;
 	if_dup_fail(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
 	if_dup_fail(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
     while (group->cmds->cmd_num > 0)
@@ -304,8 +297,8 @@ void	ft_prep_exec(t_msh *msh, char **env, t_env **env_list)
 	i = 0;
 	msh->env = env;
 	msh->paths = get_paths(env);
-	// msh->last_exit_stat = 0;
-	// msh->env_list = env_list;
+	msh->last_exit_stat = 0;
+	msh->env_list = env_list;
 	printf("===========result===========\n");
 	while(msh->group_num > i)
 	{
