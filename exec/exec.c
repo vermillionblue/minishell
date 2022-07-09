@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 16:23:52 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:58:46 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd(": command not found\n ", 2);
 	msh->last_exit_stat = 127;
-	exit (EXIT_FAILURE);
+	return (NULL);
 }
 
 char	**get_paths(char **env)
@@ -292,13 +292,13 @@ void	exec_group(t_group *group, t_msh *msh)
 //try
 //<in <innn ls | <i <ll ls && <k <kjn ls // test in out files
 //ls |cat -e & ls -l | cat | cat // tes logical ops
-void	ft_prep_exec(t_msh *msh, char **env, t_env **env_list)
+void	ft_prep_exec(t_msh *msh, t_env **env_list)
 {
 	int	i;
 
 	i = 0;
-	msh->env = env;
-	msh->paths = get_paths(env);
+	msh->env = list_to_arr(env_list);
+	msh->paths = get_paths(list_to_arr(env_list));
 	msh->last_exit_stat = 0;
 	msh->env_list = env_list;
 	printf("===========result===========\n");
