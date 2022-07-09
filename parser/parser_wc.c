@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 11:48:18 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/09 14:02:37 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:31:06 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,35 +70,27 @@ t_list	*ft_expanded2list(char *expanded)
 	return (newfirst);
 }
 
-int	ft_expand_wcs(t_group *group)
+void	ft_expand_gr_wcs(t_group *group, int cmd_i)
 {
-	int		cmd_i;
 	t_list	*link;
 	t_list	*next;
 	t_list	*newfirst;
 	char	*expanded;
-
-	cmd_i = 0;
-	while (cmd_i < group->cmds->cmd_num)
+	link = *group->cmds->cmd_args[cmd_i];
+	while (link)
 	{
-		link = *group->cmds->cmd_args[cmd_i];
-		while (link)
+		next = link->next;
+		if (ft_ectracttype(link) == LX_WORD && \
+			ft_strchr(ft_ectracttext(link), '*'))
 		{
-			next = link->next;
-			if (ft_ectracttype(link) == LX_WORD && \
-				ft_strchr(ft_ectracttext(link), '*'))
+			expanded = expand_wildcard(ft_ectracttext(link));
+			if (expanded)
 			{
-				expanded = expand_wildcard(ft_ectracttext(link));
-				if (expanded)
-				{
-					newfirst = ft_expanded2list(expanded);
-					ft_exchange_link_for_list(group->cmds->cmd_args[cmd_i], \
-						link, newfirst);
-				}
+				newfirst = ft_expanded2list(expanded);
+				ft_exchange_link_for_list(group->cmds->cmd_args[cmd_i], \
+					link, newfirst);
 			}
-			link = next;
 		}
-		cmd_i++;
+		link = next;
 	}
-	return (0);
 }
