@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/09 13:50:39 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:17:12 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	
-	env_list = create_env_list(envp);
+	//env_list = create_env_list(envp);
 	ft_signal_parent();
 	ft_init_delims(&msh);
 	while(1)
 	{
-		//env_list = create_env_list(envp);
+		env_list = create_env_list(envp);
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{

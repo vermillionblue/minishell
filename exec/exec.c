@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 13:41:58 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:23:52 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ char	*read_stdin(char *limiter, char *file)
 // 			exit (EXIT_FAILURE);
 // 		}
 // 	}
-// 	return (res);
-// }
+// // 	return (res);
+// // }
 
-///built ins run in parent: unset export cd exit
-//exit needs to work differently
+// ///built ins run in parent: unset export cd exit
+// //exit needs to work differently
 // int	redirect_parent(t_msh *msh, t_env *env_list)
 // {
 // 	int		res;
@@ -133,7 +133,8 @@ char	**get_paths(char **env)
 		i++;
 	}
 	perror("no path\n");
-	exit (EXIT_FAILURE);
+	return (NULL);
+	//exit (EXIT_FAILURE);
 }
 
 void	if_dup_fail(int n)
@@ -242,9 +243,10 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 
 void	exec_group(t_group *group, t_msh *msh)
 {
-	int		j;
+	int	j;
 
 	j = 0;
+	msh->temp_i_o = malloc(sizeof(int) * 2);
 	if_dup_fail(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
 	if_dup_fail(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
     while (group->cmds->cmd_num > 0)
