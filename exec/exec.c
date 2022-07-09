@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 16:58:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:04:22 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ void	ft_prep_exec(t_msh *msh, t_env **env_list)
 	printf("===========result===========\n");
 	while(msh->group_num > i)
 	{
-		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat == 127)
+		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)
 			break ;
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)
 			break ;
