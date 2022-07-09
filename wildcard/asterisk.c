@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 12:50:38 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 13:04:19 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char *ft_read_dir(char *cmd, char *regex_arg, DIR *dir)
         }
         dir_struct = readdir(dir);
     }
-	if (!ft_strncmp(start, "", 2));
+	if (ft_strncmp(start, "", 2))
 		return (start);
     return (cmd);
 }
@@ -101,6 +101,5 @@ char    *expand_wildcard(char *arg)
     cmd = ft_read_dir(cmd, arg, dir);
 	if (closedir(dir) == -1)
         perror("closedir() error\n");
-	printf("%s\n", cmd);
     return (cmd);
 }
