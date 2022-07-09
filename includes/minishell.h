@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/09 15:53:06 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:27:43 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_cmds
 	int		here_doc;	// boolean
 	char	**paths;		// no yet
 	int		**pipes;	
-	int		lx_pt;	// no yet, wait for Dani (depends on env)
 	char	**cmd_names;
 	t_list	***cmd_args;
 	char	***newargvs;
