@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 17:39:51 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:39:32 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,6 @@ char	*read_stdin(char *limiter, char *file)
 	return (file);
 }
 
-
-
-
-// ///built ins run in parent: unset export cd exit
-// //exit needs to work differently
-// int	redirect_parent(t_msh *msh, t_env *env_list)
-// {
-// 	int		res;
-// 	char	*args;
-
-// 	res = -2;
-// 	args = msh->groups[0]->cmds->newargvs[0];
-// 	if (!ft_strncmp(args[0], "cd", 3))
-// 		res = do_cd(check_if_no_args(args));
-// 	else if (!ft_strncmp(args[0], "export", 7))
-// 		res = do_export(&env_list, check_if_no_args(args));
-// 	else if (!ft_strncmp(args[0], "unset", 6))
-// 		res = do_unset(&env_list, check_if_no_args(args));
-// 	else if (!ft_strncmp(args[0], "exit", 5))
-// 		do_exit();
-// 	return (res);
-// }
-
 char	*get_correct_path(char **cmd, t_msh *msh)
 {
 	int		i;
@@ -113,8 +90,26 @@ char	**get_paths(char **env, t_msh *msh)
 	}
 	msh->last_exit_stat = 127;
 	perror("No path\n");
-	//exit(127);
 	exit (EXIT_FAILURE);
+}
+
+
+// /built ins run in parent: unset export cd exit
+// exit needs to work differently
+int	redirect_parent(char **cmd, t_msh *msh)
+{
+	int		res;
+
+	res = -2;
+	if (!ft_strncmp(cmd[0], "cd", 3))
+		res = do_cd(check_if_no_args(cmd));
+	else if (!ft_strncmp(cmd[0], "export", 7))
+		res = do_export(msh, check_if_no_args(cmd));
+	else if (!ft_strncmp(cmd[0], "unset", 6))
+		res = do_unset(msh, check_if_no_args(cmd));
+	else if (!ft_strncmp(cmd[0], "exit", 5))
+		do_exit();
+	return (res);
 }
 
 int	redirect_child(char **cmd, t_msh *msh)
@@ -135,7 +130,6 @@ int	redirect_child(char **cmd, t_msh *msh)
 		if (execve(a_path, cmd, msh->env) == -1)
 		{
 			perror("execve error\n");
-			msh->last_exit_stat = 1;
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -219,12 +213,6 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 			close(fd[WRITE_END]);
 		}
 		redirect_child(cmd, msh);
-		// if (execve(a_path, cmd, msh->env) == -1)
-		// {
-		// 	perror("execve error\n");
-		// 	msh->last_exit_stat = 1;
-		// 	exit (EXIT_FAILURE);
-		// }
 	}
 	if (group->cmds->cmd_num == 1)
 	{
@@ -244,11 +232,15 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	return (res);
 }
 
+
+//clean here_doc
 void	exec_group(t_group *group, t_msh *msh)
 {
 	int	j;
+	int	res;
 
 	j = 0;
+	res = 0;
 	msh->temp_i_o = malloc(sizeof(int) * 2);
 	if_dup_fail(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
 	if_dup_fail(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
@@ -285,9 +277,11 @@ void	exec_group(t_group *group, t_msh *msh)
 				group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;
 			}
 		}
-		// res = redirect_parent(msh)
-		// if ()
-        msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j], group, msh);
+		res = redirect_parent(group->cmds->newargvs[j], msh);
+		if (res == -2)
+        	msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j], group, msh);
+		else
+			msh->last_exit_stat = res;
 		group->cmds->cmd_num  -= 1; 
 		j++;
     }
@@ -298,11 +292,13 @@ void	exec_group(t_group *group, t_msh *msh)
 void	ft_prep_exec(t_msh *msh, t_env **env_list)
 {
 	int	i;
+	char **env;
 	char **env_temp;
 
 	i = 0;
+	env = list_to_arr(env_list);
 	env_temp = list_to_arr(env_list);
-	msh->env = env_temp;
+	msh->env = env;
 	msh->paths = get_paths(env_temp, msh);
 	msh->last_exit_stat = 0;
 	msh->env_list = env_list;

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/03 13:24:14 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:41:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,17 @@ int	get_name_arg(t_env *new_env, char *args1, t_env **env_list)
 	if (!check_if_valid_env(name))
 	{
 		print_name_error(args1);
-		return (0);
+		return (1);
 	}
 	if (!*(args + 1))
 		value = "";
 	else
 		value = get_content(args);
 	overwrite_env_or_new(new_env, env_list, name, value);
-	return (1);
+	return (0);
 }
 
-int	do_export(t_env **env_list, char *args)
+int	do_export(t_msh *msh, char *args)
 {
 	t_env	*new_env;
 	int		res;
@@ -163,11 +163,12 @@ int	do_export(t_env **env_list, char *args)
 	new_env = NULL;
 	if (!ft_strncmp(args, "0", 2))
 	{
-		print_sorted_export(env_list);
-		return (1);
+		print_sorted_export(msh->env_list);
+		return (0);
 	}
 	if (!ft_strchr(args, '='))
-		return (0);
-	res = get_name_arg(new_env, args, env_list);
+		return (1);
+	res = get_name_arg(new_env, args, msh->env_list);
+	msh->env = list_to_arr(msh->env_list);
 	return (res);
 }

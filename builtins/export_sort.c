@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:21:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/03 13:24:49 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:01:56 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,18 @@ void	print_sorted_export(t_env **env_list)
 		printf("=");
 		printf("\"");
 		printf("%s", temp->bash_v_content);
-		printf("\"\n");
+		printf("\"");
+		printf("sort var %d\n", temp->sort);
 		smallest = "{{{";
 		len--;
 	}
+	printf("declare -x ");
+	printf("%s", current->bash_variable);
+	printf("=");
+	printf("\"");
+	printf("%s", current->bash_v_content);
+	printf("\"\n");
+	printf("sort var %d", current->sort);
 	set_sort_var(env_list);
 }
 
