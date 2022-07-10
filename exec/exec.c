@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/10 14:39:32 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 00:15:25 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 	char	*temp;
 
 	i = 0;
+	if (access(cmd[0], F_OK) == 0)
+		return (cmd[0]);
 	while (msh->paths[i])
 	{
 		temp = ft_strjoin(msh->paths[i], "/");
