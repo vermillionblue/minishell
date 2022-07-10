@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/10 14:48:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 23:25:00 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **envp)
 		if (if_omit_space(line))
 			continue ;
 		add_history(line);
+		//ft_add_history();
 		ft_lexer(line, &msh);
 		ft_printlexems(msh.lexems);
 		ft_print_groups(&msh);

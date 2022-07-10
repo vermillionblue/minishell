@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/10 14:39:32 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 00:05:29 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 	char	*temp;
 
 	i = 0;
-	while (msh->paths[i])
+	while (msh->paths != NULL && msh->paths[i])
 	{
 		temp = ft_strjoin(msh->paths[i], "/");
 		a_path = ft_strjoin(temp, cmd[0]);
@@ -78,6 +78,7 @@ char	**get_paths(char **env, t_msh *msh)
 	char	**temp;
 
 	i = 0;
+	(void)msh;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH", 4) == 0)
@@ -88,14 +89,13 @@ char	**get_paths(char **env, t_msh *msh)
 		}
 		i++;
 	}
-	msh->last_exit_stat = 127;
-	perror("No path\n");
-	exit (EXIT_FAILURE);
+	return (NULL);
 }
 
 
 // /built ins run in parent: unset export cd exit
 // exit needs to work differently
+// unset path && ls does not work!
 int	redirect_parent(char **cmd, t_msh *msh)
 {
 	int		res;
@@ -118,7 +118,6 @@ int	redirect_child(char **cmd, t_msh *msh)
 	char	*a_path;
 
 	res = 0;
-	a_path = get_correct_path(cmd, msh);
 	if (!ft_strncmp(cmd[0], "pwd", 4))
 		res = do_cwd();
 	else if (!ft_strncmp(cmd[0], "env", 4))
@@ -127,6 +126,7 @@ int	redirect_child(char **cmd, t_msh *msh)
 	// 	res = do_echo(args);
 	else
 	{
+		a_path = get_correct_path(cmd, msh);
 		if (execve(a_path, cmd, msh->env) == -1)
 		{
 			perror("execve error\n");
@@ -295,7 +295,7 @@ void	ft_prep_exec(t_msh *msh, t_env **env_list)
 	char **env;
 	char **env_temp;
 
-	i = 0;
+	i 	= 0;
 	env = list_to_arr(env_list);
 	env_temp = list_to_arr(env_list);
 	msh->env = env;
