@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/09 17:25:14 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/10 22:22:23 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	
-	//env_list = create_env_list(envp);
-	ft_signal_parent();
+	env_list = create_env_list(envp);
 	ft_init_delims(&msh);
+	ft_signal_parent();
 	while(1)
 	{
 		env_list = create_env_list(envp);
 		msh.env_list = &env_list; // printf("TEST PATH: %s\n", find_env_node(&msh.env_list, "PATH")->bash_v_content);
+		//env_list = create_env_list(envp);
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{
@@ -61,8 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_parser(&msh);
 		
 		ft_print_groups(&msh);
-		envp = list_to_arr(&env_list);
-		ft_prep_exec(&msh, envp, &env_list);
+		ft_prep_exec(&msh, &env_list);
 		free(line);
 	}
 	return (0);

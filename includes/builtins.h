@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:14:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/09 12:12:45 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:23:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define BUILTINS_H
 # include "minishell.h"
 /////////export
-int		do_export(t_env **env_list, char *args);
+int		do_export(t_msh *msh, char *args);
 void	print_sorted_export(t_env **env_list);
 t_env	*find_env_node(t_env **env_list, char *name);
 void	set_sort_var(t_env **env_list);
@@ -23,7 +23,7 @@ unsigned int	env_list_size(t_env **env_list);
 char	*check_if_no_args(char **args);
 int		do_echo(char **args);
 int		do_cwd(void);
-int		do_unset(t_env **env_list, char *name);
+int		do_unset(t_msh *msh, char *name);
 void	do_exit(void);
 int		do_cd(char *path);
 ////////////
