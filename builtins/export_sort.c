@@ -6,14 +6,12 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:21:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/10 15:01:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:05:07 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-//find smallest first
-//sort var: 
 //sort = 2 -> unsorted
 void	print_sorted_export(t_env **env_list)
 {
@@ -23,19 +21,24 @@ void	print_sorted_export(t_env **env_list)
 	unsigned int	len;
 
 	len = env_list_size(env_list);
+	printf("list len %d\n", len);
 	current = *env_list;
 	smallest = current->bash_variable;
 	if (*env_list == NULL)
 		perror("List is Empty\n");
-	while(len > 1)
+	while(len > 0)
 	{
 		current = *env_list;
-		while (current->next)
+		while (current)
 		{	
 			if ((ft_strncmp(current->bash_variable, smallest, ft_strlen(current->bash_variable)) < 0) && current->sort == 2)
 				smallest = current->bash_variable;
-			current = current->next;
+			if (current->next)
+				current = current->next;
+			else
+				break ;
 		}
+		len--;
 		temp = find_env_node(env_list, smallest);
 		temp->sort = 1;
 		printf("declare -x ");
@@ -43,18 +46,9 @@ void	print_sorted_export(t_env **env_list)
 		printf("=");
 		printf("\"");
 		printf("%s", temp->bash_v_content);
-		printf("\"");
-		printf("sort var %d\n", temp->sort);
-		smallest = "{{{";
-		len--;
+		printf("\"\n");
+		smallest = "{";
 	}
-	printf("declare -x ");
-	printf("%s", current->bash_variable);
-	printf("=");
-	printf("\"");
-	printf("%s", current->bash_v_content);
-	printf("\"\n");
-	printf("sort var %d", current->sort);
 	set_sort_var(env_list);
 }
 
