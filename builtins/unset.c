@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/24 16:34:40 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:22:39 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,21 @@ int	check_unset_name(char *name)
 	return (1);
 }
 
-int	do_unset(t_env **env_list, char *name)
+int	do_unset(t_msh *msh, char *name)
 {
 	t_env *temp;
-	
+	t_env **env_list;
+
+	env_list = msh->env_list;
 	temp = *env_list;
 	if (!ft_strncmp(name, "0", 2))
-		return (1);
+		return (0);
 	if (!check_unset_name(name))
 	{
 		ft_putstr_fd("export: '", 2);
 		ft_putstr_fd(name, 2);
 		ft_putstr_fd("' : not a valid identifier\n", 2);
-		return (0);
+		return (1);
 	}
 	if (!ft_strncmp(temp->bash_variable, name, ft_strlen(name)))
 	{
@@ -52,7 +54,7 @@ int	do_unset(t_env **env_list, char *name)
 	if (*env_list == NULL)
 	{
 		perror("List is Empty\n");
-		return (0);
+		return (1);
 	}
 	while (temp->next)
 	{
@@ -63,5 +65,6 @@ int	do_unset(t_env **env_list, char *name)
 		}
 		temp = temp->next;
 	}
+	msh->env = list_to_arr(msh->env_list);
 	return (1);
 }
