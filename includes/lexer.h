@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/07 11:37:41 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/11 11:06:55 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@
 /* AND and OR should not be indexed with 0*/
 
 // FIELDS
-#define LX_FIELD		0	// ''
-#define LX_EXT_FIELD	1	// ""
-#define LX_VAR			2	// $
+#define LX_PAR			0	// $
+#define LX_FIELD		1	// ''
+#define LX_EXT_FIELD	2	// ""
+#define LX_VAR			3	// $
 // SINGLES
 // #define LX_WC			3	// *
 // HALVES
-#define LX_PIPE			3	// |
-#define LX_REDIR_OUT	4	// >
-#define LX_REDIR_IN		5	// <
+#define LX_PIPE			4	// |
+#define LX_REDIR_OUT	5	// >
+#define LX_REDIR_IN		6	// <
 // DOUBLES
-#define LX_AND			6	// &&
-#define LX_OR			7	// ||
-#define LX_REDIR_APPEND	8	// >>
-#define LX_REDIR_INSRC	9	// <<
+#define LX_AND			7	// &&
+#define LX_OR			8	// ||
+#define LX_REDIR_APPEND	9	// >>
+#define LX_REDIR_INSRC	10	// <<
 
-#define LX_NUM			10
+#define LX_NUM			11
 #define LX_WORD			LX_NUM
 #define LX_SEP			99
 

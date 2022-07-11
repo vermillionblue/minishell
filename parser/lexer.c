@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/07 11:43:35 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/11 11:09:27 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_init_delims(t_msh *msh)
 	delims[LX_FIELD] = "''";
 	delims[LX_EXT_FIELD] = "\"\"";
 	delims[LX_VAR] = "$$ "; //should also finish with <>&&
-	// delims[LX_WC] = "*";
+	delims[LX_PAR] = "()";
 	
 	delims[LX_PIPE] = "|";
 	delims[LX_REDIR_OUT] = ">";
