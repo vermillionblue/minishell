@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 16:08:34 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 10:53:50 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/11 21:17:51 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,3 @@ int	do_echo(char **args)
 		printf("\n");
 	return (1);
 }
-
-// #include <stdio.h>
-// int	main(int ac, char **av)
-// {
-// 	return(do_echo(av) + ac*0);
-// }
