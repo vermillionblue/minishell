@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asterisk.h                                         :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/06 12:16:31 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 18:17:37 by danisanc         ###   ########.fr       */
+/*   Created: 2022/07/11 19:04:10 by danisanc          #+#    #+#             */
+/*   Updated: 2022/07/11 19:04:41 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASTERISK_H
-# define ASTERISK_H
+#include "../includes/exec.h"
 
-# include "minishell.h"
+void	check_dup(int n)
+{
+	if (n < 0)
+	{
+		perror("dup error\n");
+		exit(EXIT_FAILURE);
+	}
+}
 
-char	*expand_wildcard(char *raw_cmd);
-
-#endif
+void	check_pipe(int n)
+{
+	if (n < 0)
+	{
+		perror("pipe() error\n");
+		exit(EXIT_FAILURE);
+	}
+}

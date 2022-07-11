@@ -6,15 +6,22 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/10 23:25:00 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 19:31:35 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "includes/minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
+
+// //todo
+// - memory leaks
+// - fd leaks
+// - history 
+// - norminette
+// - exit correctly (the only cmd in line , and group?)
+// - parenthesis 
+// - clean here doc
+// - unset path && ls does not work!
+// - dup error with pipes, specifically with: env | grep PATH
 
 int	if_omit_space(char *line)
 {

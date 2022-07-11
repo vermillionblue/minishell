@@ -6,98 +6,12 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 00:18:28 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 19:41:09 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-int	print_arr(char **env)
-{
-	int i = 0;
-	while (env[i] != NULL)
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
-	return (1);
-}
-
-char	*read_stdin(char *limiter, char *file)
-{
-	char	*line;
-	int		fd;
-	int		id;
-
-	id = fork();
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (id == 0)
-	{
-		ft_signal_child();
-		while (1)
-		{
-			line = readline("> ");
-			if (!ft_strncmp(limiter, line, ft_strlen(limiter) + 1) || !line)
-			{
-				free (limiter);
-				break ;
-			}
-			write(fd, line, ft_strlen(line));
-			write(fd, "\n", 1);
-			free(line);
-		}
-	}
-	wait(NULL);
-	return (file);
-}
-
-char	*get_correct_path(char **cmd, t_msh *msh)
-{
-	int		i;
-	char	*a_path;
-	char	*temp;
-
-	i = 0;
-	if (access(cmd[0], F_OK) == 0)
-		return (cmd[0]);
-	while (msh->paths != NULL && msh->paths[i])
-	{
-		temp = ft_strjoin(msh->paths[i], "/");
-		a_path = ft_strjoin(temp, cmd[0]);
-		if (access(a_path, F_OK) == 0)
-			return (a_path);
-		i++;
-	}
-	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd(": command not found\n ", 2);
-	msh->last_exit_stat = 127;
-	exit (EXIT_FAILURE);
-}
-
-char	**get_paths(char **env, t_msh *msh)
-{
-	int		i;
-	char	**temp;
-
-	i = 0;
-	(void)msh;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH", 4) == 0)
-		{	
-			ft_memmove(env[i], env[i] + 5, ft_strlen(env[i]));
-			temp = ft_split(env[i], ':');
-			return (temp);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-
-// /built ins run in parent: unset export cd exit
-// exit needs to work differently
-// unset path && ls does not work!
 int	redirect_parent(char **cmd, t_msh *msh)
 {
 	int		res;
@@ -109,8 +23,8 @@ int	redirect_parent(char **cmd, t_msh *msh)
 		res = do_export(msh, check_if_no_args(cmd));
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		res = do_unset(msh, check_if_no_args(cmd));
-	else if (!ft_strncmp(cmd[0], "exit", 5))
-		do_exit();
+	// else if (!ft_strncmp(cmd[0], "exit", 5))
+	// 	do_exit();
 	return (res);
 }
 
@@ -138,24 +52,6 @@ int	redirect_child(char **cmd, t_msh *msh)
 	return (res);
 }
 
-void	if_dup_fail(int n)
-{
-	if (n < 0)
-	{
-		perror("dup error\n");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	check_pipe(int n)
-{
-	if (n < 0)
-	{
-		perror("pipe() error\n");
-		exit(EXIT_FAILURE);
-	}
-}
-
 void	set_std_i_o(t_cmds *cmd, t_msh *msh)
 {
 	if (cmd->infile_name)
@@ -167,16 +63,16 @@ void	set_std_i_o(t_cmds *cmd, t_msh *msh)
 			msh->last_exit_stat = 1;
 		}
 		else
-		{
 			dup2(cmd->infile_fd, STDIN_FILENO);
-		}	
 	}
 	if (cmd->outfile_name) 
 	{
 		if (cmd->append_outfile)
-			cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_APPEND, 0664);
+			cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY
+			| O_CREAT | O_APPEND, 0664);
 		else
-			cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+			cmd->outfile_fd = open(cmd->outfile_name, O_WRONLY
+			| O_CREAT | O_TRUNC, 0664);
 	}
 }
 
@@ -194,24 +90,23 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 		ft_signal_child();
 		if (group->cmds->cmd_num == 1)
 		{
-			//close(group->cmds->infile_fd);
 			close(fd[READ_END]);
 			close(fd[WRITE_END]);
 			if (group->cmds->outfile_name)
 			{
-				if_dup_fail(dup2(group->cmds->outfile_fd, STDOUT_FILENO));
+				check_dup(dup2(group->cmds->outfile_fd, STDOUT_FILENO));
 				close(group->cmds->outfile_fd);
 			}
 			else
 			{
-				if_dup_fail(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
+				check_dup(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
 				close(msh->temp_i_o[WRITE_END]);
 			}
 		}
 		else
 		{
 			close(fd[READ_END]);
-			if_dup_fail(dup2(fd[WRITE_END], STDOUT_FILENO));
+			check_dup(dup2(fd[WRITE_END], STDOUT_FILENO));
 			close(fd[WRITE_END]);
 		}
 		redirect_child(cmd, msh);
@@ -221,21 +116,19 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 		close(fd[WRITE_END]);
 		close(fd[READ_END]);
 		close(group->cmds->infile_fd);
-		if_dup_fail(dup2(msh->temp_i_o[READ_END], STDIN_FILENO));
+		check_dup(dup2(msh->temp_i_o[READ_END], STDIN_FILENO));
 		close(msh->temp_i_o[READ_END]);
 	}
 	else
 	{
 		close(fd[WRITE_END]);
-		if_dup_fail(dup2(fd[READ_END], STDIN_FILENO));
+		check_dup(dup2(fd[READ_END], STDIN_FILENO));
 		close(fd[READ_END]);
 	}
 	waitpid(0, &res, 0);
 	return (res);
 }
 
-
-//clean here_doc
 void	exec_group(t_group *group, t_msh *msh)
 {
 	int	j;
@@ -244,38 +137,16 @@ void	exec_group(t_group *group, t_msh *msh)
 	j = 0;
 	res = 0;
 	msh->temp_i_o = malloc(sizeof(int) * 2);
-	if_dup_fail(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
-	if_dup_fail(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
+	check_dup(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
+	check_dup(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
     while (group->cmds->cmd_num > 0)
     {
 		if (group->cmds->redirs[j][0])
 		{
 			while (group->cmds->redirs[j][0])
 			{
-				if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN ||
-				ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
-				{
-					
-					if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
-					{
-						group->cmds->here_doc = 1;
-						read_stdin(ft_ectracttext(group->cmds->redirs[j][0]), ".here_doc");
-						group->cmds->infile_name = ".here_doc";
-					}	
-					else
-					{
-						group->cmds->here_doc = 0;
-						group->cmds->infile_name = ft_ectracttext(group->cmds->redirs[j][0]);
-					}
-				}
-				else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_OUT || ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_APPEND)
-				{
-					group->cmds->outfile_name = ft_ectracttext(group->cmds->redirs[j][0]);
-					if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_APPEND)
-						group->cmds->append_outfile = 1;
-					else
-						group->cmds->append_outfile = 0;
-				}	
+				check_infile(group, msh, j);
+				check_outfile(group, j);
 				group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;
 			}
 		}
@@ -288,9 +159,7 @@ void	exec_group(t_group *group, t_msh *msh)
 		j++;
     }
 }
-//try
-//<in <innn ls | <i <ll ls && <k <kjn ls // test in out files
-//ls |cat -e & ls -l | cat | cat // tes logical ops
+
 void	ft_prep_exec(t_msh *msh, t_env **env_list)
 {
 	int	i;
@@ -304,7 +173,6 @@ void	ft_prep_exec(t_msh *msh, t_env **env_list)
 	msh->paths = get_paths(env_temp, msh);
 	msh->last_exit_stat = 0;
 	msh->env_list = env_list;
-	printf("===========result===========\n");
 	while(msh->group_num > i)
 	{
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)

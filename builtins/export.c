@@ -6,69 +6,21 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/10 14:41:23 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:57:51 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-//A variable name in Bash can include letters, digits, and underscores. Its name can be started with a letter and an underscore, only. Valid variable names are size, tax5, and _tax20 but not 5rules.
-void	free_double(char **string)
-{
-	int	i;
-
-	i = 0;
-	while (string[i] != NULL)
-	{
-		free(string[i]);
-		i++;
-	}
-	free(string[i]);
-	free(string);
-}
-
-int	check_if_valid_env(char *name)
-{
-	int	i;
-
-	i = 1;
-	if (!(ft_isalpha(name[0]) || name[0] == '_'))
-		return (0);
-	while (name[i])
-	{
-		if (!ft_isalnum(name[i]) && name[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-unsigned int	env_list_size(t_env **env_list)
-{
-	t_env	*temp;
-	int		i;
-
-	i = 0;
-	temp = *env_list;
-	if (!temp)
-	{
-		perror("List is Empty\n");
-		return (0);
-	}
-	while (temp)
-	{
-		i++;
-		temp = temp->next;
-	}
-	return (i);
-}
-
+//A variable name in Bash can include letters, digits, and underscores. Its 
+// name can be started with a letter and an underscore, only. Valid variable 
+// names are size, tax5, and _tax20 but not 5rules.
 char	*get_content(char *args)
 {
-	int	len;
-	int	k;
+	int		len;
+	int		k;
 	char	*value;
-	
+
 	args++;
 	k = 0;
 	len = 0;
@@ -106,14 +58,8 @@ char	*get_name(char *args)
 	return (name);
 }
 
-void	print_name_error(char *args)
-{
-	ft_putstr_fd("export: '", 2);
-	ft_putstr_fd(args, 2);
-	ft_putstr_fd("' : not a valid identifier\n", 2);
-}
-
-void	overwrite_env_or_new(t_env *new_env, t_env **env_list, char *name, char *value)
+void	overwrite_env_or_new(t_env *new_env, t_env **env_list,
+char *name, char *value)
 {
 	t_env	*node;
 
@@ -163,7 +109,7 @@ int	do_export(t_msh *msh, char *args)
 	new_env = NULL;
 	if (!ft_strncmp(args, "0", 2))
 	{
-		print_sorted_export(msh->env_list);
+		sort_export(msh->env_list);
 		return (0);
 	}
 	if (!ft_strchr(args, '='))
