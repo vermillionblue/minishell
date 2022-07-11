@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/10 14:48:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/10 22:22:23 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	main(int argc, char **argv, char **envp)
 	ft_signal_parent();
 	while(1)
 	{
+		env_list = create_env_list(envp);
+		msh.env_list = &env_list; // printf("TEST PATH: %s\n", find_env_node(&msh.env_list, "PATH")->bash_v_content);
 		//env_list = create_env_list(envp);
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
@@ -55,7 +57,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
+		
 		ft_printlexems(msh.lexems);
+		ft_parser(&msh);
+		
 		ft_print_groups(&msh);
 		ft_prep_exec(&msh, &env_list);
 		free(line);

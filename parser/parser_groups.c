@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_groups.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:32:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/04 15:30:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:45:55 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int	ft_makegroups(t_msh *msh)
 	while (i < msh->group_num)
 	{
 		msh->groups[i] = malloc(sizeof(t_group));
+		msh->groups[i]->index = i;
 		msh->groups[i]->lexems = malloc(sizeof(t_list *));
 		*msh->groups[i]->lexems = NULL;
 		if (i == 0)
-			msh->groups[i]->type = 0;
+			msh->groups[i]->type = -1;
 		else
 			msh->groups[i]->type = ft_ectracttype(link);
 		while (link)
@@ -67,7 +68,7 @@ int	ft_makegroups(t_msh *msh)
 			type = ft_ectracttype(link);
 			if ((type == LX_AND || type == LX_OR) && *msh->groups[i]->lexems)
 				break ;
-			text = ft_ectracttext(link);
+			text = ft_strdup(ft_ectracttext(link));
 			ft_addlexem(msh->groups[i]->lexems, ft_newlexem(type, text));
 			link = link->next;
 		}
@@ -82,3 +83,4 @@ int	ft_makegroups(t_msh *msh)
 	}
 	return (0);
 }
+

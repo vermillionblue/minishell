@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 12:23:24 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 11:06:55 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 /* AND and OR should not be indexed with 0*/
 
 // FIELDS
-#define LX_FIELD		0	// ''
-#define LX_EXT_FIELD	1	// ""
-#define LX_VAR			2	// $
+#define LX_PAR			0	// $
+#define LX_FIELD		1	// ''
+#define LX_EXT_FIELD	2	// ""
+#define LX_VAR			3	// $
 // SINGLES
-#define LX_WC			3	// *
+// #define LX_WC			3	// *
 // HALVES
 #define LX_PIPE			4	// |
 #define LX_REDIR_OUT	5	// >
@@ -74,6 +75,7 @@ char	*ft_findsym(char *ptr, t_msh *msh);
 char	*ft_getfield(int lx_type, char *ptr, t_msh *msh);
 char	*ft_gettext(char *ptr, int len);
 int		ft_have_inters(char *s1, char *s2);
+char	*ft_chr2str(char c);
 
 // lists.c
 t_list	*ft_lst_penult(t_list *lst);

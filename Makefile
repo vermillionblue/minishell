@@ -3,18 +3,40 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/09 16:46:34 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/09 17:14:55 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c builtins/cd.c temporal.c builtins/export.c builtins/pwd.c \
-builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
-exec/exec.c signals.c builtins/echo.c wildcard/asterisk.c wildcard/asterisk_utils.c parser/lexer.c parser/lists.c parser/parser.c parser/parser_redirs.c parser/printer.c
+SRC = 	minishell.c \
+		builtins/cd.c \
+		temporal.c \
+		builtins/export.c \
+		builtins/pwd.c \
+		builtins/exit.c \
+		builtins/unset.c \
+		builtins/env.c \
+		builtins/export_sort.c \
+		builtins/echo.c \
+		exec/exec.c \
+		signals.c \
+		wildcard/asterisk.c \
+		wildcard/asterisk_utils.c \
+		parser/lexer.c \
+		parser/lists.c \
+		parser/parser_main.c \
+		parser/parser_groups.c \
+		parser/parser_expansion.c \
+		parser/parser_wc.c \
+		parser/parser_redirs.c \
+		parser/parser_redir_utils.c \
+		parser/parser_cmds.c \
+		parser/printer.c \
+		parser/freeings.c
 
 OBJ = $(SRC:.c=.o)
 
