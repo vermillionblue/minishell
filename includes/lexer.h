@@ -6,7 +6,11 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/11 11:06:55 by vangirov         ###   ########.fr       */
+=======
+/*   Updated: 2022/07/11 18:26:06 by danisanc         ###   ########.fr       */
+>>>>>>> dani
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +20,33 @@
 # include "minishell.h"
 
 /* AND and OR should not be indexed with 0*/
-
 // FIELDS
+<<<<<<< HEAD
 #define LX_PAR			0	// $
 #define LX_FIELD		1	// ''
 #define LX_EXT_FIELD	2	// ""
 #define LX_VAR			3	// $
 // SINGLES
 // #define LX_WC			3	// *
+=======
+# define LX_FIELD		0	// ''
+# define LX_EXT_FIELD	1	// ""
+# define LX_VAR			2	// $
+// SINGLES
+# define LX_WC			3	// *
+>>>>>>> dani
 // HALVES
-#define LX_PIPE			4	// |
-#define LX_REDIR_OUT	5	// >
-#define LX_REDIR_IN		6	// <
+# define LX_PIPE			4	// |
+# define LX_REDIR_OUT	5	// >
+# define LX_REDIR_IN		6	// <
 // DOUBLES
-#define LX_AND			7	// &&
-#define LX_OR			8	// ||
-#define LX_REDIR_APPEND	9	// >>
-#define LX_REDIR_INSRC	10	// <<
-
-#define LX_NUM			11
-#define LX_WORD			LX_NUM
-#define LX_SEP			99
-
-// typedef enum Lx
-// {
-// 	FIELD,
-// 	EXT_FIELD,
-// 	VAR,				// $
-// // SINGLES
-// 	LX_WC,				// *
-// // HALVES
-// 	PIPE,				// |
-// 	REDIR_OUT,		// >
-// 	REDIR_IN,			// <
-// // DOUBLES
-// 	AND,				// &&
-// 	OR,				// ||
-// 	REDIR_APPEND,		// >>
-// 	REDIR_INSRC,		// <<
-
-// 	WORD,
-// 	SEP,
-// 	LXNUM,
-// }	Lx;
-
+# define LX_AND			7	// &&
+# define LX_OR			8	// ||
+# define LX_REDIR_APPEND	9	// >>
+# define LX_REDIR_INSRC	10	// <<
+# define LX_NUM			11
+# define LX_WORD			LX_NUM
+# define LX_SEP			99
 
 typedef struct s_lexem
 {

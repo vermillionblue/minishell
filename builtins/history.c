@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asterisk.h                                         :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/06 12:16:31 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 18:17:37 by danisanc         ###   ########.fr       */
+/*   Created: 2022/07/11 21:35:15 by danisanc          #+#    #+#             */
+/*   Updated: 2022/07/11 21:54:42 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASTERISK_H
-# define ASTERISK_H
+#include "../includes/builtins.h"
 
-# include "minishell.h"
+void	fd_add_history(char *line, t_list **history)
+(
+	t_list *node;
 
-char	*expand_wildcard(char *raw_cmd);
-
-#endif
+	node = (t_list *)malloc(sizeof(t_list));
+	ft_lstadd_back(history, node);
+)

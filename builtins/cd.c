@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 23:45:50 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/24 15:52:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:02:07 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int	print_error(int res, char *path)
 	return (0);
 }
 
-void up_or_down(char *home, char *path, int *res)
+void	up_or_down(char *home, char *path, int *res)
 {
-	char *temp;
+	char	*temp;
 
 	home = ft_strjoin(home, "/");
 	temp = ft_strjoin(home, path);
-	free(home);
-	if (access(temp, F_OK) == 0 || !ft_strncmp(path, "..", 2) || access(path, F_OK) == 0)
+	if (access(temp, F_OK) == 0 || !ft_strncmp(path, "..", 2)
+		|| access(path, F_OK) == 0)
 	{
 		*res = chdir(path);
 		free(temp);

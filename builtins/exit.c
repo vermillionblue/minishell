@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:17:49 by danisanc          #+#    #+#             */
-/*   Updated: 2022/06/23 18:44:07 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:15:35 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-void do_exit(void)
+void	do_exit(void)
 {
 	printf(BLUE);
 	printf("Exiting... 🥲\n");

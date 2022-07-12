@@ -6,13 +6,17 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/09 17:20:20 by vangirov         ###   ########.fr       */
+=======
+/*   Updated: 2022/07/11 22:11:18 by danisanc         ###   ########.fr       */
+>>>>>>> dani
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
- ///colors
+///colors
 # define GREEN "\033[0;32m"
 # define BLACK "\033[0;30m"
 # define RED "\033[0;31m"
@@ -47,21 +51,17 @@ typedef struct s_env
 	char			*bash_v_content;
 	int				sort;
 	struct s_env	*next;
-} t_env;
+}			t_env;
 
 typedef struct s_cmds
 {
-	char	**env;			// no yet, wait for Dani
 	int		cmd_num;
-	int		pipe_num;
-	char	*infile_name;	// no yet
-	char	*outfile_name;	// no yet
-	int		infile_fd;		// no yet
+	char	*infile_name;
+	char	*outfile_name;
+	int		infile_fd;
 	int		outfile_fd;	
-	int		append_outfile; //boolean
-	int		here_doc;	// boolean
-	char	**paths;		// no yet
-	int		**pipes;	
+	int		append_outfile;
+	int		here_doc;
 	char	**cmd_names;
 	t_list	***cmd_args;
 	char	***newargvs;
@@ -78,7 +78,11 @@ typedef struct s_group
 
 typedef struct s_msh
 {
+<<<<<<< HEAD
 	char	**builtins;
+=======
+	char	*here_doc_file_name;
+>>>>>>> dani
 	char	**delims;
 	t_list	**lexems;
 	int		group_num;
@@ -88,20 +92,21 @@ typedef struct s_msh
 	char	**env;
 	t_env	**env_list;
 	int		*temp_i_o;
+	int		exit;
 }	t_msh;
-
 /* Linked Lists Utils */
 t_list	*create_element(char **value);
 void	print_list(t_list **stack);
 void	free_list(t_list **list);
 void	delete_list(t_list **list);
-char    *expand_wildcard(char *raw_cmd);
+char	*expand_wildcard(char *raw_cmd);
 /////signals
 void	ft_signal_child(void);
-void    ft_signal_parent(void);
+void	ft_signal_parent(void);
 
 # include "lexer.h"
 # include "parser.h"
 # include "exec.h"
+# include "builtins.h"
 
 #endif

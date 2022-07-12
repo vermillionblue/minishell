@@ -6,16 +6,13 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 14:07:21 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/06 16:06:21 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:57:55 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
 
-void    handle_sigtint(int sig)
+void	handle_sigtint(int sig)
 {
 	(void)sig;
 	rl_replace_line("", 0);
@@ -24,7 +21,7 @@ void    handle_sigtint(int sig)
 	rl_redisplay();
 }
 
-void    ft_signal_parent(void)
+void	ft_signal_parent(void)
 {
 	signal(SIGINT, &handle_sigtint);
 	signal(SIGQUIT, SIG_IGN);

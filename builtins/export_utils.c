@@ -1,27 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 19:59:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:58:10 by danisanc         ###   ########.fr       */
+/*   Created: 2022/07/11 17:14:56 by danisanc          #+#    #+#             */
+/*   Updated: 2022/07/11 17:17:57 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-int	do_cwd(void)
+void	print_name_error(char *args)
 {
-	char	cwd[PATH_MAX];
+	ft_putstr_fd("export: '", 2);
+	ft_putstr_fd(args, 2);
+	ft_putstr_fd("' : not a valid identifier\n", 2);
+}
 
-	if (getcwd(cwd, sizeof(cwd)))
-		printf("%s\n", cwd);
-	else
+void	free_double(char **string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != NULL)
 	{
-		perror("getcwd() error");
+		free(string[i]);
+		i++;
+	}
+	free(string[i]);
+	free(string);
+}
+
+int	check_if_valid_env(char *name)
+{
+	int	i;
+
+	i = 1;
+	if (!(ft_isalpha(name[0]) || name[0] == '_'))
 		return (0);
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+		i++;
 	}
 	return (1);
 }
