@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/12 13:28:35 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:18:31 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /* AND and OR should not be indexed with 0*/
 // FIELDS
-#define LX_PAR			0	// $
+#define LX_PAR			0	// ()
 #define LX_FIELD		1	// ''
 #define LX_EXT_FIELD	2	// ""
 #define LX_VAR			3	// $

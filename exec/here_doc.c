@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:23:30 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 19:24:27 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:26:22 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ char	*read_stdin(char *limiter, char *file)
 		while (1)
 		{
 			line = readline("> ");
+			printf("%s vs %s\n", limiter, line);
 			if (!ft_strncmp(limiter, line, ft_strlen(limiter) + 1) || !line)
 			{
-				free (limiter);
+				// printf("trigger\n");
+				// free (limiter);
 				break ;
 			}
 			write(fd, line, ft_strlen(line));
@@ -39,5 +41,3 @@ char	*read_stdin(char *limiter, char *file)
 	wait(NULL);
 	return (file);
 }
-
-////add here doc

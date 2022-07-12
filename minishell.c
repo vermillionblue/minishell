@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 13:30:45 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:17:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // - memory leaks
 // - fd leaks
-// - history 
+
 // - norminette
 // - parenthesis 
 // - clean here doc

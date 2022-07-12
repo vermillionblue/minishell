@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:09:55 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 19:41:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:32:37 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	check_infile(t_group *group, t_msh *msh, int j)
 {
-	if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN ||
-		ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
+	char	*limiter;
+
+	printf("limiter %s\n", ft_ectracttext(group->cmds->redirs[j][0]));
+	limiter = ft_strdup(ft_ectracttext(group->cmds->redirs[j][0]));
+	if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
 	{
-		if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
-		{
-			group->cmds->here_doc = 1;
-			read_stdin(ft_ectracttext(group->cmds->redirs[j][0]), \
-			msh->here_doc_file_name);
-			group->cmds->infile_name = msh->here_doc_file_name;
-		}	
-		else
-		{
-			group->cmds->here_doc = 0;
-			group->cmds->infile_name = \
-			ft_ectracttext(group->cmds->redirs[j][0]);
-		}
+		printf("limiter %s\n", ft_ectracttext(group->cmds->redirs[j][0]));
+		group->cmds->here_doc = 1;
+		read_stdin(limiter, msh->here_doc_file_name);
+		group->cmds->infile_name = msh->here_doc_file_name;
+	}	
+	else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN)
+	{
+		group->cmds->here_doc = 0;
+		group->cmds->infile_name = \
+		ft_ectracttext(group->cmds->redirs[j][0]);
 	}
 	else
 		group->cmds->infile_name = NULL;
