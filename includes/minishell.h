@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/11 19:08:14 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 22:11:18 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_msh
 	char	**env;
 	t_env	**env_list;
 	int		*temp_i_o;
+	int		exit;
 }	t_msh;
 /* Linked Lists Utils */
 t_list	*create_element(char **value);

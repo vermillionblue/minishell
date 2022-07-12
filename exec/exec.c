@@ -6,13 +6,13 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 19:41:09 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/11 22:43:29 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-int	redirect_parent(char **cmd, t_msh *msh)
+int	redirect_parent(char **cmd, int cmd_num, t_msh *msh)
 {
 	int		res;
 
@@ -23,8 +23,11 @@ int	redirect_parent(char **cmd, t_msh *msh)
 		res = do_export(msh, check_if_no_args(cmd));
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		res = do_unset(msh, check_if_no_args(cmd));
-	// else if (!ft_strncmp(cmd[0], "exit", 5))
-	// 	do_exit();
+	else if (!ft_strncmp(cmd[0], "exit", 5) && cmd_num == 1)
+	{
+		msh->exit = 1;
+		res = 0;
+	}
 	return (res);
 }
 
@@ -38,8 +41,16 @@ int	redirect_child(char **cmd, t_msh *msh)
 		res = do_cwd();
 	else if (!ft_strncmp(cmd[0], "env", 4))
 		print_env_list(msh->env_list);
-	// else if (!ft_strncmp(cmd[0], "echo", 5) && !ft_strncmp(args[1], "-n", 3))
-	// 	res = do_echo(args);
+	else if (!ft_strncmp(cmd[0], "echo", 5) && is_nflag(cmd[1]))
+		res = do_echo(cmd);
+	// else if (!ft_strncmp(cmd[0], "history", 8))
+	// {
+
+	// }
+	else if (!ft_strncmp(cmd[0], "exit", 5))
+	{
+		exit(EXIT_SUCCESS);
+	}
 	else
 	{
 		a_path = get_correct_path(cmd, msh);
@@ -132,10 +143,12 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 void	exec_group(t_group *group, t_msh *msh)
 {
 	int	j;
+	int	cmd_num;
 	int	res;
 
 	j = 0;
 	res = 0;
+	cmd_num = group->cmds->cmd_num;
 	msh->temp_i_o = malloc(sizeof(int) * 2);
 	check_dup(msh->temp_i_o[READ_END] = dup(STDIN_FILENO));
 	check_dup(msh->temp_i_o[WRITE_END] = dup(STDOUT_FILENO));
@@ -150,7 +163,7 @@ void	exec_group(t_group *group, t_msh *msh)
 				group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;
 			}
 		}
-		res = redirect_parent(group->cmds->newargvs[j], msh);
+		res = redirect_parent(group->cmds->newargvs[j], cmd_num, msh);
 		if (res == -2)
         	msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j], group, msh);
 		else
