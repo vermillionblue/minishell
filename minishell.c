@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 11:34:04 by vsimeono          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/10 22:22:23 by vangirov         ###   ########.fr       */
-=======
-/*   Updated: 2022/07/12 11:25:18 by danisanc         ###   ########.fr       */
->>>>>>> dani
+/*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
+/*   Updated: 2022/07/12 13:30:45 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +36,6 @@ int	if_omit_space(char *line)
 	return (1);
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -55,12 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	msh.exit = 0;
 	while(!msh.exit)
 	{
-<<<<<<< HEAD
-		env_list = create_env_list(envp);
-		msh.env_list = &env_list; // printf("TEST PATH: %s\n", find_env_node(&msh.env_list, "PATH")->bash_v_content);
-		//env_list = create_env_list(envp);
-=======
->>>>>>> dani
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{
@@ -71,10 +60,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		
 		ft_printlexems(msh.lexems);
 		ft_parser(&msh);
-		
 		ft_print_groups(&msh);
 		ft_prep_exec(&msh, &env_list);
 		free(line);

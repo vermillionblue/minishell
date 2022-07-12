@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/11 11:06:55 by vangirov         ###   ########.fr       */
-=======
-/*   Updated: 2022/07/11 18:26:06 by danisanc         ###   ########.fr       */
->>>>>>> dani
+/*   Updated: 2022/07/12 13:28:35 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +17,12 @@
 
 /* AND and OR should not be indexed with 0*/
 // FIELDS
-<<<<<<< HEAD
 #define LX_PAR			0	// $
 #define LX_FIELD		1	// ''
 #define LX_EXT_FIELD	2	// ""
 #define LX_VAR			3	// $
 // SINGLES
 // #define LX_WC			3	// *
-=======
-# define LX_FIELD		0	// ''
-# define LX_EXT_FIELD	1	// ""
-# define LX_VAR			2	// $
-// SINGLES
-# define LX_WC			3	// *
->>>>>>> dani
 // HALVES
 # define LX_PIPE			4	// |
 # define LX_REDIR_OUT	5	// >
@@ -63,7 +51,7 @@ char	*ft_getfield(int lx_type, char *ptr, t_msh *msh);
 char	*ft_gettext(char *ptr, int len);
 int		ft_have_inters(char *s1, char *s2);
 char	*ft_chr2str(char c);
-
+# include "minishell.h"
 // lists.c
 t_list	*ft_lst_penult(t_list *lst);
 t_lexem	*ft_newlexem(int lx_type, char *text);

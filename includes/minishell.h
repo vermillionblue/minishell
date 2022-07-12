@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/09 17:20:20 by vangirov         ###   ########.fr       */
-=======
-/*   Updated: 2022/07/11 22:11:18 by danisanc         ###   ########.fr       */
->>>>>>> dani
+/*   Updated: 2022/07/12 13:24:38 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +74,7 @@ typedef struct s_group
 
 typedef struct s_msh
 {
-<<<<<<< HEAD
-	char	**builtins;
-=======
 	char	*here_doc_file_name;
->>>>>>> dani
 	char	**delims;
 	t_list	**lexems;
 	int		group_num;
@@ -92,6 +84,7 @@ typedef struct s_msh
 	char	**env;
 	t_env	**env_list;
 	int		*temp_i_o;
+	int		*pipe_fds;
 	int		exit;
 }	t_msh;
 /* Linked Lists Utils */
