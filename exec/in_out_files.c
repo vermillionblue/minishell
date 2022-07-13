@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:09:55 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 15:32:37 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:40:14 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	check_infile(t_group *group, t_msh *msh, int j)
 {
 	char	*limiter;
 
-	printf("limiter %s\n", ft_ectracttext(group->cmds->redirs[j][0]));
 	limiter = ft_strdup(ft_ectracttext(group->cmds->redirs[j][0]));
 	if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_INSRC)
 	{
-		printf("limiter %s\n", ft_ectracttext(group->cmds->redirs[j][0]));
 		group->cmds->here_doc = 1;
 		read_stdin(limiter, msh->here_doc_file_name);
 		group->cmds->infile_name = msh->here_doc_file_name;

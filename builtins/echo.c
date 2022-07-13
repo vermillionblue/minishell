@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 16:08:34 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 21:17:51 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/12 21:50:17 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_nflag(char *str)
 		if (str[i] == '\0')
 			return (1);
 	}
-	return(0);
+	return (0);
 }
 
 int	do_echo(char **args)

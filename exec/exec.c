@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 14:28:36 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:53:03 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,18 @@ int	redirect_child(char **cmd, t_msh *msh)
 			exit (EXIT_FAILURE);
 		}
 	}
-	return (res);
+	exit (res);
 }
 
 int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 {
 	int		res;
     int		id;
+	char	**env_temp;
 
-	msh->pipe_fds = malloc(sizeof(int) * 2);
+	env_temp = list_to_arr(msh->env_list);
+	msh->paths = get_paths(env_temp, msh);
+	msh->pipe_fds = ft_calloc(2, sizeof(int));
 	set_std_i_o(group->cmds, msh);
     check_pipe(pipe(msh->pipe_fds));
 	id = fork();
@@ -72,8 +75,8 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 		close_fds_child(group, msh);
 		redirect_child(cmd, msh);
 	}
-	close_fds_parent(group, msh);
 	waitpid(0, &res, 0);
+	close_fds_parent(group, msh);
 	return (res);
 }
 
