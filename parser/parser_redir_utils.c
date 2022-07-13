@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:39:08 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/09 17:40:56 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:47:54 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_list	*ft_lst_find_preceding(t_list **head, t_list *target)
 	link = *head;
 	while (link)
 	{
-		// printf("finding prec: %s\n", ft_ectracttext(link));
 		if (link->next == target)
 			return (link);
 		link = link-> next;
@@ -60,12 +59,8 @@ t_list	*ft_lst_detach_from(t_list **headfrom, t_list *target)
 	else
 	{
 		preceding = ft_lst_find_preceding(headfrom, target);
-		// if (preceding)
-		// 	printf("prec: %s, %d\n", ft_ectracttext(preceding), ft_ectracttype(preceding->next));
 		if (preceding)
 			preceding->next = target->next;
-		// if (preceding->next)
-		// 	printf("next: %s, %d\n", ft_ectracttext(preceding->next), ft_ectracttype(preceding->next));
 	}
 	target->next = NULL;
 	return (target);
@@ -73,7 +68,6 @@ t_list	*ft_lst_detach_from(t_list **headfrom, t_list *target)
 
 void	ft_free_lexem(t_list *link)
 {
-	// if (ft_ectracttype(link) <= LX_VAR)
 	free(ft_ectracttext(link));
 	free(link->content);
 	free(link);
@@ -88,56 +82,3 @@ char	*ft_strjoinfree(char *tofree1, char *tofree2)
 	free(tofree2);
 	return (newline);
 }
-
-// char	*ft_concat(char *line, char *nonl_buff)
-// {
-// 	char	*newline;
-
-// 	newline = ft_strjoin(line, nonl_buff);
-// 	free(line);
-// 	return (newline);
-// }
-
-// /* hf (head_from), ht (head_to), t (target), d(destination) */
-// t_list	*ft_lstpush_behind_link(t_list **hf, t_list *t, t_list **ht, t_list *d)
-// {
-// 	t_list	*target;
-
-// 	if (!ht)
-// 		return (NULL);
-// 	target = ft_lst_detach_from(hf, t);
-// 	if (!target)
-// 		return (NULL);
-// 	if (!d)
-// 	{
-// 		ft_lstadd_back(ht, target);
-// 		return target;
-// 	}
-// 	target->next = d->next;
-// 	d->next = target;
-// 	return (target);
-// }
-
-// t_list	*ft_lstpush_before_link(t_list **hf, t_list *t, t_list **ht, t_list *d)
-// {
-// 	t_list	*target;
-// 	t_list	*preceding;
-
-// 	if (!ht)
-// 		return (NULL);
-// 	target = ft_lst_detach_from(hf, t);
-// 	if (!target)
-// 		return (NULL);
-// 	preceding = ft_lst_find_preceding(ht, d);
-// 	if (*ht && !preceding)
-// 	{
-// 		*ht = target;
-// 	}
-// 	else
-// 	{
-// 		preceding->next = target;
-// 	}
-// 	target->next = d;
-// 	return (target);
-// }
-

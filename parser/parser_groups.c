@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:32:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 17:45:55 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:37:54 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 /* if the first token is AND or OR print error */
 int	ft_count_groups(t_list **lexems)
 {
-	int	counter;
-	int type;
+	int		counter;
+	int		type;
+	t_list	*link;
 
-	t_list *link;
 	if (!*lexems)
 		return (0);
 	counter = 1;
 	link = *lexems;
 	type = ft_ectracttype(link);
 	if (type == LX_AND || type == LX_OR)
-		return(ft_error("syntax error: || or && as the first token", -301));
+		return (ft_error("syntax error: || or && as the first token", -301));
 	type = ft_ectracttype(ft_lstlast(link));
 	if (type == LX_AND || type == LX_OR)
-		return(ft_error("syntax error: || or && as the last token", -399));
+		return (ft_error("syntax error: || or && as the last token", -399));
 	while (link)
 	{
 		type = ft_ectracttype(link);
@@ -40,7 +40,6 @@ int	ft_count_groups(t_list **lexems)
 
 int	ft_makegroups(t_msh *msh)
 {
-	// int		gr_num;
 	int		i;
 	t_list	*link;
 	int		type;
@@ -48,8 +47,7 @@ int	ft_makegroups(t_msh *msh)
 
 	msh->group_num = ft_count_groups(msh->lexems);
 	if (msh->group_num <= 0)
-		return(ft_error("could not parse", -300));
-	
+		return (ft_error("could not parse", -300));
 	msh->groups = malloc(sizeof(t_group *) * msh->group_num);
 	i = 0;
 	link = *msh->lexems;
@@ -73,14 +71,7 @@ int	ft_makegroups(t_msh *msh)
 			link = link->next;
 		}
 		ft_dellastsep(msh->groups[i]->lexems);
-
-		// /////////////////////////////////////////////////////////////
-		// msh->groups[i]->cmds = malloc(sizeof(t_cmds *));
-		// msh->groups[i]->cmds->cmd_num = ft_count_cmds(msh->groups[i]->lexems);
-		// if (msh->groups[i]->cmds->cmd_num < 0)
-		// 	return(ft_error("could not parse group #%d", -400));
 		i++;
 	}
 	return (0);
 }
-
