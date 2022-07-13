@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/12 14:14:50 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/13 19:11:11 by vangirov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,16 @@ SRC = minishell.c \
 	builtins/export_utils.c builtins/echo.c \
 	exec/exec.c exec/errors.c exec/in_out_files.c exec/path.c exec/here_doc.c exec/fd_control.c\
 	wildcard/asterisk.c wildcard/asterisk_utils.c \
+	parser/freeings.c \
 	parser/lexer.c \
 	parser/lists.c \
-	parser/parser_main.c \
-	parser/parser_groups.c \
+	parser/parser_cmds.c \
 	parser/parser_expansion.c \
-	parser/parser_wc.c \
+	parser/parser_groups.c \
+	parser/parser_main.c \
 	parser/parser_redirs.c \
 	parser/parser_redir_utils.c \
-	parser/parser_cmds.c \
+	parser/parser_wc.c \
 	parser/printer.c \
 	signals.c \
 
