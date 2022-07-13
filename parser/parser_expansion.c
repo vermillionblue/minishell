@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 15:39:01 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:50:51 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,25 @@ void	ft_expand_all_groups_vars(t_msh *msh)
 	}
 }
 
-char	*ft_isspecialvar(char *text, t_msh *msh)
+char	*ft_get_var_value(t_list *link, t_msh *msh)
 {
+	t_env	*var;
+	char	*text;
+
+	text = (*(t_lexem *)link->content).text;
 	if (ft_strncmp(text, "?", 2) == 0)
 		return (ft_itoa(msh->last_exit_stat));
-	return (NULL);
+	var = find_env_node(msh->env_list, text);
+	if (var)
+		return (var->bash_v_content);
+	else
+		return (NULL);
 }
 
 void	ft_expand_gr_vars(t_msh *msh, int group_i)
 {
 	t_list	*link;
 	t_list	*next;
-	t_env	*var;
-	char	*text;
 	char	*value;
 
 	link = *msh->groups[group_i]->lexems;
@@ -44,17 +50,10 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 		next = link->next;
 		if (ft_ectracttype(link) == LX_VAR)
 		{
-			text = (*(t_lexem *)link->content).text;
 			// printf("TEST text: %s\n", text);
 			// print_env_list(msh->env_list);
 			// printf(">>>>>>>>>>>>>>> Finish printing env\n");
-			value = ft_isspecialvar(text, msh);
-			if (!value)
-			{
-				var = find_env_node(msh->env_list, text);
-				if (var)
-					value = var->bash_v_content;
-			}
+			value = ft_get_var_value(link, msh);
 			if (value)
 			{
 				(*(t_lexem *)link->content).text = value;
