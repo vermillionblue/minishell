@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 16:06:51 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:49:26 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,21 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 	char	*text;
 
 	link = *msh->groups[group_i]->lexems;
-	while(link)
+	while (link)
 	{
 		next = link->next;
 		if (ft_ectracttype(link) == LX_VAR)
 		{
-			// printf("TEST text: %s\n", text);
-			// print_env_list(msh->env_list);
-			// printf(">>>>>>>>>>>>>>> Finish printing env\n");
 			text = (*(t_lexem *)link->content).text;
 			value = ft_get_var_value(text, msh);
 			if (value)
 			{
 				(*(t_lexem *)link->content).text = value;
-				// printf("TEST new text: %s\n", (*(t_lexem *)link->content).text);
-				// free(text);
-				// free(value);
 				(*(t_lexem *)link->content).type = LX_WORD;
 			}
 			else
 			{
 				ft_lst_detach_from(msh->groups[group_i]->lexems, link);
-				// free((*(t_lexem *)link->content).text);
-				// free(link);
 			}
 		}
 		link = next;
@@ -77,12 +69,10 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 int	ft_get_var_len(char *ptr, t_msh *msh)
 {
 	int		len;
-	// char	*start;
 	char	*closings;
 
 	closings = msh->delims[LX_VAR] + 1;
 	len = 0;
-	// start = ptr;
 	while (*ptr && !ft_strchr(closings, *ptr))
 	{
 		len++;
@@ -90,24 +80,6 @@ int	ft_get_var_len(char *ptr, t_msh *msh)
 	}
 	return (len);
 }
-
-// 	name = ft_gettext(start, len);
-// 	var = find_env_node(&(msh->env_list), name);
-// 	if (var)
-// 	{
-// 		value = ft_strdup(var->bash_v_content);
-// 		free(name);
-// 	}
-// 	else
-// 	{
-// 		ft_lst_detach_from(msh->groups[group_i]->lexems, link);
-// 		// free((*(t_lexem *)link->content).text);
-// 		// free(link);
-// 	}
-// 	if (*ptr && lx_type <= LX_EXT_FIELD)
-// 		ptr++;
-// 	return (ptr);
-// }
 
 char	*ft_expand_text(t_msh *msh, char *text)
 {
@@ -131,7 +103,6 @@ char	*ft_expand_text(t_msh *msh, char *text)
 		{
 			len = ft_get_var_len(++ptr, msh);
 			name = ft_gettext(ptr, len);
-			// printf("LEN: %d\n", len);
 			value = ft_get_var_value(name, msh);
 			free(name);
 			if (value)
@@ -152,7 +123,7 @@ void	ft_expand_gr_fields(t_msh *msh, int group_i)
 	char	*expanded;
 
 	link = *msh->groups[group_i]->lexems;
-	while(link)
+	while (link)
 	{
 		next = link->next;
 		if (ft_ectracttype(link) == LX_EXT_FIELD)
