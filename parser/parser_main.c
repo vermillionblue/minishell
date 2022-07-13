@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/09 16:32:16 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:13:02 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	ft_parser(t_msh *msh)
 			ft_expand_gr_fields(msh, i);
 			ft_make_cmd_args(msh->groups[i]);
 			ft_loop_cmds(msh->groups[i], ft_expand_gr_wcs);
-			ft_unite_texts(msh->groups[i]);
 
 			msh->groups[i]->cmds->redirs = malloc(sizeof(t_list **) \
 				* msh->groups[i]->cmds->cmd_num);
 			ft_loop_cmds(msh->groups[i], ft_init_redirs);
 			ft_loop_cmds(msh->groups[i], ft_format_redirs);
+			ft_unite_texts(msh->groups[i]);
 			ft_loop_cmds(msh->groups[i], ft_extract_redirs);
 
 			ft_make_newargvs(msh->groups[i]);
