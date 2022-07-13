@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 18:14:30 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:58:05 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	do_unset(t_msh *msh, char *name)
 
 	env_list = msh->env_list;
 	temp = *env_list;
-	res = 1;
+	res = 0;
 	print_unset_error_or_nothing(name, env_list, &res);
 	if (!ft_strncmp(temp->bash_variable, name, ft_strlen(name)))
 	{

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 14:17:58 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:46:31 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 // - memory leaks
 // - fd leaks
-
 // - norminette
 // - parenthesis 
-// - clean here doc
-// - unset path && ls does not work!
-// - dup error with pipes, specifically with: env | grep PATH
-// - change isspace
+// - <in cat -e | wc >>out /// apparently one fd leak
+
+int	ft_isspace(char c)
+{
+	if (c == '\t' || c == '\v' || c == '\f' || c == '\n'
+		|| c == '\r')
+			return (1);
+	return (0);
+}
 
 int	if_omit_space(char *line)
 {
@@ -29,7 +33,7 @@ int	if_omit_space(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!isspace(line[i]))
+		if (!ft_isspace(line[i]))
 			return (0);
 		i++;
 	}
@@ -48,13 +52,13 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_delims(&msh);
 	ft_signal_parent();
 	msh.exit = 0;
-	while(!msh.exit)
+	while (!msh.exit)
 	{
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{
 			ft_putchar_fd('\n', STDOUT_FILENO);
-			exit(EXIT_SUCCESS) ;
+			exit(EXIT_SUCCESS);
 		}
 		if (if_omit_space(line))
 			continue ;

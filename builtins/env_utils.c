@@ -6,24 +6,23 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 18:59:12 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/12 21:49:56 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char **list_to_arr(t_env **env_list)
+char	**list_to_arr(t_env **env_list)
 {
 	char			**new_arr;
 	t_env			*temp;
 	char			*holder;
 	int				i;
-	
+
 	i = 0;
 	new_arr = (char **)malloc(sizeof(char *) * (env_list_size(env_list) + 1));
 	temp = *env_list;
-	//printf("%s first var\n", temp->bash_variable);
-	while(temp)
+	while (temp)
 	{
 		holder = ft_strjoin(temp->bash_variable, "=");
 		new_arr[i] = ft_strjoin(holder, temp->bash_v_content);
@@ -57,7 +56,7 @@ t_env	*create_env_list(char	**envp)
 	}
 	return (env_list);
 }
-/* Creating One Element with Two Variables to Place in a Linked List */
+
 t_env	*create_env_element(char **value)
 {
 	t_env	*element;
@@ -71,7 +70,7 @@ t_env	*create_env_element(char **value)
 	element->next = NULL;
 	return (element);
 }
-/* Adding Elements to the back of the ENV List (Modified ft_lstadd_back) */
+
 void	append_env_element(t_env **env_list, t_env *new)
 {
 	t_env	*temp;

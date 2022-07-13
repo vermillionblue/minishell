@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 14:14:20 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:06:32 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*read_stdin(char *limiter, char *file);
 void	check_infile(t_group *group, t_msh *msh, int j);
 void	check_outfile(t_group *group, int j);
 //////// errors
+void	check_dup2(int n);
 void	check_dup(int n);
 void	check_pipe(int n);
 //////path
