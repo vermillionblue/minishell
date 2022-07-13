@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 15:50:51 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:06:51 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,16 @@ void	ft_expand_all_groups_vars(t_msh *msh)
 	}
 }
 
-char	*ft_get_var_value(t_list *link, t_msh *msh)
+/*	Returns malloced string string==value of the variable*/
+char	*ft_get_var_value(char *text, t_msh *msh)
 {
 	t_env	*var;
-	char	*text;
 
-	text = (*(t_lexem *)link->content).text;
 	if (ft_strncmp(text, "?", 2) == 0)
 		return (ft_itoa(msh->last_exit_stat));
 	var = find_env_node(msh->env_list, text);
 	if (var)
-		return (var->bash_v_content);
+		return (ft_strdup(var->bash_v_content));
 	else
 		return (NULL);
 }
@@ -43,6 +42,7 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 	t_list	*link;
 	t_list	*next;
 	char	*value;
+	char	*text;
 
 	link = *msh->groups[group_i]->lexems;
 	while(link)
@@ -53,7 +53,8 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 			// printf("TEST text: %s\n", text);
 			// print_env_list(msh->env_list);
 			// printf(">>>>>>>>>>>>>>> Finish printing env\n");
-			value = ft_get_var_value(link, msh);
+			text = (*(t_lexem *)link->content).text;
+			value = ft_get_var_value(text, msh);
 			if (value)
 			{
 				(*(t_lexem *)link->content).text = value;
@@ -113,8 +114,7 @@ char	*ft_expand_text(t_msh *msh, char *text)
 	char	*ptr;
 	char	*ret;
 	char	*name;
-	t_env	*var;
-	// char	*value;
+	char	*value;
 	int		len;
 
 	ptr = text;
@@ -131,12 +131,12 @@ char	*ft_expand_text(t_msh *msh, char *text)
 		{
 			len = ft_get_var_len(++ptr, msh);
 			name = ft_gettext(ptr, len);
-			printf("LEN: %d\n", len);
-			var = find_env_node(msh->env_list, name);
+			// printf("LEN: %d\n", len);
+			value = ft_get_var_value(name, msh);
 			free(name);
-			if (var)
+			if (value)
 			{
-				ret = ft_strjoinfree(ret, ft_strdup(var->bash_v_content));
+				ret = ft_strjoinfree(ret, value);
 			}
 			ptr += len;
 		}
