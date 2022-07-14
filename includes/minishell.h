@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/12 13:24:38 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:53:26 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ char	*expand_wildcard(char *raw_cmd);
 /////signals
 void	ft_signal_child(void);
 void	ft_signal_parent(void);
+////////////subshell
+int		ft_subshell(char *line, char **envp);
+char *split_rev(char **cmds);
 
 # include "lexer.h"
 # include "parser.h"

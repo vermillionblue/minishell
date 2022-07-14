@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:57:33 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:31:02 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	ft_parser(t_msh *msh)
 		i = 0;
 		while (i < msh->group_num)
 		{
-			ft_expand_gr_vars(msh, i);
-			ft_expand_gr_fields(msh, i);
 			ft_make_cmd_args(msh->groups[i]);
 			ft_loop_cmds(msh->groups[i], ft_expand_gr_wcs);
 			msh->groups[i]->cmds->redirs = malloc(sizeof(t_list **) \

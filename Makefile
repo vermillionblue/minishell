@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/13 19:11:11 by vangirov         ###   ########.fr        #
+#    Updated: 2022/07/14 15:33:21 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = minishell.c \
 	builtins/cd.c builtins/env_utils.c builtins/export.c builtins/pwd.c \
 	builtins/exit.c builtins/unset.c builtins/env.c builtins/export_sort.c \
 	builtins/export_utils.c builtins/echo.c \
-	exec/exec.c exec/errors.c exec/in_out_files.c exec/path.c exec/here_doc.c exec/fd_control.c\
+	exec/exec.c exec/errors.c exec/in_out_files.c exec/path.c exec/here_doc.c exec/fd_control.c exec/exec_utils.c \
 	wildcard/asterisk.c wildcard/asterisk_utils.c \
 	parser/freeings.c \
 	parser/lexer.c \
