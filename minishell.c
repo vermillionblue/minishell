@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 19:49:34 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 21:22:56 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,28 @@ int	ft_subshell(char *line, char **envp)
 	int		res;
 
 	id = fork();
-	while (!msh.exit && id == 0)
+	if (id == 0)
 	{
-		env_list = create_env_list(envp);
-		ft_init_delims(&msh);
-		ft_signal_parent();
-		msh.exit = 0;
-		if (!line)
+		while (!msh.exit)
 		{
-			ft_putchar_fd('\n', STDOUT_FILENO);
-			exit(EXIT_SUCCESS);
+			env_list = create_env_list(envp);
+			ft_init_delims(&msh);
+			ft_signal_parent();
+			msh.exit = 0;
+			if (!line)
+			{
+				ft_putchar_fd('\n', STDOUT_FILENO);
+				exit(EXIT_SUCCESS);
+			}
+			if (if_omit_space(line))
+				continue ;
+			add_history(line);
+			ft_lexer(line, &msh);
+			ft_printlexems(msh.lexems);
+			ft_makegroups(&msh);
+			ft_prep_exec(&msh, &env_list);
+			free(line);
 		}
-		if (if_omit_space(line))
-			continue ;
-		add_history(line);
-		ft_lexer(line, &msh);
-		ft_printlexems(msh.lexems);
-		ft_makegroups(&msh);
-		ft_prep_exec(&msh, &env_list);
-		free(line);
 	}
 	waitpid(0, &res, 0);
 	return (res);

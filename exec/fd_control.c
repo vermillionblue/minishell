@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 20:15:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 21:25:11 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	close_fds_parent(t_group *group, t_msh *msh)
 {
 	if (group->cmds->cmd_num == 1)
 	{
-		// if (group->cmds->infile_name)
-		// 	close(group->cmds->infile_fd);
-		// if (group->cmds->outfile_name)
-		// 	close(group->cmds->outfile_fd);
+		if (group->cmds->infile_name)
+			close(group->cmds->infile_fd);
+		if (group->cmds->outfile_name)
+			close(group->cmds->outfile_fd);
 		close(msh->pipe_fds[WRITE_END]);
 		close(msh->pipe_fds[READ_END]);
 		check_dup2(dup2(msh->temp_i_o[READ_END], STDIN_FILENO));
