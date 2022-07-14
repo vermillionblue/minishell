@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 14:28:36 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 00:00:51 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,9 @@ void	ft_prep_exec(t_msh *msh, t_env **env_list)
 	msh->paths = get_paths(env_temp, msh);
 	msh->last_exit_stat = 0;
 	msh->env_list = env_list;
-	while(msh->group_num > i)
+	while (msh->group_num > i)
 	{
+		ft_parse_group(msh, i);
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)
 			break ;
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)

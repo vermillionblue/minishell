@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:34:14 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/09 16:28:31 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 00:03:09 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 
 // parser_main.c
+void	ft_parse_group(t_msh *msh, int group_i);
 void	ft_parser(t_msh *msh);
 int		ft_error(char *error_text, int error_num);
 

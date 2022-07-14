@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 21:24:09 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 00:01:19 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		ft_printlexems(msh.lexems);
-		ft_parser(&msh); //////////////////////////////// ft_makegroups(msh) // should check if == 0???
-		ft_print_groups(&msh);
+		// ft_printlexems(msh.lexems);
+		// ft_parser(&msh); //////////////////////////////// ft_makegroups(msh) // should check if == 0???
+		ft_makegroups(&msh);
+		// ft_print_groups(&msh);
 		ft_prep_exec(&msh, &env_list);
 		free(line);
 	}
