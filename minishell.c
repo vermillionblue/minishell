@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 00:01:19 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 01:11:23 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-	env_list = create_env_list(envp);
+	// env_list = create_env_list(envp);
 	ft_init_delims(&msh);
 	ft_signal_parent();
 	msh.exit = 0;
@@ -56,17 +56,29 @@ int	main(int argc, char **argv, char **envp)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 			exit(EXIT_SUCCESS) ;
 		}
+		if (ft_strncmp(line, "exit", 5) == 0)
+		{
+			break ;
+		}
 		if (if_omit_space(line))
 			continue ;
 		add_history(line);
+//////////////////////////////////////////////////////////////////////////
+		env_list = create_env_list(envp);
+		msh.env_list = &env_list; 
 		ft_lexer(line, &msh);
 		// ft_printlexems(msh.lexems);
-		// ft_parser(&msh); //////////////////////////////// ft_makegroups(msh) // should check if == 0???
 		ft_makegroups(&msh);
+		ft_parser(&msh); //////////////////////////////// ft_makegroups(msh) // should check if == 0???
 		// ft_print_groups(&msh);
-		ft_prep_exec(&msh, &env_list);
+		// ft_prep_exec(&msh, &env_list);
+		ft_free_msh(&msh);
 		free(line);
 	}
 	do_exit();
+	// ft_free_msh(&msh);
+	free(msh.delims);
+	free(line);
+	// exit(0);
 	return (0);
 }

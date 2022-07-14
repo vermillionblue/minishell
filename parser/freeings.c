@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:19:07 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:20:52 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 01:10:03 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,4 @@ void	ft_free_msh(t_msh *msh)
 	}
 	ft_free_lexems(msh->lexems);
 	ft_free_groups(msh);
-	free(msh->delims);
 }

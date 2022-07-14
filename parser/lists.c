@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:50:19 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:39:22 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 00:50:27 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_lexem	*ft_newlexem(int lx_type, char *text)
 {
 	t_lexem	*lexem;
 
-	lexem = malloc(sizeof(lexem));
+	lexem = malloc(sizeof(t_lexem));
 	lexem->text = text;
 	lexem->type = lx_type;
 	return (lexem);

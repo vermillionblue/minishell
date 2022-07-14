@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 21:22:35 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 01:06:54 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,11 @@ void	ft_parser(t_msh *msh)
 {
 	int	i;
 
-	if (ft_makegroups(msh) == 0) ///////////////////////////////////////////////////////////////////////////////////
+	i = 0;
+	while (i < msh->group_num)
 	{
-		i = 0;
-		while (i < msh->group_num)
-		{
-			ft_parse_group(msh, i);
-			i++;
-		}
+		ft_parse_group(msh, i);
+		i++;
 	}
 }
 
