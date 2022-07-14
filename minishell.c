@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 15:24:59 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:59:03 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // - parenthesis 
 // - <in cat -e | wc >>out /// apparently one fd leak
 // convert **cmds to *cmds for *line in ft_subshell
+//  �2��PV: No such file or directory fix , in set i o
 // 
 
 int	if_omit_space(char *line);
