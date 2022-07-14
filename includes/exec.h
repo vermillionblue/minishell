@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 18:06:32 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:46:54 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ char	*get_correct_path(char **cmd, t_msh *msh);
 void	set_std_i_o(t_cmds *cmd, t_msh *msh);
 void	close_fds_parent(t_group *group, t_msh *msh);
 void	close_fds_child(t_group *group, t_msh *msh);
+/////////utils
+void	check_what_redirs(t_group *group, t_msh *msh, int j);
+void	init_data4group(t_msh *msh, t_group *group, int *cmd_num);
 ///////////exec
 void	exec_group(t_group *group, t_msh *msh);
 void	ft_prep_exec(t_msh *msh, t_env **env_list);

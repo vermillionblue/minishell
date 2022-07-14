@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 19:46:31 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:53:00 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,63 @@
 // - norminette
 // - parenthesis 
 // - <in cat -e | wc >>out /// apparently one fd leak
+// convert **cmds to *cmds for *line in ft_subshell
+// 
+
+int	if_omit_space(char *line);
+int	ft_isspace(char c);
+
+char *split_rev(char **cmds)
+{
+	int		i;
+	char	*line;
+	char	*temp;
+
+	i = 1;
+	temp = cmds[0];
+	while (cmds[i])
+	{
+		line = ft_strjoin(temp, cmds[i]);
+		i++;
+	}
+	if (i == 1)
+		return (temp);
+	return (line);
+}
+
+int	ft_subshell(char *line, char **envp)
+{
+	t_env	*env_list;
+	t_msh	msh;
+	int		id;
+	int		res;
+
+	id = fork();
+	while (!msh.exit && id == 0)
+	{
+		env_list = create_env_list(envp);
+		ft_init_delims(&msh);
+		ft_signal_parent();
+		msh.exit = 0;
+		if (!line)
+		{
+			ft_putchar_fd('\n', STDOUT_FILENO);
+			exit(EXIT_SUCCESS);
+		}
+		if (if_omit_space(line))
+			continue ;
+		add_history(line);
+		ft_lexer(line, &msh);
+		ft_printlexems(msh.lexems);
+		ft_parser(&msh);
+		ft_print_groups(&msh);
+		ft_prep_exec(&msh, &env_list);
+		free(line);
+	}
+	waitpid(0, &res, 0);
+	return (res);
+}
+
 
 int	ft_isspace(char c)
 {
@@ -39,6 +96,21 @@ int	if_omit_space(char *line)
 	}
 	return (1);
 }
+
+// void	ft_try(t_msh *msh)
+// {
+// 	int	i;
+
+// 	if (ft_makegroups(msh) == 0) ///////////////////////////////////////////////////////////////////////////////////
+// 	{
+// 		i = 0;
+// 		while (i < msh->group_num)
+// 		{
+// 			ft_parse_group(msh, i);
+// 			i++;
+// 		}
+// 	}
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -66,6 +138,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		ft_printlexems(msh.lexems);
 		ft_parser(&msh);
+		//ft_makegroups(&msh);
+		//ft_try(&msh);
 		ft_print_groups(&msh);
 		ft_prep_exec(&msh, &env_list);
 		free(line);
