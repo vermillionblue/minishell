@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:51:18 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 20:15:22 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 {
-	if (cmd->infile_name)
+	if (cmd->infile_name != NULL)
 	{
 		cmd->infile_fd = open(cmd->infile_name, O_RDONLY);
 		if (cmd->infile_fd == -1)
 		{
+			printf("trigger\n");
 			perror(cmd->infile_name);
 			msh->last_exit_stat = 1;
 			return (0);
@@ -70,10 +71,10 @@ void	close_fds_parent(t_group *group, t_msh *msh)
 {
 	if (group->cmds->cmd_num == 1)
 	{
-		if (group->cmds->infile_name)
-			close(group->cmds->infile_fd);
-		if (group->cmds->outfile_name)
-			close(group->cmds->outfile_fd);
+		// if (group->cmds->infile_name)
+		// 	close(group->cmds->infile_fd);
+		// if (group->cmds->outfile_name)
+		// 	close(group->cmds->outfile_fd);
 		close(msh->pipe_fds[WRITE_END]);
 		close(msh->pipe_fds[READ_END]);
 		check_dup2(dup2(msh->temp_i_o[READ_END], STDIN_FILENO));

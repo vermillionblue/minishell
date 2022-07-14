@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:23:30 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 21:52:13 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 19:53:28 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	*read_stdin(char *limiter, char *file)
 		}
 	}
 	wait(NULL);
+	free (limiter);
 	return (file);
 }
