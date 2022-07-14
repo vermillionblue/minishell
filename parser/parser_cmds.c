@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/06 16:17:28 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:46:23 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,44 @@
 
 int	ft_count_cmds(t_list **lexems)
 {
-	int	counter;
-	int type;
+	int		counter;
+	int		type;
+	t_list	*link;
 
-	t_list *link;
-	// if (ft_lstsize(*lexems) == 1)
-	// 	return (0);
 	counter = 1;
 	link = *lexems;
 	type = ft_ectracttype(link);
 	if (type == LX_PIPE)
-		return(ft_error("syntax error: | the first token of a group", -401));
+		return (ft_error("syntax error: | the first token of a group", -401));
 	type = ft_ectracttype(ft_lstlast(link));
 	if (type == LX_PIPE)
-		return(ft_error("syntax error: | the last token of a group", -499));
+		return (ft_error("syntax error: | the last token of a group", -499));
 	while (link)
 	{
 		type = ft_ectracttype(link);
 		if (type == LX_PIPE)
 			counter++;
 		link = link->next;
-		
 	}
-	
 	return (counter);
 }
 
 int	ft_count_args(t_list **cmd_args)
 {
-	int	counter;
-	int type;
+	int		counter;
+	int		type;
+	t_list	*link;
 
-	t_list *link;
-	// if (ft_lstsize(*lexems) == 1)
-	// 	return (0);
 	counter = 0;
 	link = *cmd_args;
 	type = ft_ectracttype(link);
-	// if (type == LX_PIPE)
-	// 	return(ft_error("syntax error: | the first token of a group", -401));
-	// type = ft_ectracttype(ft_lstlast(link));
-	// if (type == LX_PIPE)
-	// 	return(ft_error("syntax error: | the last token of a group", -499));
 	while (link)
 	{
 		type = ft_ectracttype(link);
 		if (type != LX_SEP && type != LX_AND && type != LX_OR)
 			counter++;
 		link = link->next;
-		
 	}
-	
 	return (counter);
 }
 
@@ -78,8 +65,7 @@ int	ft_make_cmd_args(t_group *group)
 	group->cmds = malloc(sizeof(t_cmds));
 	group->cmds->cmd_num = ft_count_cmds(group->lexems);
 	if (group->cmds->cmd_num <= 0)
-		return(ft_error("could not parse group", -400 -(10 * group->index)));
-	
+		return (ft_error("could not parse group", -400 -(10 * group->index)));
 	group->cmds->cmd_args = malloc(sizeof(t_list **) * group->cmds->cmd_num);
 	i = 0;
 	link = *group->lexems;
@@ -115,13 +101,7 @@ int	ft_make_newargvs(t_group *group)
 	t_list	*link;
 	int		arg_num;
 	int		type;
-	// char	*text;
 
-	// group->cmds = malloc(sizeof(t_cmds));
-	// group->cmds->cmd_num = ft_count_cmds(group->lexems);
-	// if (group->cmds->cmd_num <= 0)
-	// 	return(ft_error("could not parse group", -400 -(10 * group->index)));
-	
 	group->cmds->newargvs = malloc(sizeof(char **) * group->cmds->cmd_num);
 	cmd_i = 0;
 	link = *group->lexems;
@@ -130,21 +110,19 @@ int	ft_make_newargvs(t_group *group)
 		arg_i = 0;
 		arg_num = ft_count_args(group->cmds->cmd_args[cmd_i]);
 		group->cmds->newargvs[cmd_i] = malloc(sizeof(char *) * arg_num + 1);
-		// *group->cmds->cmd_args[i] = NULL;
 		link = *group->cmds->cmd_args[cmd_i];
 		while (link)
 		{
 			type = ft_ectracttype(link);
 			if (type != LX_SEP && type != LX_AND && type != LX_OR)
 			{
-				group->cmds->newargvs[cmd_i][arg_i] = ft_strdup(ft_ectracttext(link));
-				// printf("------- argv[%d][%d][%d] = %s\n", group->index, cmd_i, arg_i, group->cmds->newargvs[cmd_i][arg_i]);
+				group->cmds->newargvs[cmd_i][arg_i] = \
+					ft_strdup(ft_ectracttext(link));
 				arg_i++;
 			}
 			link = link->next;
 		}
 		group->cmds->newargvs[cmd_i][arg_i] = 0;
-		// ft_dellastsep(group->cmds->cmd_args[i]);
 		cmd_i++;
 	}
 	return (0);

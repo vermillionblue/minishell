@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/11 11:09:27 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:04:28 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,21 @@
 void	ft_init_delims(t_msh *msh)
 {
 	char	**delims;
-	msh->lexems = NULL;
 
+	msh->lexems = NULL;
 	delims = malloc(sizeof(char *) * (LX_NUM + 1));
-	// i = 0;
-	// while (i < 0)
-	// {
 	delims[LX_FIELD] = "''";
 	delims[LX_EXT_FIELD] = "\"\"";
-	delims[LX_VAR] = "$$ "; //should also finish with <>&&
+	delims[LX_VAR] = "$$ ";
 	delims[LX_PAR] = "()";
-	
 	delims[LX_PIPE] = "|";
 	delims[LX_REDIR_OUT] = ">";
 	delims[LX_REDIR_IN] = "<";
-
 	delims[LX_AND] = "&&";
 	delims[LX_OR] = "||";
 	delims[LX_REDIR_APPEND] = ">>";
 	delims[LX_REDIR_INSRC] = "<<";
-
 	delims[LX_NUM] = "  $|'\"><&";
-	// }
 	msh->delims = delims;
 }
 
@@ -104,7 +97,7 @@ char	*ft_chr2str(char c)
 char	*ft_intersect(char *s1, char *s2)
 {
 	char	*intersection;
-	
+
 	intersection = ft_strdup("");
 	while (*s1)
 	{
@@ -128,7 +121,7 @@ int	ft_have_inters(char *s1, char *s2)
 {
 	char	*intersection;
 	int		len;
-	
+
 	len = 0;
 	intersection = ft_intersect(s1, s2);
 	if (intersection)
@@ -143,43 +136,32 @@ int	ft_have_inters(char *s1, char *s2)
 char	*ft_findsym(char *ptr, t_msh *msh)
 {
 	int		i;
-	// char	*closings;
 
 	i = 0;
 	while (*ptr && i < LX_NUM)
 	{
 		if (*ptr == msh->delims[i][0])
 		{
-			// closings = msh->delims[i] + 1;
-			if (i <= LX_VAR) // && ft_have_inters(ptr + 1, closings)) // FIELD
-			{
-				// printf("closings: %s\n", closings);
+			if (i <= LX_VAR)
 				return (ft_getfield(i, ++ptr, msh));
-			}
-			// else if (i == 3 || (i > 3 && i <= 6 && *(ptr + 1) && *(ptr + 1) != *ptr)) // SINGLE
-			else if (i >= LX_PIPE && i <= LX_REDIR_IN && *(ptr + 1) && *(ptr + 1) != *ptr) // SINGLE
+			else if (i >= LX_PIPE && i <= LX_REDIR_IN \
+				&& *(ptr + 1) && *(ptr + 1) != *ptr)
 			{
-				//printf("Test SINGLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
 				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 1);
 			}
-			else if (i == LX_AND && ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
+			else if (i == LX_AND && ((*(ptr + 1) \
+				&& *(ptr + 1) != *ptr) || !*(ptr + 1)))
 			{
-				ft_addlexem(msh->lexems, ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
+				ft_addlexem(msh->lexems, \
+					ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
 				return (ptr + 1);
 			}
-			else if (i >= LX_AND && i <= LX_REDIR_INSRC && *(ptr + 1) == *ptr) // DOUBLE
+			else if (i >= LX_AND && i <= LX_REDIR_INSRC && *(ptr + 1) == *ptr)
 			{
-				//printf("Test DOUBLE (%c): %c ~ %c\n", *(ptr - 1), *ptr, *(ptr + 1));
 				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 2);
 			}
-			// else
-			// {
-			// 	printf("[%d] Test LAST (%c): %c ~ %c$\n", i, *(ptr - 1), *ptr, *(ptr + 1));
-			// 	ft_addlexem(msh->lexems, ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
-			// 	return (ptr + 1);
-			// }
 		}
 		i++;
 	}

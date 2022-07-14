@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 20:46:54 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:51:55 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_pipe(int n);
 char	**get_paths(char **env, t_msh *msh);
 char	*get_correct_path(char **cmd, t_msh *msh);
 ////////////fds
-void	set_std_i_o(t_cmds *cmd, t_msh *msh);
+int		set_std_i_o(t_cmds *cmd, t_msh *msh);
 void	close_fds_parent(t_group *group, t_msh *msh);
 void	close_fds_child(t_group *group, t_msh *msh);
 /////////utils

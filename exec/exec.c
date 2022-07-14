@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 12:54:17 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:54:02 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,10 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 
 	env_temp = list_to_arr(msh->env_list);
 	msh->paths = get_paths(env_temp, msh);
-	msh->pipe_fds = ft_calloc(2, sizeof(int));
-	set_std_i_o(group->cmds, msh);
+	msh->pipe_fds = malloc(2 * sizeof(int));
 	check_pipe(pipe(msh->pipe_fds));
+	if (!set_std_i_o(group->cmds, msh))
+		return (0);
 	id = fork();
 	if (id == 0)
 	{
@@ -80,20 +81,6 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	return (res);
 }
 
-// int	get_type(t_list **lexems)
-// {
-// 	t_list *link;
-
-// 	link = *lexems;
-// 	while(link)
-// 	{
-// 		if ((*(t_lexem *)link->content).type == LX_PAR)
-// 			printf("trigger <%3d>\n", (*(t_lexem *)link->content).type);
-// 		link = link->next;
-// 	}
-// 	return (1);
-// }
-
 void	exec_group(t_group *group, t_msh *msh)
 {
 	int	j;
@@ -103,13 +90,10 @@ void	exec_group(t_group *group, t_msh *msh)
 	j = 0;
 	res = 0;
 	init_data4group(msh, group, &cmd_num);
-	////////
 	while (group->cmds->cmd_num > 0)
 	{
 		if (ft_ectracttype(group->cmds->cmd_args[j][0]) == LX_PAR)
-		{
 			res = ft_subshell(split_rev(group->cmds->newargvs[j]), msh->env);
-		}
 		else
 		{
 			if (group->cmds->redirs[j][0])
@@ -125,23 +109,6 @@ void	exec_group(t_group *group, t_msh *msh)
 		j++;
 	}
 }
-
-void	ft_parse_group(t_msh *msh, int group_i) ///////////////////////////////////////////////////////////////////
-{
-	ft_expand_gr_vars(msh, group_i);
-	ft_expand_gr_fields(msh, group_i);
-	ft_make_cmd_args(msh->groups[group_i]);
-	ft_loop_cmds(msh->groups[group_i], ft_expand_gr_wcs);
-	msh->groups[group_i]->cmds->redirs = malloc(sizeof(t_list **) \
-		* msh->groups[group_i]->cmds->cmd_num);
-	ft_loop_cmds(msh->groups[group_i], ft_init_redirs);
-	ft_loop_cmds(msh->groups[group_i], ft_format_redirs);
-	ft_unite_texts(msh->groups[group_i]);
-	ft_loop_cmds(msh->groups[group_i], ft_extract_redirs);
-	ft_make_newargvs(msh->groups[group_i]);
-}
-
-
 
 void	ft_prep_exec(t_msh *msh, t_env **env_list)
 {
