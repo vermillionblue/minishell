@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 12:53:00 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 15:24:59 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	ft_subshell(char *line, char **envp)
 	return (res);
 }
 
-
 int	ft_isspace(char c)
 {
 	if (c == '\t' || c == '\v' || c == '\f' || c == '\n'
@@ -96,21 +95,6 @@ int	if_omit_space(char *line)
 	}
 	return (1);
 }
-
-// void	ft_try(t_msh *msh)
-// {
-// 	int	i;
-
-// 	if (ft_makegroups(msh) == 0) ///////////////////////////////////////////////////////////////////////////////////
-// 	{
-// 		i = 0;
-// 		while (i < msh->group_num)
-// 		{
-// 			ft_parse_group(msh, i);
-// 			i++;
-// 		}
-// 	}
-// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -138,8 +122,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		ft_printlexems(msh.lexems);
 		ft_parser(&msh);
-		//ft_makegroups(&msh);
-		//ft_try(&msh);
 		ft_print_groups(&msh);
 		ft_prep_exec(&msh, &env_list);
 		free(line);
