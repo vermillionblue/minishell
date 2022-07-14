@@ -6,13 +6,13 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 18:48:23 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:51:18 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-void	set_std_i_o(t_cmds *cmd, t_msh *msh)
+int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 {
 	if (cmd->infile_name)
 	{
@@ -21,6 +21,7 @@ void	set_std_i_o(t_cmds *cmd, t_msh *msh)
 		{
 			perror(cmd->infile_name);
 			msh->last_exit_stat = 1;
+			return (0);
 		}
 		else
 			dup2(cmd->infile_fd, STDIN_FILENO);
@@ -34,6 +35,7 @@ void	set_std_i_o(t_cmds *cmd, t_msh *msh)
 			cmd->outfile_fd = open(cmd->outfile_name,
 					O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	}
+	return (1);
 }
 
 void	close_fds_child(t_group *group, t_msh *msh)
@@ -68,16 +70,12 @@ void	close_fds_parent(t_group *group, t_msh *msh)
 {
 	if (group->cmds->cmd_num == 1)
 	{
-		printf("%d pipes\n", msh->pipe_fds[WRITE_END]);
-		printf("%d pipes\n", msh->pipe_fds[READ_END]);
-		close(msh->pipe_fds[WRITE_END]);
-		close(msh->pipe_fds[READ_END]);
-		printf("%d in\n", group->cmds->outfile_fd);
-		printf("%d out\n", group->cmds->infile_fd);
-		if (group->cmds->outfile_name)
-			close(group->cmds->outfile_fd);
 		if (group->cmds->infile_name)
 			close(group->cmds->infile_fd);
+		if (group->cmds->outfile_name)
+			close(group->cmds->outfile_fd);
+		close(msh->pipe_fds[WRITE_END]);
+		close(msh->pipe_fds[READ_END]);
 		check_dup2(dup2(msh->temp_i_o[READ_END], STDIN_FILENO));
 		close(msh->temp_i_o[READ_END]);
 		close(msh->temp_i_o[WRITE_END]);

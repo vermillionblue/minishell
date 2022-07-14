@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:03:15 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 20:00:24 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:29:38 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 	}
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
-	msh->last_exit_stat = 127;
+	printf("%d res2\n", msh->last_exit_stat);
+	//msh->last_exit_stat = 127;
 	exit (EXIT_FAILURE);
 }
 
