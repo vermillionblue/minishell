@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 20:02:23 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:36:14 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	char	**env_temp;
 
 	env_temp = list_to_arr(msh->env_list);
-	msh->paths = get_paths(env_temp, msh);
-	msh->pipe_fds = malloc(2 * sizeof(int));
+	msh->paths = get_paths(env_temp);
+	msh->pipe_fds = ft_calloc(2, sizeof(int));
 	check_pipe(pipe(msh->pipe_fds));
 	if (!set_std_i_o(group->cmds, msh))
 		return (0);
@@ -85,49 +85,18 @@ void	exec_group(t_group *group, t_msh *msh)
 {
 	int	j;
 	int	cmd_num;
-	int	res;
 
 	j = 0;
-	res = 0;
 	init_data4group(msh, group, &cmd_num);
 	while (group->cmds->cmd_num > 0)
 	{
 		if (ft_ectracttype(group->cmds->cmd_args[j][0]) == LX_PAR)
-			res = ft_subshell(split_rev(group->cmds->newargvs[j]), msh->env);
+			msh->last_exit_stat = ft_subshell(split_rev(group->cmds->newargvs[j]), msh->env);
 		else
-		{
-			if (group->cmds->redirs[j][0])
-				check_what_redirs(group, msh, j);
-			else
-			{
-				group->cmds->infile_name = NULL;
-				group->cmds->outfile_name = NULL;
-			}
-			res = redirect_parent(group->cmds->newargvs[j], cmd_num, msh);
-			if (res == -2)
-				msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j],
-						group, msh);
-			else
-				msh->last_exit_stat = res;
-		}
+			builtin_or_exec(group, msh, cmd_num, j);
 		group->cmds->cmd_num -= 1;
 		j++;
 	}
-}
-
-void	ft_parse_group(t_msh *msh, int group_i)
-{
-	ft_expand_gr_vars(msh, group_i);
-	ft_expand_gr_fields(msh, group_i);
-	ft_make_cmd_args(msh->groups[group_i]);
-	ft_loop_cmds(msh->groups[group_i], ft_expand_gr_wcs);
-	msh->groups[group_i]->cmds->redirs = malloc(sizeof(t_list **) 
-		* msh->groups[group_i]->cmds->cmd_num);
-	ft_loop_cmds(msh->groups[group_i], ft_init_redirs);
-	ft_loop_cmds(msh->groups[group_i], ft_format_redirs);
-	ft_unite_texts(msh->groups[group_i]);
-	ft_loop_cmds(msh->groups[group_i], ft_extract_redirs);
-	ft_make_newargvs(msh->groups[group_i]);
 }
 
 void	ft_prep_exec(t_msh *msh, t_env **env_list)
@@ -141,7 +110,7 @@ void	ft_prep_exec(t_msh *msh, t_env **env_list)
 	env_temp = list_to_arr(env_list);
 	msh->here_doc_file_name = ".here_doc";
 	msh->env = env;
-	msh->paths = get_paths(env_temp, msh);
+	msh->paths = get_paths(env_temp);
 	msh->last_exit_stat = 0;
 	msh->env_list = env_list;
 	while (msh->group_num > i)

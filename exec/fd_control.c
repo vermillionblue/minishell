@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 21:25:11 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:33:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 		cmd->infile_fd = open(cmd->infile_name, O_RDONLY);
 		if (cmd->infile_fd == -1)
 		{
-			printf("trigger\n");
 			perror(cmd->infile_name);
 			msh->last_exit_stat = 1;
 			return (0);
 		}
 		else
-			dup2(cmd->infile_fd, STDIN_FILENO);
+			check_dup2(dup2(cmd->infile_fd, STDIN_FILENO));
 	}
 	if (cmd->outfile_name)
 	{

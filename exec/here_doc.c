@@ -6,15 +6,32 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:23:30 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 19:53:28 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:56:14 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-char	*read_stdin(char *limiter, char *file)
+void	read_in_child(char *limiter, int fd)
 {
 	char	*line;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (!ft_strncmp(limiter, line, ft_strlen(limiter) + 1) || !line)
+		{
+			free (limiter);
+			break ;
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+}
+
+char	*read_stdin(char *limiter, char *file)
+{
 	int		fd;
 	int		id;
 
@@ -23,19 +40,7 @@ char	*read_stdin(char *limiter, char *file)
 	if (id == 0)
 	{
 		ft_signal_child();
-		while (1)
-		{
-			line = readline("> ");
-			printf("%s vs %s\n", limiter, line);
-			if (!ft_strncmp(limiter, line, ft_strlen(limiter) + 1) || !line)
-			{
-				free (limiter);
-				break ;
-			}
-			write(fd, line, ft_strlen(line));
-			write(fd, "\n", 1);
-			free(line);
-		}
+		read_in_child(limiter, fd);
 	}
 	wait(NULL);
 	free (limiter);

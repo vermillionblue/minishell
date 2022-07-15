@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:03:15 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 16:29:38 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:54:45 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,26 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 		temp = ft_strjoin(msh->paths[i], "/");
 		a_path = ft_strjoin(temp, cmd[0]);
 		if (access(a_path, F_OK) == 0)
+		{
+			free(temp);
 			return (a_path);
+		}
 		i++;
 	}
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
-	printf("%d res2\n", msh->last_exit_stat);
-	//msh->last_exit_stat = 127;
+	free(temp);
+	free(a_path);
 	exit (EXIT_FAILURE);
 }
 
-char	**get_paths(char **env, t_msh *msh)
+char	**get_paths(char **env)
 {
 	int		i;
 	char	**temp;
 
 	i = 0;
-	(void)msh;
+	temp = NULL;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH", 4) == 0)
@@ -53,5 +56,6 @@ char	**get_paths(char **env, t_msh *msh)
 		}
 		i++;
 	}
+	free_double(temp);
 	return (NULL);
 }
