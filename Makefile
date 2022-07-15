@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/14 15:33:21 by danisanc         ###   ########.fr        #
+#    Updated: 2022/07/14 23:52:45 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = minishell.c \
 	parser/parser_wc.c \
 	parser/printer.c \
 	signals.c \
+	utils.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -70,6 +71,7 @@ clean:
 	$(RM) exec/*.o
 	$(RM) parser/*.o
 	$(RM) libft/*.o
+	$(RM) wildcard/*.o
 	$(RM) vlad_printf/*.o
 
 fclean: clean

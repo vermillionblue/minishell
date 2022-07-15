@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 21:22:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 11:53:09 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,30 @@
 // - fd leaks
 // - norminette
 // - parenthesis 
-// - <in cat -e | wc >>out /// apparently one fd leak
-// convert **cmds to *cmds for *line in ft_subshell
-//  �2��PV: No such file or directory fix , in set i o
-// 
+// redirs are broken :(
 
-int	if_omit_space(char *line);
-int	ft_isspace(char c);
-
-char *split_rev(char **cmds)
+void	free_env_list(t_env **env_list)
 {
-	int		i;
-	char	*line;
-	char	*temp;
+	t_env	*temp;
+	t_env	*next;
 
-	i = 1;
-	temp = cmds[0];
-	while (cmds[i])
+	temp = *env_list;
+	while(temp)
 	{
-		line = ft_strjoin(temp, cmds[i]);
-		i++;
+		next = temp->next;
+		free(temp->bash_v_content);
+		free(temp->bash_variable);
+		free(temp);
+		temp = next;
 	}
-	if (i == 1)
-		return (temp);
-	return (line);
+}
+
+void	free_all(t_msh *msh)
+{
+	free_env_list(msh->env_list);
+	free_double(msh->env);
+	free(msh->pipe_fds);
+	free(msh->temp_i_o);
 }
 
 int	ft_subshell(char *line, char **envp)
@@ -52,19 +52,17 @@ int	ft_subshell(char *line, char **envp)
 	id = fork();
 	if (id == 0)
 	{
+		msh.exit = 0;
 		while (!msh.exit)
 		{
 			env_list = create_env_list(envp);
 			ft_init_delims(&msh);
 			ft_signal_parent();
-			msh.exit = 0;
 			if (!line)
 			{
 				ft_putchar_fd('\n', STDOUT_FILENO);
 				exit(EXIT_SUCCESS);
 			}
-			if (if_omit_space(line))
-				continue ;
 			add_history(line);
 			ft_lexer(line, &msh);
 			ft_printlexems(msh.lexems);
@@ -75,28 +73,6 @@ int	ft_subshell(char *line, char **envp)
 	}
 	waitpid(0, &res, 0);
 	return (res);
-}
-
-int	ft_isspace(char c)
-{
-	if (c == '\t' || c == '\v' || c == '\f' || c == '\n'
-		|| c == '\r')
-			return (1);
-	return (0);
-}
-
-int	if_omit_space(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (!ft_isspace(line[i]))
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -128,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_prep_exec(&msh, &env_list);
 		free(line);
 	}
+	free_all(&msh);
 	do_exit();
 	return (0);
 }

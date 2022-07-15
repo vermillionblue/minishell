@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/14 12:53:26 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 11:42:20 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,16 @@ void	print_list(t_list **stack);
 void	free_list(t_list **list);
 void	delete_list(t_list **list);
 char	*expand_wildcard(char *raw_cmd);
+void	free_env_list(t_env **env_list);
 /////signals
 void	ft_signal_child(void);
 void	ft_signal_parent(void);
 ////////////subshell
 int		ft_subshell(char *line, char **envp);
 char *split_rev(char **cmds);
-
+///////////// utils
+char	*split_rev(char **cmds);
+int	if_omit_space(char *line);
 # include "lexer.h"
 # include "parser.h"
 # include "exec.h"
