@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/14 23:57:53 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:33:28 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	if_redirs_or_null(t_group *group, t_msh *msh, int j);
 void	ft_parse_group(t_msh *msh, int group_i);
 ///////////exec
 void	exec_group(t_group *group, t_msh *msh);
-void	ft_prep_exec(t_msh *msh, t_env **env_list);
+void	ft_prep_exec(t_msh *msh);
 void	ft_exec(void);
 int		redirect_parent(char **cmd, int cmd_num, t_msh *msh);
 int		edirect_child(char **cmd, t_msh *msh);

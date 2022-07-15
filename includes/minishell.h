@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/07/15 11:42:20 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:37:55 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void	ft_signal_child(void);
 void	ft_signal_parent(void);
 ////////////subshell
 int		ft_subshell(char *line, char **envp);
-char *split_rev(char **cmds);
+char	*split_rev(char **cmds);
 ///////////// utils
 char	*split_rev(char **cmds);
-int	if_omit_space(char *line);
+int		if_omit_space(char *line);
 # include "lexer.h"
 # include "parser.h"
 # include "exec.h"

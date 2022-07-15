@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 11:53:09 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:49:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_env_list(t_env **env_list)
 	}
 }
 
-void	free_all(t_msh *msh)
+void	free_exec(t_msh *msh)
 {
 	free_env_list(msh->env_list);
 	free_double(msh->env);
@@ -53,9 +53,10 @@ int	ft_subshell(char *line, char **envp)
 	if (id == 0)
 	{
 		msh.exit = 0;
+		env_list = create_env_list(envp);
+		msh.env_list = &env_list;
 		while (!msh.exit)
 		{
-			env_list = create_env_list(envp);
 			ft_init_delims(&msh);
 			ft_signal_parent();
 			if (!line)
@@ -67,7 +68,7 @@ int	ft_subshell(char *line, char **envp)
 			ft_lexer(line, &msh);
 			ft_printlexems(msh.lexems);
 			ft_makegroups(&msh);
-			ft_prep_exec(&msh, &env_list);
+			ft_prep_exec(&msh);
 			free(line);
 		}
 	}
@@ -84,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	env_list = create_env_list(envp);
+	msh.env_list = &env_list;
 	ft_init_delims(&msh);
 	ft_signal_parent();
 	msh.exit = 0;
@@ -93,6 +95,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 		{
 			ft_putchar_fd('\n', STDOUT_FILENO);
+			ft_free_msh(&msh);
+			free_exec(&msh);
 			exit(EXIT_SUCCESS);
 		}
 		if (if_omit_space(line))
@@ -101,10 +105,12 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
-		ft_prep_exec(&msh, &env_list);
+		ft_prep_exec(&msh);
+		ft_free_msh(&msh);
 		free(line);
 	}
-	free_all(&msh);
+	free_exec(&msh);
+	free(msh.delims);
 	do_exit();
 	return (0);
 }

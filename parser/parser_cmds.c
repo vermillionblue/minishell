@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:46:23 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:52:31 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_make_cmd_args(t_group *group)
 	int		type;
 	char	*text;
 
-	group->cmds = malloc(sizeof(t_cmds));
+	group->cmds = ft_calloc(1, sizeof(t_cmds));
 	group->cmds->cmd_num = ft_count_cmds(group->lexems);
 	if (group->cmds->cmd_num <= 0)
 		return (ft_error("could not parse group", -400 -(10 * group->index)));
@@ -109,7 +109,7 @@ int	ft_make_newargvs(t_group *group)
 	{
 		arg_i = 0;
 		arg_num = ft_count_args(group->cmds->cmd_args[cmd_i]);
-		group->cmds->newargvs[cmd_i] = malloc(sizeof(char *) * arg_num + 1);
+		group->cmds->newargvs[cmd_i] = malloc(sizeof(char *) * (arg_num + 1));
 		link = *group->cmds->cmd_args[cmd_i];
 		while (link)
 		{

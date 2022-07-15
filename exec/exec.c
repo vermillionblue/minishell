@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 12:36:14 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:47:41 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,19 @@ void	exec_group(t_group *group, t_msh *msh)
 	}
 }
 
-void	ft_prep_exec(t_msh *msh, t_env **env_list)
+void	ft_prep_exec(t_msh *msh)
 {
 	int		i;
 	char	**env;
 	char	**env_temp;
 
 	i = 0;
-	env = list_to_arr(env_list);
-	env_temp = list_to_arr(env_list);
+	env = list_to_arr(msh->env_list);
+	env_temp = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
 	msh->env = env;
 	msh->paths = get_paths(env_temp);
 	msh->last_exit_stat = 0;
-	msh->env_list = env_list;
 	while (msh->group_num > i)
 	{
 		ft_parse_group(msh, i);

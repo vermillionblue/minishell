@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:50:19 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:39:22 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:24:08 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_lexem	*ft_newlexem(int lx_type, char *text)
 {
 	t_lexem	*lexem;
 
-	lexem = malloc(sizeof(lexem));
+	lexem = malloc(sizeof(t_lexem));
 	lexem->text = text;
 	lexem->type = lx_type;
 	return (lexem);

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 21:49:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:26:36 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**list_to_arr(t_env **env_list)
 	int				i;
 
 	i = 0;
-	new_arr = (char **)malloc(sizeof(char *) * (env_list_size(env_list) + 1));
+	new_arr = (char **)ft_calloc((env_list_size(env_list) + 1), sizeof(char *));
 	temp = *env_list;
 	while (temp)
 	{
