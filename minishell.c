@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 15:49:58 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:26:02 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,23 @@
 // - fd leaks
 // - norminette
 // - parenthesis 
-// redirs are broken :(
 
+
+// -cat file | grep rrr | cat -e > 555 | cat >> 444
+
+//---------- weird exit stats, discuss with vlad
+// - <in cat >file !!?
 void	free_env_list(t_env **env_list)
 {
-	t_env	*temp;
 	t_env	*next;
 
-	temp = *env_list;
-	while(temp)
+	while(*env_list)
 	{
-		next = temp->next;
-		free(temp->bash_v_content);
-		free(temp->bash_variable);
-		free(temp);
-		temp = next;
+		next = (*env_list)->next;
+		free((*env_list)->bash_v_content);
+		free((*env_list)->bash_variable);
+		free(*env_list);
+		*env_list = next;
 	}
 }
 
@@ -70,6 +72,9 @@ int	ft_subshell(char *line, char **envp)
 			ft_makegroups(&msh);
 			ft_prep_exec(&msh);
 			free(line);
+			free_double(msh.env);
+			free(msh.pipe_fds);
+			free(msh.temp_i_o);
 		}
 	}
 	waitpid(0, &res, 0);
@@ -89,28 +94,34 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_delims(&msh);
 	ft_signal_parent();
 	msh.exit = 0;
+	msh.last_exit_stat = 0;
 	while (!msh.exit)
 	{
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{
+			free_env_list(msh.env_list);
+			free(msh.delims);
 			ft_putchar_fd('\n', STDOUT_FILENO);
-			ft_free_msh(&msh);
-			free_exec(&msh);
 			exit(EXIT_SUCCESS);
 		}
 		if (if_omit_space(line))
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
 		ft_prep_exec(&msh);
-		ft_free_msh(&msh);
 		free(line);
+		free(msh.pipe_fds);
+		free(msh.temp_i_o);
+		free_double(msh.env);
+		ft_free_msh(&msh);
+		//ft_free_msh(&msh); if here gives a seg fault
+		//free_double(msh.env);
 	}
-	free_exec(&msh);
+	//free_exec(&msh);
 	free(msh.delims);
+	//ft_free_msh(&msh);
 	do_exit();
 	return (0);
 }

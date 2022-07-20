@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 15:26:36 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:50:17 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**list_to_arr(t_env **env_list)
 	int				i;
 
 	i = 0;
-	new_arr = (char **)ft_calloc((env_list_size(env_list) + 1), sizeof(char *));
+	new_arr = (char **)ft_calloc((env_list_size(env_list) + 1), sizeof(char *) + 1);
 	temp = *env_list;
 	while (temp)
 	{
@@ -30,7 +30,7 @@ char	**list_to_arr(t_env **env_list)
 		i++;
 		temp = temp->next;
 	}
-	new_arr[i] = NULL;
+	new_arr[i] = 0;
 	return (new_arr);
 }
 
@@ -64,10 +64,11 @@ t_env	*create_env_element(char **value)
 	element = malloc(sizeof(t_env));
 	if (!element)
 		return (NULL);
-	element->bash_variable = value[0];
-	element->bash_v_content = value[1];
+	element->bash_variable = ft_strdup(value[0]);
+	element->bash_v_content = ft_strdup(value[1]);
 	element->sort = 2;
 	element->next = NULL;
+	free_double(value);
 	return (element);
 }
 

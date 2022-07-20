@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redirs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:58:08 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:51:54 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:18:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ void	ft_format_redirs(t_group *group, int cmd_i)
 			}
 			else if (ft_ectracttype(next) == LX_SEP)
 			{
-				printf("deleteing SEP\n");
 				link->next = next->next;
-				printf("TEST <\n");
 				ft_free_lexem(next);
 			}
 		}

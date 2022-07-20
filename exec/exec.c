@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 15:47:41 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:27:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	redirect_child(char **cmd, t_msh *msh)
 		res = do_cwd();
 	else if (!ft_strncmp(cmd[0], "env", 4))
 		print_env_list(msh->env_list);
-	else if (!ft_strncmp(cmd[0], "echo", 5) && is_nflag(cmd[1]))
-		res = do_echo(cmd);
+	else if (!ft_strncmp(cmd[0], "echo", 5))
+		res = do_echo(cmd);	
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 		do_exit();
 	else
@@ -103,15 +103,14 @@ void	ft_prep_exec(t_msh *msh)
 {
 	int		i;
 	char	**env;
-	char	**env_temp;
+	//char	**env_temp;
 
 	i = 0;
 	env = list_to_arr(msh->env_list);
-	env_temp = list_to_arr(msh->env_list);
+	//env_temp = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
 	msh->env = env;
-	msh->paths = get_paths(env_temp);
-	msh->last_exit_stat = 0;
+	//msh->paths = get_paths(env_temp);
 	while (msh->group_num > i)
 	{
 		ft_parse_group(msh, i);

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/15 12:40:30 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:56:38 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j)
 		msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j],
 				group, msh);
 	else
+	{
+		printf(" exit stat in child %d\n", res);
 		msh->last_exit_stat = res;
+	}
+		
 }
 
 void	if_redirs_or_null(t_group *group, t_msh *msh, int j)

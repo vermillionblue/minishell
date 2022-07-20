@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 16:08:34 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 21:50:17 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/07/16 13:45:38 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	is_nflag(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	if (str[i++] == '-')
 	{
@@ -47,5 +49,5 @@ int	do_echo(char **args)
 	}
 	if (!is_nflag(args[1]))
 		printf("\n");
-	return (1);
+	return (0);
 }

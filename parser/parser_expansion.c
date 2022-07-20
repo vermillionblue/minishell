@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:49:26 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:47:24 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
