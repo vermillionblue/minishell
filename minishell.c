@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/20 10:26:02 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:37:34 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 // - fd leaks
 // - norminette
 // - parenthesis 
+// - ls *.o not working
 
+//leaks 
+// - built ins
+// - destroy env after use
+// - free pipes, free temp_i_o
+// - handle exit command 
 
-// -cat file | grep rrr | cat -e > 555 | cat >> 444
-
-//---------- weird exit stats, discuss with vlad
-// - <in cat >file !!?
 void	free_env_list(t_env **env_list)
 {
 	t_env	*next;
@@ -95,15 +97,13 @@ int	main(int argc, char **argv, char **envp)
 	ft_signal_parent();
 	msh.exit = 0;
 	msh.last_exit_stat = 0;
-	while (!msh.exit)
+	while (!msh.exit) //check
 	{
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
 		{
-			free_env_list(msh.env_list);
-			free(msh.delims);
 			ft_putchar_fd('\n', STDOUT_FILENO);
-			exit(EXIT_SUCCESS);
+			break ;
 		}
 		if (if_omit_space(line))
 			continue ;
@@ -112,14 +112,12 @@ int	main(int argc, char **argv, char **envp)
 		ft_makegroups(&msh);
 		ft_prep_exec(&msh);
 		free(line);
-		free(msh.pipe_fds);
 		free(msh.temp_i_o);
 		free_double(msh.env);
 		ft_free_msh(&msh);
-		//ft_free_msh(&msh); if here gives a seg fault
-		//free_double(msh.env);
 	}
 	//free_exec(&msh);
+	free_env_list(msh.env_list);
 	free(msh.delims);
 	//ft_free_msh(&msh);
 	do_exit();

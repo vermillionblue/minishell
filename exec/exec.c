@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/20 10:27:23 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:08:07 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	redirect_child(char **cmd, t_msh *msh)
 			exit (EXIT_FAILURE);
 		}
 	}
+	//free all
+	//free_double(msh->env);
+	free(msh->delims);
+
+	ft_free_msh(msh);
 	exit (res);
 }
 
@@ -75,6 +80,7 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 		ft_signal_child();
 		close_fds_child(group, msh);
 		redirect_child(cmd, msh);
+		//free all
 	}
 	waitpid(0, &res, 0);
 	close_fds_parent(group, msh);
@@ -106,6 +112,8 @@ void	ft_prep_exec(t_msh *msh)
 	//char	**env_temp;
 
 	i = 0;
+	if (!msh->env)
+		free_double(msh->env);
 	env = list_to_arr(msh->env_list);
 	//env_temp = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
@@ -119,6 +127,12 @@ void	ft_prep_exec(t_msh *msh)
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)
 			break ;
 		exec_group(msh->groups[i], msh);
+		// free(msh->groups[i]->cmds->cmd_args);
+		// free(msh->groups[i]->cmds->redirs);
+		// free(msh->groups[i]->cmds->newargvs);
+		// free(msh->groups[i]->cmds);
+		// ft_free_lexems(msh->groups[i]->lexems);
+		// free(msh->groups[i]);
 		i++;
 	}
 }

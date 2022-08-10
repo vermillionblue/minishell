@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/16 12:56:38 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/09 21:02:31 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j)
 
 void	if_redirs_or_null(t_group *group, t_msh *msh, int j)
 {
+
 	if (group->cmds->redirs[j][0])
 		check_what_redirs(group, msh, j);
 	else
