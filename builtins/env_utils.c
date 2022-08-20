@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/10 14:45:01 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/10 15:15:26 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_env	*create_env_element(char **value)
 	element->bash_v_content = ft_strdup(value[1]);
 	element->sort = 2;
 	element->next = NULL;
-	//free_double(value);
+	free_double(value);
 	return (element);
 }
 

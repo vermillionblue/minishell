@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/10 12:37:34 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/10 15:28:28 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // - built ins
 // - destroy env after use
 // - free pipes, free temp_i_o
-// - handle exit command 
+// handle exit command 
 
 void	free_env_list(t_env **env_list)
 {
@@ -96,6 +96,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_delims(&msh);
 	ft_signal_parent();
 	msh.exit = 0;
+	//msh.env = NULL;
 	msh.last_exit_stat = 0;
 	while (!msh.exit) //check
 	{
@@ -113,10 +114,10 @@ int	main(int argc, char **argv, char **envp)
 		ft_prep_exec(&msh);
 		free(line);
 		free(msh.temp_i_o);
-		free_double(msh.env);
 		ft_free_msh(&msh);
 	}
 	//free_exec(&msh);
+	//free_double(msh.paths);
 	free_env_list(msh.env_list);
 	free(msh.delims);
 	//ft_free_msh(&msh);

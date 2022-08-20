@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/10 12:08:07 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/10 15:28:42 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	redirect_child(char **cmd, t_msh *msh)
 	//free all
 	//free_double(msh->env);
 	free(msh->delims);
-
+	free(msh->pipe_fds);
+	free(msh->temp_i_o);
+	free_double(msh->paths);
+	free_double(msh->env);
 	ft_free_msh(msh);
 	exit (res);
 }
@@ -84,6 +87,7 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	}
 	waitpid(0, &res, 0);
 	close_fds_parent(group, msh);
+	free_double(msh->env);
 	return (res);
 }
 
@@ -112,8 +116,9 @@ void	ft_prep_exec(t_msh *msh)
 	//char	**env_temp;
 
 	i = 0;
-	if (!msh->env)
-		free_double(msh->env);
+	env = NULL;
+	// if (!msh->env)
+	// 	free_double(msh->env);
 	env = list_to_arr(msh->env_list);
 	//env_temp = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
