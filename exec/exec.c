@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/10 15:28:42 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 13:53:35 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 
 	env_temp = list_to_arr(msh->env_list);
 	msh->paths = get_paths(env_temp);
+	free_double(env_temp);
 	msh->pipe_fds = ft_calloc(2, sizeof(int));
 	check_pipe(pipe(msh->pipe_fds));
 	if (!set_std_i_o(group->cmds, msh))
@@ -87,7 +88,7 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	}
 	waitpid(0, &res, 0);
 	close_fds_parent(group, msh);
-	free_double(msh->env);
+	//free_double(msh->env);
 	return (res);
 }
 
@@ -113,17 +114,12 @@ void	ft_prep_exec(t_msh *msh)
 {
 	int		i;
 	char	**env;
-	//char	**env_temp;
 
 	i = 0;
 	env = NULL;
-	// if (!msh->env)
-	// 	free_double(msh->env);
 	env = list_to_arr(msh->env_list);
-	//env_temp = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
 	msh->env = env;
-	//msh->paths = get_paths(env_temp);
 	while (msh->group_num > i)
 	{
 		ft_parse_group(msh, i);
@@ -132,12 +128,6 @@ void	ft_prep_exec(t_msh *msh)
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)
 			break ;
 		exec_group(msh->groups[i], msh);
-		// free(msh->groups[i]->cmds->cmd_args);
-		// free(msh->groups[i]->cmds->redirs);
-		// free(msh->groups[i]->cmds->newargvs);
-		// free(msh->groups[i]->cmds);
-		// ft_free_lexems(msh->groups[i]->lexems);
-		// free(msh->groups[i]);
 		i++;
 	}
 }

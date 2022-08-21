@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/10 15:28:28 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 15:07:26 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@
 // - free pipes, free temp_i_o
 // handle exit command 
 
+void	free_env_arr(char **arr)
+{
+	int i = 0;
+	while(arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 void	free_env_list(t_env **env_list)
 {
 	t_env	*next;
@@ -36,6 +46,7 @@ void	free_env_list(t_env **env_list)
 		free(*env_list);
 		*env_list = next;
 	}
+	free(next);
 }
 
 void	free_exec(t_msh *msh)
@@ -96,7 +107,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_delims(&msh);
 	ft_signal_parent();
 	msh.exit = 0;
-	//msh.env = NULL;
 	msh.last_exit_stat = 0;
 	while (!msh.exit) //check
 	{
@@ -114,12 +124,16 @@ int	main(int argc, char **argv, char **envp)
 		ft_prep_exec(&msh);
 		free(line);
 		free(msh.temp_i_o);
+		free(msh.pipe_fds);
 		ft_free_msh(&msh);
+		free_env_list(msh.env_list);
 	}
 	//free_exec(&msh);
-	//free_double(msh.paths);
+	free_double(msh.paths);
 	free_env_list(msh.env_list);
 	free(msh.delims);
+	free_double(msh.env);
+	//ft_free_groups(&msh);
 	//ft_free_msh(&msh);
 	do_exit();
 	return (0);

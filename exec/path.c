@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:03:15 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/09 21:05:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 13:51:00 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	**get_paths(char **env)
 {
 	int		i;
 	char	**temp;
+	char	*env_temp;
 
 	i = 0;
 	temp = NULL;
@@ -65,9 +66,9 @@ char	**get_paths(char **env)
 	{
 		if (ft_strncmp(env[i], "PATH", 4) == 0)
 		{
-			env[i] += 5;
-			//ft_memmove(env[i], env[i] + 5, ft_strlen(env[i]));
-			temp = ft_split(env[i], ':');
+			env_temp = ft_strdup(env[i] + 5);
+			temp = ft_split(env_temp, ':');
+			free(env_temp);
 			return (temp);
 		}
 		i++;

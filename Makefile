@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/07/14 23:52:45 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/21 15:10:07 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,17 @@ CC = gcc
 
 UNAME_S := $(shell uname -s)
 
-LIB_MAC =  -I $(HOME)/goinfre/.brew/opt/readline/include/ -lreadline
+LIB_MAC =  -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 
 LIB_LINUX = -lreadline
 
-CFLAGS = -Wall -Wextra -Werror -I includes/ -g
+LIBS = $(LIB_MAC) -I./includes
+
+ifeq ($(UNAME_S), Darwin)
+	CFLAGS =  -Wall -Wextra -Werror -g -I $(HOME)/goinfre/.brew/opt/readline/include/
+else
+	CFLAGS =  -Wall -Wextra -Werror -g -I includes/
+endif
 
 RM = rm -f
 

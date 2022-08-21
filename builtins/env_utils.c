@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/10 15:15:26 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 11:48:43 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**list_to_arr(t_env **env_list)
 		i++;
 		temp = temp->next;
 	}
-	new_arr[i] = 0;
+	new_arr[i] = NULL;
 	return (new_arr);
 }
 

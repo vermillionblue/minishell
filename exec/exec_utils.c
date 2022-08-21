@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/09 21:02:31 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 14:08:40 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j)
 		msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j],
 				group, msh);
 	else
-	{
-		printf(" exit stat in child %d\n", res);
 		msh->last_exit_stat = res;
-	}
-		
 }
 
 void	if_redirs_or_null(t_group *group, t_msh *msh, int j)
