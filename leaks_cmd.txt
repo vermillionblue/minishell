@@ -1,0 +1,1 @@
+valgrind --leak-check=full --show-reachable=yes --error-limit=no --suppressions=/home/alessa/ft/minishell/minishell.supp  --log-file=leaks.txt ./minishell 
