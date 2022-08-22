@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/09 21:03:11 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/22 11:22:49 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 		}
 		else
 			check_dup2(dup2(cmd->infile_fd, STDIN_FILENO));
-		
-	
 	}
 	if (cmd->outfile_name)
 	{
@@ -40,9 +38,9 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 	return (1);
 }
 
-void	close_fds_child(t_group *group, t_msh *msh)
+void	close_fds_child(t_group *group, t_msh *msh, int cmd_num)
 {
-	if (group->cmds->cmd_num == 1)
+	if (cmd_num == 1)
 	{
 		close(msh->pipe_fds[READ_END]);
 		close(msh->pipe_fds[WRITE_END]);
@@ -78,9 +76,9 @@ void	close_fds_child(t_group *group, t_msh *msh)
 	}
 }
 
-void	close_fds_parent(t_group *group, t_msh *msh)
+void	close_fds_parent(t_group *group, t_msh *msh, int cmd_num)
 {
-	if (group->cmds->cmd_num == 1)
+	if (cmd_num == 1)
 	{
 		close(msh->temp_i_o[WRITE_END]);
 		close(msh->pipe_fds[WRITE_END]);

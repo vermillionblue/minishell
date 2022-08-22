@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 18:58:05 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/22 13:15:24 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	do_unset(t_msh *msh, char *name)
 		}
 		temp = temp->next;
 	}
+	if (msh->env)
+		free_double(msh->env);
 	msh->env = list_to_arr(msh->env_list);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:14:56 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:17:57 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 15:35:14 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_double(char **string)
 	int	i;
 
 	i = 0;
-	while (string[i] != NULL)
+	while (string[i])
 	{
 		free(string[i]);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/21 13:53:35 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/22 13:10:00 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	redirect_child(char **cmd, t_msh *msh)
 {
 	int		res;
 	char	*a_path;
-
+    
 	res = 0;
 	if (!ft_strncmp(cmd[0], "pwd", 4))
 		res = do_cwd();
@@ -43,29 +43,34 @@ int	redirect_child(char **cmd, t_msh *msh)
 		print_env_list(msh->env_list);
 	else if (!ft_strncmp(cmd[0], "echo", 5))
 		res = do_echo(cmd);	
-	else if (!ft_strncmp(cmd[0], "exit", 5))
-		do_exit();
 	else
 	{
 		a_path = get_correct_path(cmd, msh);
 		if (execve(a_path, cmd, msh->env) == -1)
 		{
 			perror("execve error\n");
+			free(a_path);
+			free(msh->delims);
+			free(msh->pipe_fds);
+			free(msh->temp_i_o);
+			free_double(msh->paths);
+			free_double(msh->env);
+			free_env_list(msh->env_list);
+			ft_free_msh(msh);
 			exit (EXIT_FAILURE);
 		}
 	}
-	//free all
-	//free_double(msh->env);
-	free(msh->delims);
 	free(msh->pipe_fds);
 	free(msh->temp_i_o);
 	free_double(msh->paths);
 	free_double(msh->env);
+	free_env_list(msh->env_list);
 	ft_free_msh(msh);
+	free(msh->delims);
 	exit (res);
 }
 
-int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
+int	exec_cmds(char **cmd, t_group *group, t_msh *msh, int cmd_num)
 {
 	int		res;
 	int		id;
@@ -82,13 +87,14 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh)
 	if (id == 0)
 	{
 		ft_signal_child();
-		close_fds_child(group, msh);
+		close_fds_child(group, msh, cmd_num);
 		redirect_child(cmd, msh);
-		//free all
 	}
 	waitpid(0, &res, 0);
-	close_fds_parent(group, msh);
-	//free_double(msh->env);
+	close_fds_parent(group, msh, cmd_num);
+	if (msh->paths)
+		free_double(msh->paths);
+	free(msh->pipe_fds);
 	return (res);
 }
 
@@ -98,14 +104,15 @@ void	exec_group(t_group *group, t_msh *msh)
 	int	cmd_num;
 
 	j = 0;
-	init_data4group(msh, group, &cmd_num);
-	while (group->cmds->cmd_num > 0)
+	cmd_num = group->cmds->cmd_num;
+	init_data4group(msh);
+	while (cmd_num  > 0)
 	{
 		if (ft_ectracttype(group->cmds->cmd_args[j][0]) == LX_PAR)
 			msh->last_exit_stat = ft_subshell(split_rev(group->cmds->newargvs[j]), msh->env);
 		else
 			builtin_or_exec(group, msh, cmd_num, j);
-		group->cmds->cmd_num -= 1;
+		cmd_num  -= 1;
 		j++;
 	}
 }
@@ -122,12 +129,12 @@ void	ft_prep_exec(t_msh *msh)
 	msh->env = env;
 	while (msh->group_num > i)
 	{
-		ft_parse_group(msh, i);
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)
 			break ;
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)
 			break ;
 		exec_group(msh->groups[i], msh);
+		free(msh->temp_i_o);
 		i++;
 	}
 }

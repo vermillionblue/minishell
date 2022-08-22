@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:04:58 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:14:17 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 15:19:18 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ unsigned int	env_list_size(t_env **env_list)
 	temp = *env_list;
 	if (!temp)
 	{
-		perror("List is Empty\n");
+		ft_putstr_fd("List is Empty\n", 2);
 		return (0);
 	}
 	while (temp)
@@ -39,7 +39,7 @@ int	print_env_list(t_env **env_list)
 	temp = *env_list;
 	if (*env_list == NULL)
 	{
-		perror("List is Empty\n");
+		ft_putstr_fd("List is Empty\n", 2);
 		return (0);
 	}
 	while (temp)

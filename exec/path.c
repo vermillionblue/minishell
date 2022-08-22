@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:03:15 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/21 13:51:00 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/22 12:59:01 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,23 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 	{
 		temp = ft_strjoin(msh->paths[i], "/");
 		a_path = ft_strjoin(temp, cmd[0]);
+		free(temp);
 		if (access(a_path, F_OK) == 0)
-		{
-			free(temp);
 			return (a_path);
-		}
+		free(a_path);
 		i++;
 	}
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
-	free(temp);
-	free(a_path);
 	free_double(msh->env);
-	//free(msh->temp_i_o);
+	free_env_list(msh->env_list);
+	if (msh->paths)
+		free_double(msh->paths);
+	free(msh->temp_i_o);
+	free(msh->pipe_fds);
+	free(msh->delims);
 	ft_free_msh(msh);
-	//free_exec(msh);
-	msh->last_exit_stat = 127;
+	msh->last_exit_stat = 127;	
 	exit (EXIT_FAILURE);
 }
 

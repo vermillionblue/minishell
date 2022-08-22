@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/08/21 15:10:07 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/21 18:48:52 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,17 +18,17 @@ SRC = minishell.c \
 	builtins/export_utils.c builtins/echo.c \
 	exec/exec.c exec/errors.c exec/in_out_files.c exec/path.c exec/here_doc.c exec/fd_control.c exec/exec_utils.c \
 	wildcard/asterisk.c wildcard/asterisk_utils.c \
-	parser/freeings.c \
-	parser/lexer.c \
-	parser/lists.c \
-	parser/parser_cmds.c \
-	parser/parser_expansion.c \
-	parser/parser_groups.c \
-	parser/parser_main.c \
-	parser/parser_redirs.c \
-	parser/parser_redir_utils.c \
-	parser/parser_wc.c \
-	parser/printer.c \
+	42msh_parser/freeings.c \
+	42msh_parser/lexer.c \
+	42msh_parser/lists.c \
+	42msh_parser/parser_cmds.c \
+	42msh_parser/parser_expansion.c \
+	42msh_parser/parser_groups.c \
+	42msh_parser/parser_main.c \
+	42msh_parser/parser_redirs.c \
+	42msh_parser/parser_redir_utils.c \
+	42msh_parser/parser_wc.c \
+	42msh_parser/printer.c \
 	signals.c \
 	utils.c \
 

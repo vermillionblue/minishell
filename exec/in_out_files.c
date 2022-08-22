@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:09:55 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/09 21:02:16 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 19:46:01 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,9 @@ void	check_infile(t_group *group, t_msh *msh, int j)
 	}	
 	else if (ft_ectracttype(group->cmds->redirs[j][0]) == LX_REDIR_IN)
 	{
-		group->cmds->here_doc = 0;
 		group->cmds->infile_name = \
 		ft_ectracttext(group->cmds->redirs[j][0]);
 	}
-	// else
-	// 	group->cmds->infile_name = NULL;
 }
 
 void	check_outfile(t_group *group, int j)

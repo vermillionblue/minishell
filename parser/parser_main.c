@@ -6,36 +6,26 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/19 13:35:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/21 18:27:44 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// void	ft_parser(t_msh *msh)
-// {
-// 	int	i;
+void	ft_parser(t_msh *msh)
+{
+	int	i;
 
-// 	if (ft_makegroups(msh) == 0)
-// 	{
-// 		i = 0;
-// 		while (i < msh->group_num)
-// 		{
-// 			ft_expand_gr_vars(msh, i);
-// 			ft_expand_gr_fields(msh, i);
-// 			ft_make_cmd_args(msh->groups[i]);
-// 			ft_loop_cmds(msh->groups[i], ft_expand_gr_wcs);
-// 			msh->groups[i]->cmds->redirs = malloc(sizeof(t_list **) 
-// 				* msh->groups[i]->cmds->cmd_num);
-// 			ft_loop_cmds(msh->groups[i], ft_init_redirs);
-// 			ft_loop_cmds(msh->groups[i], ft_format_redirs);
-// 			ft_unite_texts(msh->groups[i]);
-// 			ft_loop_cmds(msh->groups[i], ft_extract_redirs);
-// 			ft_make_newargvs(msh->groups[i]);
-// 			i++;
-// 		}
-// 	}
-// }
+	if (ft_makegroups(msh) == 0)
+	{
+		i = 0;
+		while (i < msh->group_num)
+		{
+			ft_parse_group(msh, i);
+			i++;
+		}
+	}
+}
 
 int	ft_error(char *error_text, int error_num)
 {
