@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 20:22:44 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:52:34 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@
 // - parenthesis 
 // - ls *.o not working
 
-//leaks 
-// - built ins
-// - destroy env after use
-// - free pipes, free temp_i_o
-// handle exit command 
 
 void	free_env_arr(char **arr)
 {
@@ -83,7 +78,7 @@ int	ft_subshell(char *line, char **envp)
 			ft_lexer(line, &msh);
 			ft_printlexems(msh.lexems);
 			ft_makegroups(&msh);
-			ft_prep_exec(&msh);
+			//ft_prep_exec(&msh);
 			free(line);
 			free_double(msh.env);
 			free(msh.pipe_fds);
@@ -121,14 +116,16 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		ft_printlexems(msh.lexems);
+		//ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
+		//printf("trigger12");
 		ft_parser(&msh);
-		ft_print_groups(&msh);
+		//ft_print_groups(&msh);
+		//printf("trigger11");
 		ft_prep_exec(&msh);
 		//ft_print_groups(&msh);
 		free(line);
-		//free_double(msh.env); 
+		free_double(msh.env); 
 		ft_free_msh(&msh);
 	}
 	//free_exec(&msh);

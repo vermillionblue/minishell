@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 20:15:11 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:55:09 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	check_unset_name(char *name)
 
 void	print_unset_error_or_nothing(char *name, t_env **env_list, int *res)
 {
-	if (!name)
-		*res = 0;
 	if (!check_unset_name(name))
 	{
 		ft_putstr_fd("unset: '", 2);
@@ -57,6 +55,8 @@ int	do_unset(t_msh *msh, char *name)
 	env_list = msh->env_list;
 	temp = *env_list;
 	res = 0;
+	if (!name)
+		return (0);
 	print_unset_error_or_nothing(name, env_list, &res);
 	if (!ft_strncmp(temp->bash_variable, name, ft_strlen(name)))
 	{

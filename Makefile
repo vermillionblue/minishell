@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/08/23 17:32:09 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/24 00:18:18 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 20:13:57 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:55:33 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	redirect_child(char **cmd, t_msh *msh)
 	char	*a_path;
     
 	res = 0;
+
 	if (!ft_strncmp(cmd[0], "pwd", 4))
 		res = do_cwd();
 	else if (!ft_strncmp(cmd[0], "env", 4))
