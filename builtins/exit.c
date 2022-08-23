@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:17:49 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/21 14:02:50 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:13:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,36 @@ void	do_exit(void)
 	printf("Exiting... 🥲\n");
 	printf(WHITE);
 	exit(EXIT_SUCCESS);
+}
+
+int	exit_helper(char **cmd, t_msh *msh, int cmd_num)
+{
+	int	k;
+
+	k = 0;
+	if (cmd[2])
+	{
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd("too many arguments\n", 2);
+		msh->last_exit_stat = 127;
+		return (127);
+	}
+	if (cmd[1])
+	{
+		while(cmd[1][k])
+		{
+			if (!ft_isdigit(cmd[1][k]))
+			{
+				ft_putstr_fd("exit: ", 2);
+				ft_putstr_fd(cmd[1], 2);
+				ft_putstr_fd(": numeric argument required\n", 2);
+				return(127);
+			}
+			k++;
+		}
+		return(ft_atoi(cmd[1]));
+	}
+	if (cmd_num == 1 && !cmd[1])
+		msh->exit = 1;
+	return (0);
 }

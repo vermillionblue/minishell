@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/22 17:00:47 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 19:59:09 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j)
 	if_redirs_or_null(group, msh, j);
 	res = redirect_parent(group->cmds->newargvs[j], cmd_num, msh);
 	if (res == -2)
+	{
 		msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j],
-				group, msh, cmd_num);
+			group, msh, cmd_num);
+	}	
 	else
 		msh->last_exit_stat = res;
 }

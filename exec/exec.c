@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/22 13:10:00 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:13:57 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
+
 
 int	redirect_parent(char **cmd, int cmd_num, t_msh *msh)
 {
@@ -18,16 +19,13 @@ int	redirect_parent(char **cmd, int cmd_num, t_msh *msh)
 
 	res = -2;
 	if (!ft_strncmp(cmd[0], "cd", 3))
-		res = do_cd(check_if_no_args(cmd));
+		res = do_cd(cmd[1]);
 	else if (!ft_strncmp(cmd[0], "export", 7))
-		res = do_export(msh, check_if_no_args(cmd));
+		res = do_export(msh, cmd[1]);
 	else if (!ft_strncmp(cmd[0], "unset", 6))
-		res = do_unset(msh, check_if_no_args(cmd));
-	else if (!ft_strncmp(cmd[0], "exit", 5) && cmd_num == 1)
-	{
-		msh->exit = 1;
-		res = 0;
-	}
+		res = do_unset(msh, cmd[1]);
+	else if (!ft_strncmp(cmd[0], "exit", 5))
+		res = exit_helper(cmd, msh, cmd_num);
 	return (res);
 }
 
@@ -42,7 +40,7 @@ int	redirect_child(char **cmd, t_msh *msh)
 	else if (!ft_strncmp(cmd[0], "env", 4))
 		print_env_list(msh->env_list);
 	else if (!ft_strncmp(cmd[0], "echo", 5))
-		res = do_echo(cmd);	
+		res = do_echo(cmd);
 	else
 	{
 		a_path = get_correct_path(cmd, msh);
@@ -127,6 +125,8 @@ void	ft_prep_exec(t_msh *msh)
 	env = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
 	msh->env = env;
+	if (!msh->groups[0]->cmds->newargvs || (msh->group_num == 1 && !msh->groups[0]->cmds->newargvs[0]))
+		return ;
 	while (msh->group_num > i)
 	{
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/22 13:27:13 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:13:33 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	do_export(t_msh *msh, char *args)
 	int		res;
 
 	new_env = NULL;
-	if (!ft_strncmp(args, "0", 2))
+	if (!args)
 	{
 		sort_export(msh->env_list);
 		return (0);

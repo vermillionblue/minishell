@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 22:18:34 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/16 12:33:16 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:46:19 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*split_rev(char **cmds)
 	return (line);
 }
 
-int	ft_isspace(char c)
-{
-	if (c == '\t' || c == '\v' || c == '\f' || c == '\n'
-		|| c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
+// int	ft_isspace(char c)
+// {
+// 	if (c == '\t' || c == '\v' || c == '\f' || c == '\n'
+// 		|| c == '\r' || c == ' ')
+// 		return (1);
+// 	return (0);
+// }
 
 int	if_omit_space(char *line)
 {

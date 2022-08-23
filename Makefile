@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/08/21 18:48:52 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/23 17:32:09 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ clean:
 	$(RM) *.o
 	$(RM) builtins/*.o
 	$(RM) exec/*.o
-	$(RM) parser/*.o
+	$(RM) 42msh_parser/*.o
 	$(RM) libft/*.o
 	$(RM) wildcard/*.o
 	$(RM) vlad_printf/*.o

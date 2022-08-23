@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:14:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 21:29:26 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:02:52 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int				get_name_arg(t_env *new_env, char *args, t_env **env_list);
 void			print_name_error(char *args);
 void			free_double(char **string);
 int				check_if_valid_env(char *name);
+///////////
+int	exit_helper(char **cmd, t_msh *msh, int cmd_num);
 ////////////////////
 unsigned int	env_list_size(t_env **env_list);
 char			*check_if_no_args(char **args);

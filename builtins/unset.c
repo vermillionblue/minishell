@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/22 13:15:24 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:15:11 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_unset_name(char *name)
 		return (0);
 	while (name[i])
 	{
-		if (!ft_isalnum(name[i]))
+		if (name[i] != '_' && !(ft_isalnum(name[i])))
 			return (0);
 		i++;
 	}
@@ -32,11 +32,11 @@ int	check_unset_name(char *name)
 
 void	print_unset_error_or_nothing(char *name, t_env **env_list, int *res)
 {
-	if (!ft_strncmp(name, "0", 2))
+	if (!name)
 		*res = 0;
 	if (!check_unset_name(name))
 	{
-		ft_putstr_fd("export: '", 2);
+		ft_putstr_fd("unset: '", 2);
 		ft_putstr_fd(name, 2);
 		ft_putstr_fd("' : not a valid identifier\n", 2);
 		*res = 1;

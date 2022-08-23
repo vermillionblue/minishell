@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 23:45:50 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/11 17:02:07 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:12:29 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ int	do_cd(char *path)
 
 	res = -1;
 	home = getenv("HOME");
-	if (!ft_strncmp(path, "0", 1))
+	if (!path)
 		chdir(home);
+	// if (!ft_strncmp(path, "0", 1))
+	// 	chdir(home);
 	else
 	{
 		if (!ft_strncmp(path, "~", 1))
