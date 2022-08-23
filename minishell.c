@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/22 17:08:35 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:48:48 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 	msh.exit = 0;
 	msh.last_exit_stat = 0;
 	msh.paths = NULL;
-	while (!msh.exit) //check
+	while (!msh.exit)
 	{
 		line = readline("\033[0;35mminishell 🦄$ \033[0;37m");
 		if (!line)
@@ -123,11 +123,11 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		ft_makegroups(&msh);
 		ft_parser(&msh);
-		ft_print_groups(&msh);
-		// ft_prep_exec(&msh);
+		//ft_print_groups(&msh);
+		ft_prep_exec(&msh);
 		free(line);
 		ft_free_msh(&msh);
-		// free_double(msh.env);
+		free_double(msh.env);
 		//free_env_list(msh.env_list);
 	}
 	//free_exec(&msh);
