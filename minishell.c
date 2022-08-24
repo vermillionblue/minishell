@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:11:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 21:01:08 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 21:21:26 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		ft_makegroups(&msh);
-		ft_prep_exec(&msh);
 		free(line);
+		if (ft_makegroups(&msh) <= 0)
+			continue ;
+		ft_prep_exec(&msh);
 		free_double(msh.env);
 		ft_free_msh(&msh);
 	}
