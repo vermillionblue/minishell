@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 15:17:40 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:39:26 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	redirect_child(char **cmd, t_msh *msh)
 	else
 		ft_execve(cmd, msh);
 	ft_free_exec(msh);
-	exit (0);
+	exit (res);
 }
 
 int	exec_cmds(char **cmd, t_group *group, t_msh *msh, int cmd_num)

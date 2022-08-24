@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 15:37:16 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:57:44 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef struct s_lexem
 	char	*text;
 }	t_lexem;
 
-typedef struct s_msh t_msh;
-typedef struct s_group t_group;
-typedef struct s_env t_env;
-typedef struct s_cmds t_cmds;
+typedef struct s_msh	t_msh;
+typedef struct s_group	t_group;
+typedef struct s_env	t_env;
+typedef struct s_cmds	t_cmds;
 // lexer.c
 void	ft_init_delims(t_msh *msh);
 void	ft_lexer(char *line, t_msh *msh);
@@ -56,7 +56,6 @@ char	*ft_getfield(int lx_type, char *ptr, t_msh *msh);
 char	*ft_gettext(char *ptr, int len);
 int		ft_have_inters(char *s1, char *s2);
 char	*ft_chr2str(char c);
-# include "minishell.h"
 // lists.c
 t_list	*ft_lst_penult(t_list *lst);
 t_lexem	*ft_newlexem(int lx_type, char *text);

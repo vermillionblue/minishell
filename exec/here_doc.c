@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:23:30 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:10:30 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:55:57 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-void	read_in_child(char *limiter, int fd)
+void	read_in_child(t_msh *msh, char *limiter, int fd)
 {
 	char	*line;
 
@@ -21,8 +21,15 @@ void	read_in_child(char *limiter, int fd)
 		line = readline("> ");
 		if (!ft_strncmp(limiter, line, ft_strlen(limiter) + 1) || !line)
 		{
+			if (line)
+				free(line);
 			free (limiter);
-			break ;
+			ft_free_msh(msh);
+			free(msh->temp_i_o);
+			free_double(msh->env);
+			free(msh->delims);
+			free_env_list(msh->env_list);
+			exit (EXIT_SUCCESS);
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -30,7 +37,7 @@ void	read_in_child(char *limiter, int fd)
 	}
 }
 
-char	*read_stdin(char *limiter, char *file)
+char	*read_stdin(t_msh *msh, char *limiter, char *file)
 {
 	int		fd;
 	int		id;
@@ -40,8 +47,9 @@ char	*read_stdin(char *limiter, char *file)
 	if (id == 0)
 	{
 		ft_signal_child();
-		read_in_child(limiter, fd);
+		read_in_child(msh, limiter, fd);
 	}
 	wait(NULL);
+	free(limiter);
 	return (file);
 }

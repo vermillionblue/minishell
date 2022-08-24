@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 18:25:23 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:48:59 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell.h"
 # include "exec.h"
 ///////here doc
-char	*read_stdin(char *limiter, char *file);
+char	*read_stdin(t_msh *msh, char *limiter, char *file);
 ///in n out files
 void	check_infile(t_group *group, t_msh *msh, t_list *link);
 void	check_outfile(t_group *group, t_list *link);

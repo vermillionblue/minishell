@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:11:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 18:28:45 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 21:01:08 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "includes/minishell.h"
 
-// - memory leaks
-// - fd leaks
 // - norminette
-// - parenthesis 
 // - ls *.o not working
-
 int	ft_subshell(char *line, char **envp)
 {
 	t_env	*env_list;
@@ -26,7 +21,6 @@ int	ft_subshell(char *line, char **envp)
 	int		id;
 	int		res;
 
-	printf("%s\n", line);
 	id = fork();
 	if (id == 0)
 	{
@@ -44,7 +38,7 @@ int	ft_subshell(char *line, char **envp)
 		ft_lexer(line, &msh);
 		ft_makegroups(&msh);
 		ft_prep_exec(&msh);
-		free_double(msh.env); 
+		free_double(msh.env);
 		ft_free_msh(&msh);
 	}
 	waitpid(0, &res, 0);
@@ -78,12 +72,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		//ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
 		ft_prep_exec(&msh);
-		//ft_print_groups(&msh);
 		free(line);
-		free_double(msh.env); 
+		free_double(msh.env);
 		ft_free_msh(&msh);
 	}
 	free_env_list(msh.env_list);
