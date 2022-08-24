@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeings.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:49:42 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:47:16 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 21:34:42 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	free_env_list(t_env **env_list)
 	while (*env_list)
 	{
 		next = (*env_list)->next;
-		free((*env_list)->bash_v_content);
+		if ((*env_list)->bash_v_content)
+			free((*env_list)->bash_v_content);
 		free((*env_list)->bash_variable);
 		free(*env_list);
 		*env_list = next;

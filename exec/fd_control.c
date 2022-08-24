@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_control.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 17:41:33 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 22:22:33 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	fds_child_last_cmd(t_msh *msh, t_group *group)
 	}
 	else
 		check_dup2(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
-	if (group->cmds->here_doc)
+	if (access(msh->here_doc_file_name, F_OK) == 0)
 		unlink(msh->here_doc_file_name);
 	close(msh->temp_i_o[WRITE_END]);
 	close(msh->temp_i_o[READ_END]);

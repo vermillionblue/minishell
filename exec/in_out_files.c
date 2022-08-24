@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:09:55 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 20:48:18 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 22:17:48 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_infile(t_group *group, t_msh *msh, t_list *link)
 {
 	char	*limiter;
 
-	if (ft_ectracttype(link) == LX_REDIR_INSRC)
+	if (ft_ectracttype(link) == LX_REDIR_INSRC && access(msh->here_doc_file_name, F_OK))
 	{
 		limiter = ft_strdup(ft_ectracttext(link));
 		group->cmds->here_doc = 1;
