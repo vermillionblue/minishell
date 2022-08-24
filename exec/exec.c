@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 23:55:33 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:56:40 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@ int	redirect_parent(char **cmd, int cmd_num, t_msh *msh)
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		res = do_unset(msh, cmd[1]);
 	else if (!ft_strncmp(cmd[0], "exit", 5))
-		res = exit_helper(cmd, msh, cmd_num);
+	{
+		if (cmd_num == 1 && !cmd[1])
+		{
+			res = 0;
+			msh->exit = 1;
+		}
+	}
 	return (res);
 }
 
@@ -42,6 +48,8 @@ int	redirect_child(char **cmd, t_msh *msh)
 		print_env_list(msh->env_list);
 	else if (!ft_strncmp(cmd[0], "echo", 5))
 		res = do_echo(cmd);
+	else if (!ft_strncmp(cmd[0], "exit", 5))
+		res = exit_helper(cmd, msh, 3);
 	else
 	{
 		a_path = get_correct_path(cmd, msh);
