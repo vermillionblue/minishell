@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 08:00:44 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:06:55 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	**list_to_arr(t_env **env_list)
 	int				i;
 
 	i = 0;
-	new_arr = (char **)ft_calloc((env_list_size(env_list) + 1), sizeof(char *) + 1);
+	new_arr = (char **)ft_calloc((env_list_size(env_list)
+				+ 1), sizeof(char *) + 1);
 	temp = *env_list;
 	while (temp)
 	{
@@ -33,7 +34,6 @@ char	**list_to_arr(t_env **env_list)
 	new_arr[i] = NULL;
 	return (new_arr);
 }
-
 
 t_env	*create_env_list(char	**envp)
 {

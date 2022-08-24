@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 08:30:06 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:16:35 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j)
 	if (res == -2)
 	{
 		msh->last_exit_stat = exec_cmds(group->cmds->newargvs[j],
-			group, msh, cmd_num);
+				group, msh, cmd_num);
 	}	
 	else
 		msh->last_exit_stat = res;
@@ -38,7 +38,7 @@ void	if_redirs_or_null(t_group *group, t_msh *msh, int j)
 
 void	check_what_redirs(t_group *group, t_msh *msh, int j)
 {
-	t_list*	link;
+	t_list	*link;
 
 	link = group->cmds->redirs[j][0];
 	while (link)

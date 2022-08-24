@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:05:10 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 20:13:33 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:07:37 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,5 @@ int	do_export(t_msh *msh, char *args)
 	if (!ft_strchr(args, '='))
 		return (1);
 	res = get_name_arg(new_env, args, msh->env_list);
-	msh->env = list_to_arr(msh->env_list);
 	return (res);
 }

@@ -5,14 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/23 23:58:00 by danisanc         ###   ########.fr       */
-=======
-/*   Updated: 2022/08/23 23:52:34 by danisanc         ###   ########.fr       */
->>>>>>> 6a4dcce70234d38ec2b08d129ea5f81aebd56b82
+/*   Created: 2022/08/24 12:11:08 by danisanc          #+#    #+#             */
+/*   Updated: 2022/08/24 12:53:43 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "includes/minishell.h"
 
@@ -122,7 +119,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		//ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
-		//printf("trigger12");
 		ft_parser(&msh);
 		//ft_print_groups(&msh);
 		ft_prep_exec(&msh);

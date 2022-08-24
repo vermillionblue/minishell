@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 23:55:09 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:14:43 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ void	print_unset_error_or_nothing(char *name, t_env **env_list, int *res)
 	}
 }
 
+int	iter_unset_var(t_env **env_list, t_env *temp, char *name)
+{
+	if (!ft_strncmp(temp->bash_variable, name, ft_strlen(name)))
+	{
+		*env_list = temp->next;
+		return (0);
+	}
+	while (temp->next)
+	{
+		if (!ft_strncmp(temp->next->bash_variable, name, ft_strlen(name) + 1))
+		{
+			temp->next = temp->next->next;
+			return (0);
+		}
+		temp = temp->next;
+	}
+}
+
 int	do_unset(t_msh *msh, char *name)
 {
 	t_env	*temp;
@@ -63,15 +81,8 @@ int	do_unset(t_msh *msh, char *name)
 		*env_list = temp->next;
 		return (0);
 	}
-	while (temp->next)
-	{
-		if (!ft_strncmp(temp->next->bash_variable, name, ft_strlen(name) + 1))
-		{
-			temp->next = temp->next->next;
-			return (0);
-		}
-		temp = temp->next;
-	}
+	if (iter_unset_var(env_list, temp, name) == 0)
+		return (0);
 	if (msh->env)
 		free_double(msh->env);
 	msh->env = list_to_arr(msh->env_list);
