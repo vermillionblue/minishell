@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:08:31 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:41:33 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 {
 	if (cmd->infile_name)
 	{
-		printf("trigger in\n");
 		cmd->infile_fd = open(cmd->infile_name, O_RDONLY);
 		if (cmd->infile_fd == -1)
 		{
@@ -29,7 +28,6 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 	}
 	if (cmd->outfile_name)
 	{
-		printf("trigger\n");
 		if (cmd->append_outfile)
 			cmd->outfile_fd = open(cmd->outfile_name,
 					O_WRONLY | O_CREAT | O_APPEND, 0664);

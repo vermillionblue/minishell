@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:17:49 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 13:09:59 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:36:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	do_exit(void)
 {
 	printf(BLUE);
-	printf("Exiting... 🥲\n");
+	printf("Exiting... 😥\n");
 	printf(WHITE);
 	exit(EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/08/22 18:54:55 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:38:37 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@
 /* Our Libraries */
 # include "../libft/libft.h"
 # include "../vlad_printf/ft_printf.h"
+# include "lexer.h"
+# include "parser.h"
+# include "exec.h"
+# include "builtins.h"
 
 typedef struct s_env
 {
@@ -103,9 +107,5 @@ char	*split_rev(char **cmds);
 ///////////// utils
 char	*split_rev(char **cmds);
 int		if_omit_space(char *line);
-# include "lexer.h"
-# include "parser.h"
-# include "exec.h"
-# include "builtins.h"
 
 #endif

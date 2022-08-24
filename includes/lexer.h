@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:52:33 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/14 10:55:30 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:37:16 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ typedef struct s_lexem
 	char	*text;
 }	t_lexem;
 
+typedef struct s_msh t_msh;
+typedef struct s_group t_group;
+typedef struct s_env t_env;
+typedef struct s_cmds t_cmds;
 // lexer.c
 void	ft_init_delims(t_msh *msh);
 void	ft_lexer(char *line, t_msh *msh);

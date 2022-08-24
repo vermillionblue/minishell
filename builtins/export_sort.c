@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 09:21:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/12 13:32:46 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:42:00 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	sort_export(t_env **env_list)
 	unsigned int	len;
 
 	len = env_list_size(env_list);
-	printf("list len %d\n", len);
 	current = *env_list;
 	smallest = current->bash_variable;
 	if (*env_list == NULL)

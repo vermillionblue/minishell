@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:14:36 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 17:02:52 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:25:21 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void			print_name_error(char *args);
 void			free_double(char **string);
 int				check_if_valid_env(char *name);
 ///////////
-int	exit_helper(char **cmd, t_msh *msh, int cmd_num);
+int				exit_helper(char **cmd, t_msh *msh, int cmd_num);
 ////////////////////
 unsigned int	env_list_size(t_env **env_list);
 char			*check_if_no_args(char **args);

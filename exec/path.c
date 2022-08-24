@@ -6,11 +6,27 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:03:15 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:13:10 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:24:29 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
+
+void	access_fail_error(char **cmd, t_msh *msh)
+{
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	msh->last_exit_stat = 127;
+	exit (EXIT_FAILURE);
+}
+
+void	cmd_not_found(char **cmd, t_msh *msh)
+{
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
+	ft_free_exec(msh);
+	msh->last_exit_stat = 127;
+}
 
 char	*get_correct_path(char **cmd, t_msh *msh)
 {
@@ -24,12 +40,7 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 		if (access(cmd[0], F_OK) == 0)
 			return (cmd[0]);
 		else
-		{
-			ft_putstr_fd(cmd[0], 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			msh->last_exit_stat = 127;
-			exit (EXIT_FAILURE);
-		}
+			access_fail_error(cmd, msh);
 	}
 	while (msh->paths != NULL && msh->paths[i])
 	{
@@ -41,10 +52,7 @@ char	*get_correct_path(char **cmd, t_msh *msh)
 		free(a_path);
 		i++;
 	}
-	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
-	ft_free_exec(msh);
-	msh->last_exit_stat = 127;
+	cmd_not_found(cmd, msh);
 	exit (EXIT_FAILURE);
 }
 

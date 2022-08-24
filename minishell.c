@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:11:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:27:58 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:28:45 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,26 @@ int	ft_subshell(char *line, char **envp)
 	int		id;
 	int		res;
 
+	printf("%s\n", line);
 	id = fork();
 	if (id == 0)
 	{
-		msh.exit = 0;
 		env_list = create_env_list(envp);
 		msh.env_list = &env_list;
-		while (!msh.exit)
+		ft_init_delims(&msh);
+		ft_signal_parent();
+		msh.exit = 0;
+		msh.last_exit_stat = 0;
+		if (!line)
 		{
-			ft_init_delims(&msh);
-			ft_signal_parent();
-			if (!line)
-			{
-				ft_putchar_fd('\n', STDOUT_FILENO);
-				exit(EXIT_SUCCESS);
-			}
-			add_history(line);
-			ft_lexer(line, &msh);
-			ft_printlexems(msh.lexems);
-			ft_makegroups(&msh);
-			//ft_prep_exec(&msh);
-			free(line);
-			free_double(msh.env);
-			free(msh.pipe_fds);
-			free(msh.temp_i_o);
+			ft_putchar_fd('\n', STDOUT_FILENO);
+			exit(EXIT_SUCCESS);
 		}
+		ft_lexer(line, &msh);
+		ft_makegroups(&msh);
+		ft_prep_exec(&msh);
+		free_double(msh.env); 
+		ft_free_msh(&msh);
 	}
 	waitpid(0, &res, 0);
 	return (res);
@@ -85,20 +80,14 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		//ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
-		//ft_parser(&msh);
-		//ft_print_groups(&msh);
 		ft_prep_exec(&msh);
+		//ft_print_groups(&msh);
 		free(line);
 		free_double(msh.env); 
 		ft_free_msh(&msh);
 	}
-	//free_exec(&msh);
-	//free_double(msh.paths);
 	free_env_list(msh.env_list);
 	free(msh.delims);
-	// free_double(msh.env);
-	//ft_free_groups(&msh);
-	// ft_free_msh(&msh);
 	do_exit();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:54:39 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:17:40 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	redirect_child(char **cmd, t_msh *msh)
 	else
 		ft_execve(cmd, msh);
 	ft_free_exec(msh);
-	exit (res);
+	exit (0);
 }
 
 int	exec_cmds(char **cmd, t_group *group, t_msh *msh, int cmd_num)
@@ -117,9 +117,11 @@ void	ft_prep_exec(t_msh *msh)
 		if (!msh->groups[0]->cmds->newargvs
 			|| (msh->group_num == 1 && !msh->groups[0]->cmds->newargvs[0]))
 			return ;
-		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)
+		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat != 11
+			&& msh->last_exit_stat > 0)
 			break ;
-		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)
+		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat != 0
+			&& msh->last_exit_stat == 11)
 			break ;
 		exec_group(msh->groups[i], msh);
 		free(msh->temp_i_o);
