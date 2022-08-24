@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 13:14:43 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:00:03 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	iter_unset_var(t_env **env_list, t_env *temp, char *name)
 		}
 		temp = temp->next;
 	}
+	return (1);
 }
 
 int	do_unset(t_msh *msh, char *name)

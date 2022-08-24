@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 11:56:40 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:54:39 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
-
 
 int	redirect_parent(char **cmd, int cmd_num, t_msh *msh)
 {
@@ -38,10 +37,8 @@ int	redirect_parent(char **cmd, int cmd_num, t_msh *msh)
 int	redirect_child(char **cmd, t_msh *msh)
 {
 	int		res;
-	char	*a_path;
-    
-	res = 0;
 
+	res = 0;
 	if (!ft_strncmp(cmd[0], "pwd", 4))
 		res = do_cwd();
 	else if (!ft_strncmp(cmd[0], "env", 4))
@@ -51,29 +48,8 @@ int	redirect_child(char **cmd, t_msh *msh)
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 		res = exit_helper(cmd, msh, 3);
 	else
-	{
-		a_path = get_correct_path(cmd, msh);
-		if (execve(a_path, cmd, msh->env) == -1)
-		{
-			perror("execve error\n");
-			free(a_path);
-			free(msh->delims);
-			free(msh->pipe_fds);
-			free(msh->temp_i_o);
-			free_double(msh->paths);
-			free_double(msh->env);
-			free_env_list(msh->env_list);
-			ft_free_msh(msh);
-			exit (EXIT_FAILURE);
-		}
-	}
-	free(msh->pipe_fds);
-	free(msh->temp_i_o);
-	free_double(msh->paths);
-	free_double(msh->env);
-	free_env_list(msh->env_list);
-	ft_free_msh(msh);
-	free(msh->delims);
+		ft_execve(cmd, msh);
+	ft_free_exec(msh);
 	exit (res);
 }
 
@@ -113,13 +89,14 @@ void	exec_group(t_group *group, t_msh *msh)
 	j = 0;
 	cmd_num = group->cmds->cmd_num;
 	init_data4group(msh);
-	while (cmd_num  > 0)
+	while (cmd_num > 0)
 	{
 		if (ft_ectracttype(group->cmds->cmd_args[j][0]) == LX_PAR)
-			msh->last_exit_stat = ft_subshell(split_rev(group->cmds->newargvs[j]), msh->env);
+			msh->last_exit_stat
+				= ft_subshell(split_rev(group->cmds->newargvs[j]), msh->env);
 		else
 			builtin_or_exec(group, msh, cmd_num, j);
-		cmd_num  -= 1;
+		cmd_num -= 1;
 		j++;
 	}
 }
@@ -134,10 +111,12 @@ void	ft_prep_exec(t_msh *msh)
 	env = list_to_arr(msh->env_list);
 	msh->here_doc_file_name = ".here_doc";
 	msh->env = env;
-	if (!msh->groups[0]->cmds->newargvs || (msh->group_num == 1 && !msh->groups[0]->cmds->newargvs[0]))
-		return ;
 	while (msh->group_num > i)
 	{
+		ft_parse_group(msh, i);
+		if (!msh->groups[0]->cmds->newargvs
+			|| (msh->group_num == 1 && !msh->groups[0]->cmds->newargvs[0]))
+			return ;
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0)
 			break ;
 		if (msh->groups[i]->type == LX_OR && msh->last_exit_stat == 0)

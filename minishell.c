@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:11:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 12:53:43 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:27:58 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,6 @@
 // - norminette
 // - parenthesis 
 // - ls *.o not working
-
-
-void	free_env_arr(char **arr)
-{
-	int i = 0;
-	while(arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-void	free_env_list(t_env **env_list)
-{
-	t_env	*next;
-
-	while(*env_list)
-	{
-		next = (*env_list)->next;
-		free((*env_list)->bash_v_content);
-		free((*env_list)->bash_variable);
-		free(*env_list);
-		*env_list = next;
-	}
-	free(next);
-}
-
-void	free_exec(t_msh *msh)
-{
-	free_env_list(msh->env_list);
-	free_double(msh->env);
-	free(msh->pipe_fds);
-	free(msh->temp_i_o);
-}
 
 int	ft_subshell(char *line, char **envp)
 {
@@ -119,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_lexer(line, &msh);
 		//ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
-		ft_parser(&msh);
+		//ft_parser(&msh);
 		//ft_print_groups(&msh);
 		ft_prep_exec(&msh);
 		free(line);

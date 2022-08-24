@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   in_out_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:09:55 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/21 19:46:01 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:10:46 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,4 @@ void	check_outfile(t_group *group, int j)
 		else
 			group->cmds->append_outfile = 0;
 	}
-	// else
-	// 	group->cmds->outfile_name = NULL;
 }

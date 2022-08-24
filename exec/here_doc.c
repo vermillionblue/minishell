@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:23:30 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/16 13:06:29 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:10:30 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ char	*read_stdin(char *limiter, char *file)
 		read_in_child(limiter, fd);
 	}
 	wait(NULL);
-	//free (limiter);
 	return (file);
 }

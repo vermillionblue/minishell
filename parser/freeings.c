@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeings.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:19:07 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/10 12:00:51 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:47:50 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,4 @@ void	ft_free_msh(t_msh *msh)
 	}
 	ft_free_lexems(msh->lexems);
 	ft_free_groups(msh);
-	//free(msh->delims);
 }

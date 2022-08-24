@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_control.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 12:58:41 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:08:31 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,35 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 			cmd->outfile_fd = open(cmd->outfile_name,
 					O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	}
-	//printf("%s\n", cmd->outfile_name);
 	return (1);
+}
+
+void	fds_child_last_cmd(t_msh *msh, t_group *group)
+{
+	close(msh->pipe_fds[READ_END]);
+	close(msh->pipe_fds[WRITE_END]);
+	if (group->cmds->infile_name != NULL)
+	{
+		check_dup2(dup2(group->cmds->infile_fd, STDIN_FILENO));
+		close(group->cmds->infile_fd);
+	}	
+	if (group->cmds->outfile_name)
+	{
+		check_dup2(dup2(group->cmds->outfile_fd, STDOUT_FILENO));
+		close(group->cmds->outfile_fd);
+	}
+	else
+		check_dup2(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
+	if (group->cmds->here_doc)
+		unlink(msh->here_doc_file_name);
+	close(msh->temp_i_o[WRITE_END]);
+	close(msh->temp_i_o[READ_END]);
 }
 
 void	close_fds_child(t_group *group, t_msh *msh, int cmd_num)
 {
 	if (cmd_num == 1)
-	{
-		close(msh->pipe_fds[READ_END]);
-		close(msh->pipe_fds[WRITE_END]);
-		if (group->cmds->infile_name != NULL)
-		{
-			
-			check_dup2(dup2(group->cmds->infile_fd, STDIN_FILENO));
-			close(group->cmds->infile_fd);
-		}	
-		if (group->cmds->outfile_name)
-		{
-			check_dup2(dup2(group->cmds->outfile_fd, STDOUT_FILENO));
-			close(group->cmds->outfile_fd);
-		}
-		else
-			check_dup2(dup2(msh->temp_i_o[WRITE_END], STDOUT_FILENO));
-		if (group->cmds->here_doc)
-			unlink(msh->here_doc_file_name);
-		close(msh->temp_i_o[WRITE_END]);
-		close(msh->temp_i_o[READ_END]);
-	}
+		fds_child_last_cmd(msh, group);
 	else
 	{
 		close(msh->pipe_fds[READ_END]);
