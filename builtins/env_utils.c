@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 18:58:38 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/21 11:48:43 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:00:44 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**list_to_arr(t_env **env_list)
 	return (new_arr);
 }
 
+
 t_env	*create_env_list(char	**envp)
 {
 	t_env	*env_list;
@@ -46,8 +47,10 @@ t_env	*create_env_list(char	**envp)
 	{
 		if (envp[i][ft_strlen(envp[i]) - 1] == '=')
 		{
-			array[0] = ft_strdup(envp[i]);
-			array[1] = "";
+			array = malloc(sizeof(char *) * 2);
+			array[0] = malloc(ft_strlen(envp[i]));
+			ft_strlcpy(array[0], envp[i], ft_strlen(envp[i]));
+			array[1] = ft_strdup("");
 		}
 		else
 			array = ft_split(envp[i], '=');

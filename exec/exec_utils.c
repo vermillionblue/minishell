@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 19:59:09 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:30:06 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ void	if_redirs_or_null(t_group *group, t_msh *msh, int j)
 
 void	check_what_redirs(t_group *group, t_msh *msh, int j)
 {
-	while (group->cmds->redirs[j][0])
+	t_list*	link;
+
+	link = group->cmds->redirs[j][0];
+	while (link)
 	{
 		check_infile(group, msh, j);
 		check_outfile(group, j);
-		group->cmds->redirs[j][0] = group->cmds->redirs[j][0]->next;
+		link = link->next;
 	}
 }
 
