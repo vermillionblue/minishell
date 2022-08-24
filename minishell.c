@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 13:28:57 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 20:22:44 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:58:00 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,14 +121,13 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		add_history(line);
 		ft_lexer(line, &msh);
-		ft_printlexems(msh.lexems);
+		//ft_printlexems(msh.lexems);
 		ft_makegroups(&msh);
 		ft_parser(&msh);
-		ft_print_groups(&msh);
-		ft_prep_exec(&msh);
 		//ft_print_groups(&msh);
+		ft_prep_exec(&msh);
 		free(line);
-		//free_double(msh.env); 
+		free_double(msh.env); 
 		ft_free_msh(&msh);
 	}
 	//free_exec(&msh);

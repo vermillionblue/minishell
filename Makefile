@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/08/23 17:32:09 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/24 00:29:33 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,6 @@ endif
 RM = rm -f
 
 all: $(NAME)
-
-$(%.o): $(%.c)
 
 $(NAME): $(OBJ)
 ifeq ($(UNAME_S), Darwin)
