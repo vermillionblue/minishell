@@ -6,17 +6,29 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/25 12:59:55 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:55:33 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
+int	check_open_fail(int i, t_msh *msh)
+{
+	if (i == -1)
+	{
+		msh->open_stat = 0;
+		perror("sorry, cannot open file\n");
+		msh->last_exit_stat = 1;
+	}
+	return (i);
+}
+
 int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 {
+	msh->open_stat = 1;
 	if (cmd->infile_name)
 	{
-		cmd->infile_fd = open(cmd->infile_name, O_RDONLY);
+		cmd->infile_fd = check_open_fail(open(cmd->infile_name, O_RDONLY), msh);
 		if (cmd->infile_fd == -1)
 		{
 			perror(cmd->infile_name);
@@ -29,19 +41,13 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 	if (cmd->outfile_name)
 	{
 		if (cmd->append_outfile)
-			cmd->outfile_fd = open(cmd->outfile_name,
-					O_WRONLY | O_CREAT | O_APPEND, 0664);
+			cmd->outfile_fd = check_open_fail(open(cmd->outfile_name,
+						O_WRONLY | O_CREAT | O_APPEND, 0664), msh);
 		else
-			cmd->outfile_fd = open(cmd->outfile_name,
-					O_WRONLY | O_CREAT | O_TRUNC, 0664);
-		if (cmd->outfile_fd == -1)
-		{
-			perror("sorry, cannot open file\n");
-			ft_free_msh(msh);
-			return (0);
-		}
+			cmd->outfile_fd = check_open_fail(open(cmd->outfile_name,
+						O_WRONLY | O_CREAT | O_TRUNC, 0664), msh);
 	}
-	return (1);
+	return (msh->open_stat);
 }
 
 void	fds_child_last_cmd(t_msh *msh, t_group *group)

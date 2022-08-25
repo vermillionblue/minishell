@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:34:07 by vsimeono          #+#    #+#             */
-/*   Updated: 2022/08/25 11:50:19 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:46:23 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_msh
 	int		*temp_i_o;
 	int		*pipe_fds;
 	int		exit;
+	int		open_stat;
 }	t_msh;
 /* Linked Lists Utils */
 t_list	*create_element(char **value);

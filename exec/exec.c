@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/25 18:26:03 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:05:01 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,16 @@ int	exec_cmds(char **cmd, t_group *group, t_msh *msh, int cmd_num)
 	msh->pipe_fds = ft_calloc(2, sizeof(int));
 	check_pipe(pipe(msh->pipe_fds));
 	if (!set_std_i_o(group->cmds, msh))
+	{
+		free_pipes_n_paths(msh);
 		return (0);
+	}
 	id = fork();
 	if (id == 0)
-	{
-		ft_signal_child();
-		close_fds_child(group, msh, cmd_num);
-		redirect_child(cmd, msh);
-	}
+		set_up_child(group, cmd, msh, cmd_num);
 	waitpid(0, &res, 0);
 	close_fds_parent(group, msh, cmd_num);
-	if (msh->paths)
-		free_double(msh->paths);
-	free(msh->pipe_fds);
+	free_pipes_n_paths(msh);
 	return (res);
 }
 
@@ -117,17 +114,7 @@ void	ft_prep_exec(t_msh *msh)
 		if (!msh->groups[i]->cmds->newargvs
 			|| (msh->group_num == 1 && !msh->groups[i]->cmds->newargvs[0]))
 			return ;
-		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0 && msh->last_exit_stat != 11)
-			break ;
-		if (msh->groups[i]->type == LX_OR && (msh->last_exit_stat == 0
-			|| msh->last_exit_stat == 11))
-			{
-				msh->group_num = i;
-				break ;
-			}
-			
-		exec_group(msh->groups[i], msh);
-		free(msh->temp_i_o);
+		exec_logic(i, msh);
 		i++;
 	}
 }

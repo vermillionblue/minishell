@@ -6,7 +6,7 @@
 #    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/08/25 11:46:11 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/25 20:03:57 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC = minishell.c \
 	builtins/export_utils.c builtins/echo.c \
 	exec/exec.c exec/errors.c exec/in_out_files.c exec/path.c \
 	exec/freeings.c exec/here_doc.c exec/fd_control.c exec/exec_utils.c \
+	exec/exec_utils2.c \
 	wildcard/asterisk.c wildcard/asterisk_utils.c \
 	42msh_parser/freeings.c \
 	42msh_parser/lexems.c \

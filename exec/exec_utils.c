@@ -6,11 +6,29 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:39:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 22:12:45 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:28:45 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
+
+void	exec_logic(int i, t_msh *msh)
+{
+	int		flag;
+
+	flag = 0;
+	if (msh->groups[i]->type == LX_AND
+		&& msh->last_exit_stat > 0 && msh->last_exit_stat != 11)
+		flag = 1;
+	else if (msh->groups[i]->type == LX_OR && (msh->last_exit_stat == 0
+			|| msh->last_exit_stat == 11))
+		flag = 1;
+	else if (flag == 0)
+	{
+		exec_group(msh->groups[i], msh);
+		free(msh->temp_i_o);
+	}
+}
 
 void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j)
 {

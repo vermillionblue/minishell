@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 20:36:41 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 14:00:03 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:36:41 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	print_unset_error_or_nothing(char *name, t_env **env_list, int *res)
 
 int	iter_unset_var(t_env **env_list, t_env *temp, char *name)
 {
+	t_env	*temp2;
 	if (!ft_strncmp(temp->bash_variable, name, ft_strlen(name)))
 	{
 		*env_list = temp->next;
@@ -57,7 +58,11 @@ int	iter_unset_var(t_env **env_list, t_env *temp, char *name)
 	{
 		if (!ft_strncmp(temp->next->bash_variable, name, ft_strlen(name) + 1))
 		{
+			free(temp->next->bash_variable);
+			free(temp->next->bash_v_content);
+			temp2 = temp->next;
 			temp->next = temp->next->next;
+			free(temp2);
 			return (0);
 		}
 		temp = temp->next;

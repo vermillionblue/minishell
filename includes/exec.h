@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 18:18:43 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 20:48:59 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:19:59 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define EXEC_H
 
 # include "minishell.h"
-# include "exec.h"
+///
+int	redirect_child(char **cmd, t_msh *msh);
 ///////here doc
 char	*read_stdin(t_msh *msh, char *limiter, char *file);
 ///in n out files
@@ -31,7 +32,11 @@ char	*get_correct_path(char **cmd, t_msh *msh);
 int		set_std_i_o(t_cmds *cmd, t_msh *msh);
 void	close_fds_parent(t_group *group, t_msh *msh, int cmd_num);
 void	close_fds_child(t_group *group, t_msh *msh, int cmd_num);
+/////////utils 2
+void	free_pipes_n_paths(t_msh *msh);
+void	set_up_child(t_group *group, char **cmd, t_msh *msh, int cmd_num);
 /////////utils
+void	exec_logic(int i, t_msh *msh);
 void	check_what_redirs(t_group *group, t_msh *msh, int j);
 void	init_data4group(t_msh *msh);
 void	builtin_or_exec(t_group *group, t_msh *msh, int cmd_num, int j);
