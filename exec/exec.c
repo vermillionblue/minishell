@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 17:24:27 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/25 16:22:47 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 17:48:17 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,17 @@ void	ft_prep_exec(t_msh *msh)
 	while (msh->group_num > i)
 	{
 		ft_parse_group(msh, i);
-		if (!msh->groups[i]->cmds->newargvs
-			|| (msh->group_num == 1 && !msh->groups[i]->cmds->newargvs[0]))
+		if (!msh->groups[0]->cmds->newargvs
+			|| (msh->group_num == 1 && !msh->groups[0]->cmds->newargvs[0]))
 			return ;
 		if (msh->groups[i]->type == LX_AND && msh->last_exit_stat > 0 && msh->last_exit_stat != 11)
 			break ;
 		if (msh->groups[i]->type == LX_OR && (msh->last_exit_stat == 0
 			|| msh->last_exit_stat == 11))
+			{
+				msh->groups[i] = NULL;
 				break ;
+			}
 		exec_group(msh->groups[i], msh);
 		free(msh->temp_i_o);
 		i++;
