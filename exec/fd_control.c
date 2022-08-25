@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 14:01:08 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 22:22:33 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 12:59:55 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int	set_std_i_o(t_cmds *cmd, t_msh *msh)
 		else
 			cmd->outfile_fd = open(cmd->outfile_name,
 					O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		if (cmd->outfile_fd == -1)
+		{
+			perror("sorry, cannot open file\n");
+			ft_free_msh(msh);
+			return (0);
+		}
 	}
 	return (1);
 }

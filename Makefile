@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/29 14:19:05 by danisanc          #+#    #+#              #
-#    Updated: 2022/08/24 13:59:24 by danisanc         ###   ########.fr        #
+#    Updated: 2022/08/25 11:46:11 by danisanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,11 @@ SRC = minishell.c \
 	exec/freeings.c exec/here_doc.c exec/fd_control.c exec/exec_utils.c \
 	wildcard/asterisk.c wildcard/asterisk_utils.c \
 	42msh_parser/freeings.c \
+	42msh_parser/lexems.c \
 	42msh_parser/lexer.c \
+	42msh_parser/lexer_init.c \
 	42msh_parser/lists.c \
+	42msh_parser/parser_argvs.c \
 	42msh_parser/parser_cmds.c \
 	42msh_parser/parser_expansion.c \
 	42msh_parser/parser_groups.c \
@@ -30,6 +33,7 @@ SRC = minishell.c \
 	42msh_parser/parser_redir_utils.c \
 	42msh_parser/parser_wc.c \
 	42msh_parser/printer.c \
+	42msh_parser/trimmers.c \
 	signals.c \
 	utils.c \
 

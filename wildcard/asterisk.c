@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asterisk.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:28:40 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/24 16:32:22 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/25 12:08:17 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,8 @@ int	ft_regexcomp(char *regex, char *name)
 	i = 0;
 	k = 0;
 	last = ft_strlen(regex) - 1;
-	printf("+++++++++++++++++++++++++++++++++++++++++\n");
-	printf("%s vs %s\n", name, regex);
-	printf("+++++++++++++++++++++++++++++++++++++++++\n");
 	while (regex[i] && name[k])
 	{
-		printf("%c vs %c\n", regex[i], name[k]);
-		printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
 		if ((regex[i] == '*' && i + 1 == last
 				&& name[ft_strlen(name) - 1] == regex[last])
 			|| (i == last && regex[i] == '*'))
